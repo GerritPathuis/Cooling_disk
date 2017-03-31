@@ -70,11 +70,12 @@ Partial Class Form1
         'NumericUpDown1
         '
         Me.NumericUpDown1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown1.Location = New System.Drawing.Point(231, 22)
+        Me.NumericUpDown1.Location = New System.Drawing.Point(308, 27)
+        Me.NumericUpDown1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown1.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown1.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown1.Name = "NumericUpDown1"
-        Me.NumericUpDown1.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown1.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown1.TabIndex = 0
         Me.NumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown1.Value = New Decimal(New Integer() {240, 0, 0, 0})
@@ -82,10 +83,11 @@ Partial Class Form1
         'NumericUpDown2
         '
         Me.NumericUpDown2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown2.Location = New System.Drawing.Point(231, 49)
+        Me.NumericUpDown2.Location = New System.Drawing.Point(308, 60)
+        Me.NumericUpDown2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown2.Maximum = New Decimal(New Integer() {150, 0, 0, 0})
         Me.NumericUpDown2.Name = "NumericUpDown2"
-        Me.NumericUpDown2.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown2.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown2.TabIndex = 1
         Me.NumericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -93,9 +95,10 @@ Partial Class Form1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(17, 27)
+        Me.Label1.Location = New System.Drawing.Point(23, 33)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(174, 16)
+        Me.Label1.Size = New System.Drawing.Size(222, 20)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Outside diameter shaft [mm]"
         '
@@ -103,9 +106,10 @@ Partial Class Form1
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(17, 81)
+        Me.Label2.Location = New System.Drawing.Point(23, 100)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(202, 16)
+        Me.Label2.Size = New System.Drawing.Size(258, 20)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Length shaft outside casing [mm]"
         '
@@ -113,20 +117,22 @@ Partial Class Form1
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(17, 54)
+        Me.Label3.Location = New System.Drawing.Point(23, 66)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(164, 16)
+        Me.Label3.Size = New System.Drawing.Size(208, 20)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Inside diameter shaft [mm]"
         '
         'NumericUpDown3
         '
         Me.NumericUpDown3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown3.Location = New System.Drawing.Point(231, 76)
+        Me.NumericUpDown3.Location = New System.Drawing.Point(308, 94)
+        Me.NumericUpDown3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown3.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown3.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown3.Name = "NumericUpDown3"
-        Me.NumericUpDown3.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown3.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown3.TabIndex = 5
         Me.NumericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown3.Value = New Decimal(New Integer() {10, 0, 0, 0})
@@ -135,20 +141,22 @@ Partial Class Form1
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(17, 108)
+        Me.Label4.Location = New System.Drawing.Point(23, 133)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(189, 16)
+        Me.Label4.Size = New System.Drawing.Size(241, 20)
         Me.Label4.TabIndex = 6
         Me.Label4.Text = "Heat conductivity coeff [W/mK]"
         '
         'NumericUpDown4
         '
         Me.NumericUpDown4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown4.Location = New System.Drawing.Point(231, 103)
+        Me.NumericUpDown4.Location = New System.Drawing.Point(308, 127)
+        Me.NumericUpDown4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown4.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown4.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown4.Name = "NumericUpDown4"
-        Me.NumericUpDown4.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown4.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown4.TabIndex = 7
         Me.NumericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown4.Value = New Decimal(New Integer() {16, 0, 0, 0})
@@ -168,18 +176,21 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.NumericUpDown3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label3)
-        Me.GroupBox1.Location = New System.Drawing.Point(19, 24)
+        Me.GroupBox1.Location = New System.Drawing.Point(25, 30)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(305, 193)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Size = New System.Drawing.Size(407, 238)
         Me.GroupBox1.TabIndex = 8
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Fan shaft data"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(231, 158)
+        Me.TextBox1.Location = New System.Drawing.Point(308, 194)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(54, 20)
+        Me.TextBox1.Size = New System.Drawing.Size(71, 22)
         Me.TextBox1.TabIndex = 11
         Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -187,9 +198,10 @@ Partial Class Form1
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(17, 158)
+        Me.Label12.Location = New System.Drawing.Point(23, 194)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(98, 16)
+        Me.Label12.Size = New System.Drawing.Size(124, 20)
         Me.Label12.TabIndex = 10
         Me.Label12.Text = "Shaft area [m2]"
         '
@@ -197,11 +209,12 @@ Partial Class Form1
         '
         Me.NumericUpDown5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown5.Increment = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.NumericUpDown5.Location = New System.Drawing.Point(231, 130)
+        Me.NumericUpDown5.Location = New System.Drawing.Point(308, 160)
+        Me.NumericUpDown5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown5.Maximum = New Decimal(New Integer() {800, 0, 0, 0})
         Me.NumericUpDown5.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown5.Name = "NumericUpDown5"
-        Me.NumericUpDown5.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown5.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown5.TabIndex = 9
         Me.NumericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown5.Value = New Decimal(New Integer() {250, 0, 0, 0})
@@ -210,9 +223,10 @@ Partial Class Form1
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(17, 135)
+        Me.Label5.Location = New System.Drawing.Point(23, 166)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(152, 16)
+        Me.Label5.Size = New System.Drawing.Size(192, 20)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "Max Fan temperature [c]"
         '
@@ -235,9 +249,11 @@ Partial Class Form1
         Me.GroupBox2.Controls.Add(Me.Label8)
         Me.GroupBox2.Controls.Add(Me.NumericUpDown10)
         Me.GroupBox2.Controls.Add(Me.Label10)
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 223)
+        Me.GroupBox2.Location = New System.Drawing.Point(16, 274)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(312, 270)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox2.Size = New System.Drawing.Size(416, 332)
         Me.GroupBox2.TabIndex = 10
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Cooling disk data"
@@ -245,11 +261,12 @@ Partial Class Form1
         'NumericUpDown6
         '
         Me.NumericUpDown6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown6.Location = New System.Drawing.Point(238, 124)
+        Me.NumericUpDown6.Location = New System.Drawing.Point(317, 153)
+        Me.NumericUpDown6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown6.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown6.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown6.Name = "NumericUpDown6"
-        Me.NumericUpDown6.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown6.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown6.TabIndex = 13
         Me.NumericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown6.Value = New Decimal(New Integer() {30, 0, 0, 0})
@@ -258,9 +275,10 @@ Partial Class Form1
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(17, 127)
+        Me.Label14.Location = New System.Drawing.Point(23, 156)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(196, 16)
+        Me.Label14.Size = New System.Drawing.Size(254, 20)
         Me.Label14.TabIndex = 12
         Me.Label14.Text = "Heat transfer (external) [W/m2K]"
         '
@@ -268,17 +286,19 @@ Partial Class Form1
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(19, 209)
+        Me.Label13.Location = New System.Drawing.Point(25, 257)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(147, 16)
+        Me.Label13.Size = New System.Drawing.Size(185, 20)
         Me.Label13.TabIndex = 17
         Me.Label13.Text = "Effective disk area [m2]"
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(239, 207)
+        Me.TextBox4.Location = New System.Drawing.Point(319, 255)
+        Me.TextBox4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(54, 20)
+        Me.TextBox4.Size = New System.Drawing.Size(71, 22)
         Me.TextBox4.TabIndex = 16
         Me.TextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -286,17 +306,19 @@ Partial Class Form1
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(18, 183)
+        Me.Label7.Location = New System.Drawing.Point(24, 225)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(117, 16)
+        Me.Label7.Size = New System.Drawing.Size(150, 20)
         Me.Label7.TabIndex = 15
         Me.Label7.Text = "Disk area factor [-]"
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(238, 181)
+        Me.TextBox3.Location = New System.Drawing.Point(317, 223)
+        Me.TextBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(54, 20)
+        Me.TextBox3.Size = New System.Drawing.Size(71, 22)
         Me.TextBox3.TabIndex = 14
         Me.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -304,17 +326,19 @@ Partial Class Form1
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(18, 157)
+        Me.Label6.Location = New System.Drawing.Point(24, 193)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(95, 16)
+        Me.Label6.Size = New System.Drawing.Size(119, 20)
         Me.Label6.TabIndex = 13
         Me.Label6.Text = "Disk area [m2]"
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(238, 155)
+        Me.TextBox2.Location = New System.Drawing.Point(317, 191)
+        Me.TextBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(54, 20)
+        Me.TextBox2.Size = New System.Drawing.Size(71, 22)
         Me.TextBox2.TabIndex = 12
         Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -322,20 +346,22 @@ Partial Class Form1
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(17, 72)
+        Me.Label9.Location = New System.Drawing.Point(23, 89)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(169, 16)
+        Me.Label9.Size = New System.Drawing.Size(212, 20)
         Me.Label9.TabIndex = 12
         Me.Label9.Text = "Hub outside diameter [mm]"
         '
         'NumericUpDown11
         '
         Me.NumericUpDown11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown11.Location = New System.Drawing.Point(238, 13)
+        Me.NumericUpDown11.Location = New System.Drawing.Point(317, 16)
+        Me.NumericUpDown11.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown11.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown11.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumericUpDown11.Name = "NumericUpDown11"
-        Me.NumericUpDown11.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown11.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown11.TabIndex = 10
         Me.NumericUpDown11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown11.Value = New Decimal(New Integer() {2, 0, 0, 0})
@@ -344,20 +370,22 @@ Partial Class Form1
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(17, 19)
+        Me.Label11.Location = New System.Drawing.Point(23, 23)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(120, 16)
+        Me.Label11.Size = New System.Drawing.Size(152, 20)
         Me.Label11.TabIndex = 11
         Me.Label11.Text = "Number of disks [-]"
         '
         'NumericUpDown7
         '
         Me.NumericUpDown7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown7.Location = New System.Drawing.Point(238, 69)
+        Me.NumericUpDown7.Location = New System.Drawing.Point(317, 85)
+        Me.NumericUpDown7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown7.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown7.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown7.Name = "NumericUpDown7"
-        Me.NumericUpDown7.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown7.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown7.TabIndex = 1
         Me.NumericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown7.Value = New Decimal(New Integer() {273, 0, 0, 0})
@@ -365,11 +393,12 @@ Partial Class Form1
         'NumericUpDown9
         '
         Me.NumericUpDown9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown9.Location = New System.Drawing.Point(238, 41)
+        Me.NumericUpDown9.Location = New System.Drawing.Point(317, 50)
+        Me.NumericUpDown9.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NumericUpDown9.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown9.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown9.Name = "NumericUpDown9"
-        Me.NumericUpDown9.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown9.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown9.TabIndex = 0
         Me.NumericUpDown9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown9.Value = New Decimal(New Integer() {546, 0, 0, 0})
@@ -378,20 +407,22 @@ Partial Class Form1
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(17, 47)
+        Me.Label8.Location = New System.Drawing.Point(23, 58)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(171, 16)
+        Me.Label8.Size = New System.Drawing.Size(215, 20)
         Me.Label8.TabIndex = 2
         Me.Label8.Text = "Outside diameter disk [mm]"
         '
         'NumericUpDown10
         '
         Me.NumericUpDown10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown10.Location = New System.Drawing.Point(238, 96)
-        Me.NumericUpDown10.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.NumericUpDown10.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.NumericUpDown10.Location = New System.Drawing.Point(317, 118)
+        Me.NumericUpDown10.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown10.Maximum = New Decimal(New Integer() {50, 0, 0, 0})
+        Me.NumericUpDown10.Minimum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown10.Name = "NumericUpDown10"
-        Me.NumericUpDown10.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown10.Size = New System.Drawing.Size(71, 26)
         Me.NumericUpDown10.TabIndex = 5
         Me.NumericUpDown10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.NumericUpDown10.Value = New Decimal(New Integer() {10, 0, 0, 0})
@@ -400,29 +431,32 @@ Partial Class Form1
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(17, 99)
+        Me.Label10.Location = New System.Drawing.Point(23, 122)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(174, 16)
+        Me.Label10.Size = New System.Drawing.Size(222, 20)
         Me.Label10.TabIndex = 4
         Me.Label10.Text = "Uniform dick thickness [mm]"
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(398, 470)
+        Me.Button1.Location = New System.Drawing.Point(531, 578)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.Size = New System.Drawing.Size(100, 28)
         Me.Button1.TabIndex = 11
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(672, 535)
+        Me.ClientSize = New System.Drawing.Size(896, 658)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "Form1"
         Me.Text = "Cooling disk sizing"
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()

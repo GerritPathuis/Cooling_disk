@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
@@ -36,6 +36,8 @@ Partial Class Form1
         Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.NumericUpDown6 = New System.Windows.Forms.NumericUpDown()
+        Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -51,8 +53,6 @@ Partial Class Form1
         Me.NumericUpDown10 = New System.Windows.Forms.NumericUpDown()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.NumericUpDown6 = New System.Windows.Forms.NumericUpDown()
-        Me.Label14 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,11 +60,11 @@ Partial Class Form1
         Me.GroupBox1.SuspendLayout()
         CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.NumericUpDown6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown10, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NumericUpDown6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'NumericUpDown1
@@ -77,7 +77,7 @@ Partial Class Form1
         Me.NumericUpDown1.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown1.TabIndex = 0
         Me.NumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown1.Value = New Decimal(New Integer() {80, 0, 0, 0})
+        Me.NumericUpDown1.Value = New Decimal(New Integer() {240, 0, 0, 0})
         '
         'NumericUpDown2
         '
@@ -137,9 +137,9 @@ Partial Class Form1
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(17, 108)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(164, 16)
+        Me.Label4.Size = New System.Drawing.Size(189, 16)
         Me.Label4.TabIndex = 6
-        Me.Label4.Text = "Heat transmission coeff [..]"
+        Me.Label4.Text = "Heat conductivity coeff [W/mK]"
         '
         'NumericUpDown4
         '
@@ -151,7 +151,7 @@ Partial Class Form1
         Me.NumericUpDown4.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown4.TabIndex = 7
         Me.NumericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown4.Value = New Decimal(New Integer() {40, 0, 0, 0})
+        Me.NumericUpDown4.Value = New Decimal(New Integer() {16, 0, 0, 0})
         '
         'GroupBox1
         '
@@ -189,9 +189,9 @@ Partial Class Form1
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(17, 158)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(109, 16)
+        Me.Label12.Size = New System.Drawing.Size(98, 16)
         Me.Label12.TabIndex = 10
-        Me.Label12.Text = "Shaft area [mm2]"
+        Me.Label12.Text = "Shaft area [m2]"
         '
         'NumericUpDown5
         '
@@ -242,19 +242,41 @@ Partial Class Form1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Cooling disk data"
         '
+        'NumericUpDown6
+        '
+        Me.NumericUpDown6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.NumericUpDown6.Location = New System.Drawing.Point(238, 124)
+        Me.NumericUpDown6.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.NumericUpDown6.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.NumericUpDown6.Name = "NumericUpDown6"
+        Me.NumericUpDown6.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown6.TabIndex = 13
+        Me.NumericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumericUpDown6.Value = New Decimal(New Integer() {30, 0, 0, 0})
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(17, 127)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(196, 16)
+        Me.Label14.TabIndex = 12
+        Me.Label14.Text = "Heat transfer (external) [W/m2K]"
+        '
         'Label13
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(19, 209)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(173, 16)
+        Me.Label13.Size = New System.Drawing.Size(147, 16)
         Me.Label13.TabIndex = 17
-        Me.Label13.Text = "Calculation disk area [mm2]"
+        Me.Label13.Text = "Effective disk area [m2]"
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(232, 208)
+        Me.TextBox4.Location = New System.Drawing.Point(239, 207)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(54, 20)
         Me.TextBox4.TabIndex = 16
@@ -272,7 +294,7 @@ Partial Class Form1
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(231, 182)
+        Me.TextBox3.Location = New System.Drawing.Point(238, 181)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(54, 20)
         Me.TextBox3.TabIndex = 14
@@ -284,13 +306,13 @@ Partial Class Form1
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(18, 157)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(106, 16)
+        Me.Label6.Size = New System.Drawing.Size(95, 16)
         Me.Label6.TabIndex = 13
-        Me.Label6.Text = "Disk area [mm2]"
+        Me.Label6.Text = "Disk area [m2]"
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(231, 156)
+        Me.TextBox2.Location = New System.Drawing.Point(238, 155)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(54, 20)
         Me.TextBox2.TabIndex = 12
@@ -309,14 +331,14 @@ Partial Class Form1
         'NumericUpDown11
         '
         Me.NumericUpDown11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown11.Location = New System.Drawing.Point(231, 14)
+        Me.NumericUpDown11.Location = New System.Drawing.Point(238, 13)
         Me.NumericUpDown11.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown11.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumericUpDown11.Name = "NumericUpDown11"
         Me.NumericUpDown11.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown11.TabIndex = 10
         Me.NumericUpDown11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown11.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumericUpDown11.Value = New Decimal(New Integer() {2, 0, 0, 0})
         '
         'Label11
         '
@@ -331,26 +353,26 @@ Partial Class Form1
         'NumericUpDown7
         '
         Me.NumericUpDown7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown7.Location = New System.Drawing.Point(231, 70)
+        Me.NumericUpDown7.Location = New System.Drawing.Point(238, 69)
         Me.NumericUpDown7.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown7.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown7.Name = "NumericUpDown7"
         Me.NumericUpDown7.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown7.TabIndex = 1
         Me.NumericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown7.Value = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.NumericUpDown7.Value = New Decimal(New Integer() {273, 0, 0, 0})
         '
         'NumericUpDown9
         '
         Me.NumericUpDown9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown9.Location = New System.Drawing.Point(231, 42)
+        Me.NumericUpDown9.Location = New System.Drawing.Point(238, 41)
         Me.NumericUpDown9.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown9.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown9.Name = "NumericUpDown9"
         Me.NumericUpDown9.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown9.TabIndex = 0
         Me.NumericUpDown9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown9.Value = New Decimal(New Integer() {350, 0, 0, 0})
+        Me.NumericUpDown9.Value = New Decimal(New Integer() {546, 0, 0, 0})
         '
         'Label8
         '
@@ -365,7 +387,7 @@ Partial Class Form1
         'NumericUpDown10
         '
         Me.NumericUpDown10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown10.Location = New System.Drawing.Point(231, 97)
+        Me.NumericUpDown10.Location = New System.Drawing.Point(238, 96)
         Me.NumericUpDown10.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumericUpDown10.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown10.Name = "NumericUpDown10"
@@ -393,28 +415,6 @@ Partial Class Form1
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'NumericUpDown6
-        '
-        Me.NumericUpDown6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown6.Location = New System.Drawing.Point(231, 125)
-        Me.NumericUpDown6.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.NumericUpDown6.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.NumericUpDown6.Name = "NumericUpDown6"
-        Me.NumericUpDown6.Size = New System.Drawing.Size(53, 22)
-        Me.NumericUpDown6.TabIndex = 13
-        Me.NumericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown6.Value = New Decimal(New Integer() {20, 0, 0, 0})
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(17, 127)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(167, 16)
-        Me.Label14.TabIndex = 12
-        Me.Label14.Text = "Heat transmission coeff  [..]"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -434,11 +434,11 @@ Partial Class Form1
         CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.NumericUpDown6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown11, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown10, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NumericUpDown6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

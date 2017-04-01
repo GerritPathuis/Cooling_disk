@@ -1,5 +1,7 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.Math
+Imports System.Threading
 Imports Word = Microsoft.Office.Interop.Word
 
 
@@ -11,23 +13,112 @@ Public Class Form1
     Dim dirpath_Home As String = "C:\Temp\"
 
     Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
-    "analytical methods for better understanding of convection through the fins of a brake rotor",
-    "The experimental approach involved two aspects, assessment of both heat transfer And fluid motion",
-    "A transient experiment was conducted to quantify the internal (fin) convection And external (rotor surface)",
-    "convection terms for three nominal speeds.",
-    "For the given experiment, conduction And radiation were determined to be negligible.",
-    "Rotor rotational speeds of 342, 684 And 1025 rpm yielded fin convection heat transfer",
-    "coefficients of 27.0, 52.7, 78.3 Wm-2 K-1, respectively, indicating a linear relationship.",
-    "At the slowest speed, the internal convection represented 45.5% of the total heat transfer, increasing to 55.4% at 1025 rpm.",
-    "The flow aspect of the experiment involved the determination of the velocity field through the internal passages formed by the radial fins.",
-    "Utilizing PIV, the phase-averaged velocity field was determined.",
-    "A number of detrimental flow patterns were observed, notably entrance effects",
-    "and the presence of recirculation on the suction side of the fins"}
+   "analytical methods for better understanding of convection through the fins of a brake rotor",
+   "The experimental approach involved two aspects, assessment of both heat transfer And fluid motion",
+   "A transient experiment was conducted to quantify the internal (fin) convection And external (rotor surface)",
+   "convection terms for three nominal speeds.",
+   "For the given experiment, conduction And radiation were determined to be negligible.",
+   "Rotor rotational speeds of 342, 684 And 1025 rpm yielded fin convection heat transfer",
+   "coefficients of 27.0, 52.7, 78.3 Wm-2 K-1, respectively, indicating a linear relationship.",
+   "At the slowest speed, the internal convection represented 45.5% of the total heat transfer, increasing to 55.4% at 1025 rpm.",
+   "The flow aspect of the experiment involved the determination of the velocity field through the internal passages formed by the radial fins.",
+   "Utilizing PIV, the phase-averaged velocity field was determined.",
+   "A number of detrimental flow patterns were observed, notably entrance effects",
+   "and the presence of recirculation on the suction side of the fins"}
+
+
+    'Explanation "Metal;Temp;[W/mK]",
+    Public Shared mat_conductivity() As String = {
+    "Admiralty Brass;20;111",
+    "Aluminum-pure;93;215",
+     "Aluminum-Bronze;20;76",
+    "Antimony;20;19",
+    "Beryllium;20;218",
+    "Beryllium Copper;20;66",
+    "Bismuth;20;8.5",
+    "Cadmium;20;93",
+    "Carbon Steel, 0.5% C (plate);20;54",
+    "Carbon Steel, C45 (shaft steel);20;46",
+    "Carbon Steel, 1.5% C (alloy);20;36",
+    "Cartridge brass (UNS C26000);20;120",
+    "Cast Iron, gray;21;60",
+    "Chromium;20;90",
+    "Cobalt;20;69",
+    "Copper-pure;20;386",
+    "Copper bronze (75% Cu, 25% Sn);20;26",
+    "Copper brass (70% Cu, 30% Zi);20;111",
+    "Cupronickel;20;29",
+    "Gold;20;315",
+    "Hastelloy B;20;10",
+    "Hastelloy C;21;8.7",
+    "Inconel;50;15",
+    "Incoloy;100;12",
+    "Iridium;100;147",
+   "Iron-nodular pearlitic;100;31",
+   "Iron-pure;20;73",
+   "Iron-wrought;20;59",
+   "Lead;20;35",
+   "Manganese Bronze;20;106",
+   "Magnesium;20;159",
+   "Mercury;20;8.4",
+   "Molybdenum;20;140",
+   "Monel;100;26",
+   "Nickel;20;90",
+   "Nickel Wrought;100;70",
+   "Niobium (Columbium);20;52",
+   "Osmium;20;61",
+   "Phosphor bronze (10% Sn, UNS C52400);20;50",
+   "Platinum;20;73",
+   "Plutonium;20;8.0",
+   "Potassium;20;100",
+   "Red Brass;20;159",
+   "Rhodium;20;150",
+   "Selenium;20;0.52",
+   "Silicon;20;84",
+   "Silver-pure;20;407",
+   "Sodium;20;134",
+   "Stainless 304(L) @ 100c;100;16.9",
+   "Stainless 304(L) @ 315c;315;17.3",
+   "Stainless 304(L) @ 538c;538;18.4",
+   "Stainless 316(L) @ 100c;100;16.2",
+   "Stainless 316(L) @ 500c;500;21.4",
+   "Tantalum;20;54",
+   "Thorium;20;42",
+   "Tin;0;65",
+   "Titanium;20;21",
+   "Tungsten;20;168",
+   "Uranium;20;24",
+   "Vanadium;20;61",
+   "Wrought Carbon Steel;0;59",
+   "Yellow Brass;20;116",
+   "Zinc;20;116",
+   "Zirconium;0;23"}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim words() As String
+        Dim separators() As String = {";"}
+        Dim hh As Integer
+
+        Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
+        Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+
         For hh = 0 To (transfer.Length - 1)
             TextBox8.Text &= transfer(hh) & vbCrLf
         Next hh
+
+        '-------Fill combobox1 and 2, Steel selection------------------
+        ComboBox1.Items.Clear()
+        ComboBox2.Items.Clear()
+
+        For hh = 0 To (mat_conductivity.Length - 2)            'Fill combobox3 with steel data
+            words = mat_conductivity(hh).Split(separators, StringSplitOptions.None)
+            ComboBox1.Items.Add(words(0))
+            ComboBox2.Items.Add(words(0))
+        Next hh
+
+        '----------------- prevent out of bounds------------------
+        ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 9, -1))   'C45
+        ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown6.ValueChanged, NumericUpDown14.ValueChanged
@@ -37,7 +128,7 @@ Public Class Form1
     Private Sub Calc_shaft()
         Dim f_od, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
         Dim d_no, d_od, d_hub_od, d_Heat_trans, d_thick, fin_height As Double
-        Dim d_area_actual, d_area_calc, area_factor1, area_factor2, area_eff As Double
+        Dim d_area_actual, d_area_calc, area_factor1, area_factor2, area_eff, d_coeff As Double
         Dim power_conducted, power_transferred As Double
         Dim dT_conduct, dT_transfer As Double
         Dim temp_fan, temp_amb, temp_disk As Double
@@ -62,11 +153,11 @@ Public Class Form1
         d_hub_od = NumericUpDown7.Value / 1000
         d_thick = NumericUpDown10.Value / 1000
         d_Heat_trans = NumericUpDown6.Value
+        d_coeff = NumericUpDown8.Value
         d_area_actual = d_no * 2 * Math.PI / 4 * (d_od ^ 2 - d_hub_od ^ 2)  'Natural log !!
 
-
         fin_height = (d_od - d_hub_od) / 2
-        area_factor1 = fin_height * (d_Heat_trans / (F_coeff * 0.5 * d_thick)) ^ 0.5
+        area_factor1 = fin_height * (d_Heat_trans / (d_coeff * 0.5 * d_thick)) ^ 0.5
         area_factor2 = 1 + 0.35 * Math.Log(d_od / d_hub_od)
 
         area_eff = Math.Tanh(area_factor1 * area_factor2) / (area_factor1 * area_factor2)
@@ -74,18 +165,21 @@ Public Class Form1
 
         '-------------- heat ---------------
         If temp_disk > 0 Then        'Preventing VB start problems!!
-            For i = 0 To 350
+            For i = 0 To 500
                 dT_conduct = temp_fan - temp_disk
                 dT_transfer = temp_disk - temp_amb
 
                 power_conducted = Shaft_area * dT_conduct * F_coeff / F_length
                 power_transferred = dT_transfer * d_area_calc * d_Heat_trans
 
+                If Abs(power_conducted - power_transferred) < 2 Then
+                    Exit For        'Speeding things up
+                End If
 
                 If (power_conducted > power_transferred) Then
-                    temp_disk += 1
+                    temp_disk += 0.5
                 Else
-                    temp_disk -= 1
+                    temp_disk -= 0.5
                 End If
             Next
 
@@ -96,7 +190,6 @@ Public Class Form1
         TextBox2.Text = Math.Round(d_area_actual, 2).ToString
         TextBox3.Text = Math.Round(area_eff, 3).ToString
         TextBox4.Text = Math.Round(d_area_calc, 2).ToString
-
         TextBox5.Text = Math.Round(power_conducted, 0).ToString
         TextBox6.Text = Math.Round(power_transferred, 0).ToString
 
@@ -133,7 +226,7 @@ Public Class Form1
             oPara2 = oDoc.Content.Paragraphs.Add(oDoc.Bookmarks.Item("\endofdoc").Range)
             oPara2.Format.SpaceAfter = 1
             oPara2.Range.Font.Bold = CInt(False)
-            oPara2.Range.Text = "Fan cooling disk sizing " & vbCrLf
+            oPara2.Range.Text = "Fan cooling disk sizing" & vbCrLf
             oPara2.Range.InsertParagraphAfter()
 
             '----------------------------------------------
@@ -151,13 +244,13 @@ Public Class Form1
             oTable.Cell(row, 1).Range.Text = "Item number"
             oTable.Cell(row, 2).Range.Text = TextBox10.Text
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Fan type "
+            oTable.Cell(row, 1).Range.Text = "Fan type"
             oTable.Cell(row, 2).Range.Text = TextBox11.Text
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Author "
+            oTable.Cell(row, 1).Range.Text = "Author"
             oTable.Cell(row, 2).Range.Text = Environment.UserName
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Date "
+            oTable.Cell(row, 1).Range.Text = "Date"
             oTable.Cell(row, 2).Range.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             row += 1
             oTable.Columns(1).Width = oWord.InchesToPoints(2.5)   'Change width of columns 
@@ -169,13 +262,16 @@ Public Class Form1
 
             '------------------ Fan data----------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 7, 3)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 8, 3)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 9
             oTable.Range.Font.Bold = CInt(False)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             row = 1
             oTable.Cell(row, 1).Range.Text = "Fan shaft dimensions"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Shaft material"
+            oTable.Cell(row, 2).Range.Text = ComboBox1.Text
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft OD"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown1.Value, 0).ToString
@@ -193,7 +289,6 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
-
             oTable.Cell(row, 1).Range.Text = "Max fan operating temp"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown5.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[c]"
@@ -211,14 +306,16 @@ Public Class Form1
 
             '------------------ Cooling disk data----------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 7, 3)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 9, 3)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 9
             oTable.Range.Font.Bold = CInt(False)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             row = 1
             oTable.Cell(row, 1).Range.Text = "Cooling disk data"
-
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Disk material"
+            oTable.Cell(row, 2).Range.Text = ComboBox2.Text
             row += 1
             oTable.Cell(row, 1).Range.Text = "Number of disks"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown11.Value, 0).ToString
@@ -236,11 +333,13 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown10.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
-
-            oTable.Cell(row, 1).Range.Text = "Heat transfer (external)"
+            oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown6.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[W/m2K]"
-
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown8.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Effective disk area"
             oTable.Cell(row, 2).Range.Text = TextBox4.Text
@@ -295,9 +394,27 @@ Public Class Form1
             End If
             oWord.ActiveDocument.SaveAs(ufilename.ToString)
         Catch ex As Exception
-            MessageBox.Show(ex.Message & " Problem storing file to " & dirpath_Rap)  ' Show the exception's message.
+            MessageBox.Show(ex.Message & "Problem storing file to" & dirpath_Rap)  ' Show the exception's message.
         End Try
     End Sub
 
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Dim separators() As String = {";"}
 
+        If (ComboBox1.SelectedIndex > -1) Then          'Prevent exceptions
+            Dim words() As String = mat_conductivity(ComboBox1.SelectedIndex).Split(separators, StringSplitOptions.None)
+            NumericUpDown4.Value = CDec(words(2))       'Conductivity fan shaft
+        End If
+        Calc_shaft()
+    End Sub
+
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
+        Dim separators() As String = {";"}
+
+        If (ComboBox2.SelectedIndex > -1) Then          'Prevent exceptions
+            Dim words() As String = mat_conductivity(ComboBox2.SelectedIndex).Split(separators, StringSplitOptions.None)
+            NumericUpDown8.Value = CDec(words(2))       'Conductivity cooling disk
+        End If
+        Calc_shaft()
+    End Sub
 End Class

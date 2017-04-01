@@ -65,14 +65,14 @@ Partial Class Form1
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Button2 = New System.Windows.Forms.Button()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -583,6 +583,15 @@ Partial Class Form1
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(392, 439)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(124, 23)
+        Me.Button2.TabIndex = 14
+        Me.Button2.Text = "Print to word"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.Label23)
@@ -598,6 +607,24 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Thermal conductivity metals"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(8, 368)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(244, 13)
+        Me.Label23.TabIndex = 5
+        Me.Label23.Text = "Non ventilated brake disks (no slits) 187 [W/m2K] "
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(8, 345)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(433, 13)
+        Me.Label22.TabIndex = 4
+        Me.Label22.Text = "http://iaeme.com/MasterAdmin/UploadFolder/IJMET_07_03_025/IJMET_07_03_025.pdf"
         '
         'TextBox8
         '
@@ -633,33 +660,6 @@ Partial Class Form1
         Me.Label19.Size = New System.Drawing.Size(118, 13)
         Me.Label19.TabIndex = 0
         Me.Label19.Text = "Aluminium 204 [W/m.K)"
-        '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(8, 345)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(433, 13)
-        Me.Label22.TabIndex = 4
-        Me.Label22.Text = "http://iaeme.com/MasterAdmin/UploadFolder/IJMET_07_03_025/IJMET_07_03_025.pdf"
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(8, 368)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(244, 13)
-        Me.Label23.TabIndex = 5
-        Me.Label23.Text = "Non ventilated brake disks (no slits) 187 [W/m2K] "
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(392, 439)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(124, 23)
-        Me.Button2.TabIndex = 14
-        Me.Button2.Text = "Print to word"
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'Form1
         '

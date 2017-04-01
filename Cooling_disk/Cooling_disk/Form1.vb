@@ -1,6 +1,36 @@
-﻿Public Class Form1
+﻿Imports System
+Imports System.IO
+Imports System.Text
+Imports System.Math
+'Imports System.Windows.Forms.DataVisualization.Charting
+Imports System.Globalization
+Imports System.Threading
+'Imports Word = Microsoft.Office.Interop.Word
+Imports System.Collections
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, MyBase.Load, NumericUpDown6.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown13.ValueChanged
+
+Public Class Form1
+
+    Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
+    "analytical methods for better understanding of convection through the fins of a brake rotor",
+    "The experimental approach involved two aspects, assessment of both heat transfer And fluid motion",
+    "A transient experiment was conducted to quantify the internal (fin) convection And external (rotor surface)",
+    "convection terms for three nominal speeds.",
+    "For the given experiment, conduction And radiation were determined to be negligible.",
+    "Rotor rotational speeds of 342, 684 And 1025 rpm yielded fin convection heat transfer",
+    "coefficients of 27.0, 52.7, 78.3 Wm-2 K-1, respectively, indicating a linear relationship.",
+    "At the slowest speed, the internal convection represented 45.5% of the total heat transfer, increasing to 55.4% at 1025 rpm.",
+    "The flow aspect of the experiment involved the determination of the velocity field through the internal passages formed by the radial fins.",
+    "Utilizing PIV, the phase-averaged velocity field was determined.",
+    "A number of detrimental flow patterns were observed, notably entrance effects",
+    "and the presence of recirculation on the suction side of the fins"}
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        For hh = 0 To (transfer.Length - 1)
+            TextBox8.Text &= transfer(hh)
+        Next hh
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown6.ValueChanged, NumericUpDown14.ValueChanged
         Calc_shaft()
     End Sub
 
@@ -16,7 +46,7 @@
         '-------------- temps ----------------
         temp_fan = NumericUpDown5.Value
         temp_amb = NumericUpDown14.Value
-        temp_disk = NumericUpDown13.Value
+        temp_disk = (temp_amb + temp_fan) / 2
 
         '-------------- shaft-----------------
         f_od = NumericUpDown1.Value / 1000      '[mm]->[m]
@@ -44,7 +74,7 @@
 
         '-------------- heat ---------------
         If temp_disk > 0 Then        'Preventing VB start problems!!
-            For i = 0 To 5
+            For i = 0 To 350
                 dT_conduct = temp_fan - temp_disk
                 dT_transfer = temp_disk - temp_amb
 
@@ -57,13 +87,10 @@
                 Else
                     temp_disk -= 1
                 End If
-
             Next
 
-            NumericUpDown13.Value = temp_disk
+            TextBox7.Text = Math.Round(temp_disk, 1).ToString
         End If
-        If power_conducted < 0 Then power_conducted = 0
-        If power_transferred < 0 Then power_transferred = 0
 
         TextBox1.Text = Math.Round(Shaft_area, 2).ToString
         TextBox2.Text = Math.Round(d_area_actual, 2).ToString

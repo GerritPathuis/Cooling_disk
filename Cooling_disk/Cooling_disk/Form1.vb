@@ -1,8 +1,14 @@
-﻿Imports System.Math
+﻿Imports System.IO
+Imports System.Math
 Imports Word = Microsoft.Office.Interop.Word
 
 
 Public Class Form1
+
+    '----------- directory's-----------
+    Dim dirpath_Eng As String = "N:\Engineering\VBasic\Fan_sizing_input\"
+    Dim dirpath_Rap As String = "N:\Engineering\VBasic\Fan_rapport_copy\"
+    Dim dirpath_Home As String = "C:\Temp\"
 
     Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
     "analytical methods for better understanding of convection through the fins of a brake rotor",
@@ -17,9 +23,10 @@ Public Class Form1
     "Utilizing PIV, the phase-averaged velocity field was determined.",
     "A number of detrimental flow patterns were observed, notably entrance effects",
     "and the presence of recirculation on the suction side of the fins"}
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For hh = 0 To (transfer.Length - 1)
-            TextBox8.Text &= transfer(hh)
+            TextBox8.Text &= transfer(hh) & vbCrLf
         Next hh
     End Sub
 
@@ -102,14 +109,12 @@ Public Class Form1
     'Write data to Word 
     'see https://msdn.microsoft.com/en-us/library/office/aa192495(v=office.11).aspx
     Private Sub Write_to_word()
-        'Dim bmp_tab_page1 As New Bitmap(TabPage1.Width, TabPage1.Height)
-        'Dim bmp_grouobox23 As New Bitmap(GroupBox23.Width, GroupBox23.Height)
         Dim oWord As Word.Application
         Dim oDoc As Word.Document
         Dim oTable As Word.Table
-        Dim oPara1, oPara2, oPara4 As Word.Paragraph
-        Dim i, j, wrows, q As Integer
-        Dim ufilename, file_name As String
+        Dim oPara1, oPara2 As Word.Paragraph
+        Dim ufilename As String
+        Dim row As Integer
 
         Try
             oWord = CType(CreateObject("Word.Application"), Word.Application)
@@ -128,31 +133,33 @@ Public Class Form1
             oPara2 = oDoc.Content.Paragraphs.Add(oDoc.Bookmarks.Item("\endofdoc").Range)
             oPara2.Format.SpaceAfter = 1
             oPara2.Range.Font.Bold = CInt(False)
-            oPara2.Range.Text = "Fan selection And sizing " & vbCrLf
+            oPara2.Range.Text = "Fan cooling disk sizing " & vbCrLf
             oPara2.Range.InsertParagraphAfter()
 
             '----------------------------------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 6, 2)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 5, 2)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 10
             oTable.Range.Font.Bold = CInt(False)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
 
-            oTable.Cell(1, 1).Range.Text = "Project Name"
-            ' oTable.Cell(1, 2).Range.Text = TextBox283.Text
-            oTable.Cell(2, 1).Range.Text = "Item number"
-            ' oTable.Cell(2, 2).Range.Text = TextBox284.Text
-            oTable.Cell(3, 1).Range.Text = "Fan type "
-            oTable.Cell(3, 2).Range.Text = Label1.Text
-            oTable.Cell(4, 1).Range.Text = "Fan arrangement "
-            ' oTable.Cell(4, 2).Range.Text = ComboBox4.SelectedItem.ToString
-
-            oTable.Cell(5, 1).Range.Text = "Author "
-            oTable.Cell(5, 2).Range.Text = Environment.UserName
-            oTable.Cell(6, 1).Range.Text = "Date "
-            oTable.Cell(6, 2).Range.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-
+            row = 1
+            oTable.Cell(row, 1).Range.Text = "Project Name"
+            oTable.Cell(row, 2).Range.Text = TextBox9.Text
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Item number"
+            oTable.Cell(row, 2).Range.Text = TextBox10.Text
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Fan type "
+            oTable.Cell(row, 2).Range.Text = TextBox11.Text
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Author "
+            oTable.Cell(row, 2).Range.Text = Environment.UserName
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Date "
+            oTable.Cell(row, 2).Range.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+            row += 1
             oTable.Columns(1).Width = oWord.InchesToPoints(2.5)   'Change width of columns 
             oTable.Columns(2).Width = oWord.InchesToPoints(4)
 
@@ -160,40 +167,135 @@ Public Class Form1
             oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
 
 
-            '------------------ motor----------------------
+            '------------------ Fan data----------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 4, 3)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 7, 3)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 9
             oTable.Range.Font.Bold = CInt(False)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
+            row = 1
+            oTable.Cell(row, 1).Range.Text = "Fan shaft dimensions"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Shaft OD"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown1.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[mm]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Shaft ID"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown2.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[mm]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Length casing-cooling disk"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown3.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[mm]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Heat conductivity coeff"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[W/mK]"
+            row += 1
 
-            oTable.Cell(1, 1).Range.Text = "Motor + VSD"
-            oTable.Cell(2, 1).Range.Text = "Speed"
-            oTable.Cell(2, 2).Range.Text = TextBox1.Text
-            oTable.Cell(2, 3).Range.Text = "[rpm]"
-            oTable.Cell(3, 1).Range.Text = "Installed Power"
-            oTable.Cell(3, 2).Range.Text = "  "
-            oTable.Cell(3, 3).Range.Text = "[kW]"
-            oTable.Cell(4, 1).Range.Text = "Inertia impeller"
-            oTable.Cell(4, 2).Range.Text = Round(NumericUpDown1.Value, 0).ToString
-            oTable.Cell(4, 3).Range.Text = "[kg.m2]"
-            oTable.Columns(1).Width = oWord.InchesToPoints(1.3)   'Change width of columns
+            oTable.Cell(row, 1).Range.Text = "Max fan operating temp"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown5.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[c]"
+
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Shaft cross section"
+            oTable.Cell(row, 2).Range.Text = TextBox1.Text
+            oTable.Cell(row, 3).Range.Text = "[m2]"
+
+            oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
+            oTable.Columns(2).Width = oWord.InchesToPoints(1.55)
+            oTable.Columns(3).Width = oWord.InchesToPoints(0.8)
+            oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
+            oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
+
+            '------------------ Cooling disk data----------------------
+            'Insert a table, fill it with data and change the column widths.
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 7, 3)
+            oTable.Range.ParagraphFormat.SpaceAfter = 1
+            oTable.Range.Font.Size = 9
+            oTable.Range.Font.Bold = CInt(False)
+            oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
+            row = 1
+            oTable.Cell(row, 1).Range.Text = "Cooling disk data"
+
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Number of disks"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown11.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[-]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Outside diameter disk"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown9.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[mm]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Hub diameter"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown7.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[mm]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Uniform disk thcknes"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown10.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[W/mK]"
+            row += 1
+
+            oTable.Cell(row, 1).Range.Text = "Heat transfer (external)"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown6.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[W/m2K]"
+
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Effective disk area"
+            oTable.Cell(row, 2).Range.Text = TextBox4.Text
+            oTable.Cell(row, 3).Range.Text = "[m2]"
+
+            oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
+            oTable.Columns(2).Width = oWord.InchesToPoints(1.55)
+            oTable.Columns(3).Width = oWord.InchesToPoints(0.8)
+            oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
+            oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
+
+            '------------------ Results data----------------------
+            'Insert a table, fill it with data and change the column widths.
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 5, 3)
+            oTable.Range.ParagraphFormat.SpaceAfter = 1
+            oTable.Range.Font.Size = 9
+            oTable.Range.Font.Bold = CInt(False)
+            oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
+            row = 1
+            oTable.Cell(row, 1).Range.Text = "Results"
+
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Ambient temperature"
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown14.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[c]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Conducted power"
+            oTable.Cell(row, 2).Range.Text = TextBox5.Text
+            oTable.Cell(row, 3).Range.Text = "[W]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "To air transferred power"
+            oTable.Cell(row, 2).Range.Text = TextBox6.Text
+            oTable.Cell(row, 3).Range.Text = "[W]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Calculated shaft temperature"
+            oTable.Cell(row, 2).Range.Text = TextBox7.Text
+            oTable.Cell(row, 3).Range.Text = "[c]"
+            row += 1
+
+            oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
             oTable.Columns(2).Width = oWord.InchesToPoints(1.55)
             oTable.Columns(3).Width = oWord.InchesToPoints(0.8)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
 
 
-            ufilename = "Fan_select_report_" & TextBox2.Text & "_" & TextBox2.Text & DateTime.Now.ToString("_yyyy_MM_dd") & "(" & TextBox3.Text & ")" & ".docx"
-            'If Directory.Exists(dirpath_Rap) Then
-            '    ufilename = dirpath_Rap & ufilename
-            'Else
-            '    ufilename = dirpath_Home & ufilename
-            'End If
+            ufilename = "Fan_cooling_disk_report_" & TextBox2.Text & "_" & TextBox2.Text & DateTime.Now.ToString("_yyyy_MM_dd") & "(" & TextBox3.Text & ")" & ".docx"
+            If Directory.Exists(dirpath_Rap) Then
+                ufilename = dirpath_Rap & ufilename
+            Else
+                ufilename = dirpath_Home & ufilename
+            End If
             oWord.ActiveDocument.SaveAs(ufilename.ToString)
         Catch ex As Exception
-            ' MessageBox.Show(ex.Message & " Problem storing file to " & dirpath_Rap)  ' Show the exception's message.
+            MessageBox.Show(ex.Message & " Problem storing file to " & dirpath_Rap)  ' Show the exception's message.
         End Try
     End Sub
 

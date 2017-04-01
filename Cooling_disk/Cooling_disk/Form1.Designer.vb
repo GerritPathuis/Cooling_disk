@@ -65,6 +65,13 @@ Partial Class Form1
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.TextBox10 = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Label23 = New System.Windows.Forms.Label()
@@ -90,6 +97,7 @@ Partial Class Form1
         Me.GroupBox4.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -443,7 +451,7 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(392, 368)
+        Me.Button1.Location = New System.Drawing.Point(203, 478)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 11
@@ -456,7 +464,7 @@ Partial Class Form1
         Me.GroupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox3.Controls.Add(Me.NumericUpDown14)
         Me.GroupBox3.Controls.Add(Me.Label18)
-        Me.GroupBox3.Location = New System.Drawing.Point(338, 19)
+        Me.GroupBox3.Location = New System.Drawing.Point(345, 162)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(305, 61)
         Me.GroupBox3.TabIndex = 12
@@ -494,7 +502,7 @@ Partial Class Form1
         Me.GroupBox4.Controls.Add(Me.TextBox6)
         Me.GroupBox4.Controls.Add(Me.Label16)
         Me.GroupBox4.Controls.Add(Me.Label17)
-        Me.GroupBox4.Location = New System.Drawing.Point(338, 86)
+        Me.GroupBox4.Location = New System.Drawing.Point(345, 232)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(305, 128)
         Me.GroupBox4.TabIndex = 13
@@ -569,6 +577,7 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.GroupBox5)
         Me.TabPage1.Controls.Add(Me.Button2)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.Button1)
@@ -582,6 +591,73 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.GroupBox5.Controls.Add(Me.TextBox9)
+        Me.GroupBox5.Controls.Add(Me.Label26)
+        Me.GroupBox5.Controls.Add(Me.TextBox10)
+        Me.GroupBox5.Controls.Add(Me.Label24)
+        Me.GroupBox5.Controls.Add(Me.TextBox11)
+        Me.GroupBox5.Controls.Add(Me.Label25)
+        Me.GroupBox5.Location = New System.Drawing.Point(345, 19)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(305, 114)
+        Me.GroupBox5.TabIndex = 15
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Project data"
+        '
+        'TextBox9
+        '
+        Me.TextBox9.Location = New System.Drawing.Point(120, 19)
+        Me.TextBox9.Name = "TextBox9"
+        Me.TextBox9.Size = New System.Drawing.Size(164, 20)
+        Me.TextBox9.TabIndex = 15
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.Location = New System.Drawing.Point(16, 75)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(60, 16)
+        Me.Label26.TabIndex = 14
+        Me.Label26.Text = "Fan type"
+        '
+        'TextBox10
+        '
+        Me.TextBox10.Location = New System.Drawing.Point(120, 45)
+        Me.TextBox10.Name = "TextBox10"
+        Me.TextBox10.Size = New System.Drawing.Size(164, 20)
+        Me.TextBox10.TabIndex = 13
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(16, 22)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(98, 16)
+        Me.Label24.TabIndex = 12
+        Me.Label24.Text = "Project number"
+        '
+        'TextBox11
+        '
+        Me.TextBox11.Location = New System.Drawing.Point(120, 71)
+        Me.TextBox11.Name = "TextBox11"
+        Me.TextBox11.Size = New System.Drawing.Size(164, 20)
+        Me.TextBox11.TabIndex = 11
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(16, 49)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(33, 16)
+        Me.Label25.TabIndex = 10
+        Me.Label25.Text = "Item"
         '
         'Button2
         '
@@ -690,6 +766,8 @@ Partial Class Form1
         Me.GroupBox4.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         Me.ResumeLayout(False)
@@ -747,4 +825,11 @@ Partial Class Form1
     Friend WithEvents Label23 As Label
     Friend WithEvents Label22 As Label
     Friend WithEvents Button2 As Button
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents TextBox10 As TextBox
+    Friend WithEvents Label24 As Label
+    Friend WithEvents TextBox11 As TextBox
+    Friend WithEvents Label25 As Label
+    Friend WithEvents TextBox9 As TextBox
+    Friend WithEvents Label26 As Label
 End Class

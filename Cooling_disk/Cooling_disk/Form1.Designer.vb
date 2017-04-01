@@ -70,6 +70,9 @@ Partial Class Form1
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Button2 = New System.Windows.Forms.Button()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -280,7 +283,7 @@ Partial Class Form1
         Me.NumericUpDown6.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown6.TabIndex = 13
         Me.NumericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown6.Value = New Decimal(New Integer() {70, 0, 0, 0})
+        Me.NumericUpDown6.Value = New Decimal(New Integer() {187, 0, 0, 0})
         '
         'Label14
         '
@@ -446,6 +449,7 @@ Partial Class Form1
         Me.Button1.TabIndex = 11
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'GroupBox3
         '
@@ -565,6 +569,7 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Button2)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.Button1)
         Me.TabPage1.Controls.Add(Me.GroupBox4)
@@ -580,6 +585,8 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label23)
+        Me.TabPage2.Controls.Add(Me.Label22)
         Me.TabPage2.Controls.Add(Me.TextBox8)
         Me.TabPage2.Controls.Add(Me.Label21)
         Me.TabPage2.Controls.Add(Me.Label20)
@@ -594,10 +601,10 @@ Partial Class Form1
         '
         'TextBox8
         '
-        Me.TextBox8.Location = New System.Drawing.Point(44, 202)
+        Me.TextBox8.Location = New System.Drawing.Point(8, 131)
         Me.TextBox8.Multiline = True
         Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(531, 205)
+        Me.TextBox8.Size = New System.Drawing.Size(647, 183)
         Me.TextBox8.TabIndex = 3
         '
         'Label21
@@ -626,6 +633,33 @@ Partial Class Form1
         Me.Label19.Size = New System.Drawing.Size(118, 13)
         Me.Label19.TabIndex = 0
         Me.Label19.Text = "Aluminium 204 [W/m.K)"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(8, 345)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(433, 13)
+        Me.Label22.TabIndex = 4
+        Me.Label22.Text = "http://iaeme.com/MasterAdmin/UploadFolder/IJMET_07_03_025/IJMET_07_03_025.pdf"
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(8, 368)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(244, 13)
+        Me.Label23.TabIndex = 5
+        Me.Label23.Text = "Non ventilated brake disks (no slits) 187 [W/m2K] "
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(392, 439)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(124, 23)
+        Me.Button2.TabIndex = 14
+        Me.Button2.Text = "Print to word"
+        Me.Button2.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -710,4 +744,7 @@ Partial Class Form1
     Friend WithEvents Label20 As Label
     Friend WithEvents Label19 As Label
     Friend WithEvents TextBox8 As TextBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents Label22 As Label
+    Friend WithEvents Button2 As Button
 End Class

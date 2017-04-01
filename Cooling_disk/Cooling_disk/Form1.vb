@@ -2,7 +2,6 @@
 Imports System.IO
 Imports System.Text
 Imports System.Math
-'Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.Globalization
 Imports System.Threading
 'Imports Word = Microsoft.Office.Interop.Word

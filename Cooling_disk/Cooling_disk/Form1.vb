@@ -121,7 +121,7 @@ Public Class Form1
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown6.ValueChanged, NumericUpDown14.ValueChanged
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged
         Calc_shaft()
     End Sub
 
@@ -133,6 +133,8 @@ Public Class Form1
         Dim dT_conduct, dT_transfer As Double
         Dim temp_fan, temp_amb, temp_disk As Double
         Dim i As Integer
+
+        Calc_transfer()
 
         '-------------- temps ----------------
         temp_fan = NumericUpDown5.Value
@@ -152,8 +154,9 @@ Public Class Form1
         d_od = NumericUpDown9.Value / 1000
         d_hub_od = NumericUpDown7.Value / 1000
         d_thick = NumericUpDown10.Value / 1000
-        d_Heat_trans = NumericUpDown6.Value
-        d_coeff = NumericUpDown8.Value
+
+        Double.TryParse(TextBox15.Text, d_Heat_trans)
+        Double.TryParse(TextBox20.Text, d_coeff)
         d_area_actual = d_no * 2 * Math.PI / 4 * (d_od ^ 2 - d_hub_od ^ 2)  'Natural log !!
 
         fin_height = (d_od - d_hub_od) / 2
@@ -192,7 +195,37 @@ Public Class Form1
         TextBox4.Text = Math.Round(d_area_calc, 2).ToString
         TextBox5.Text = Math.Round(power_conducted, 0).ToString
         TextBox6.Text = Math.Round(power_transferred, 0).ToString
+    End Sub
 
+    Private Sub Calc_transfer()
+        Dim d_od, d_id, dia, speed, Reynolds, ht, ro, Ka, vel, mu, safety As Double
+
+        d_od = NumericUpDown9.Value / 1000      '[mm]->[m]
+        d_id = NumericUpDown7.Value / 1000      '[mm]->[m]
+        dia = (d_od + d_id) / 2
+        speed = NumericUpDown12.Value           '[rpm]
+        vel = speed / 60 * PI * d_od            '[m/s]
+        Ka = NumericUpDown13.Value              'conductivity air
+        ro = NumericUpDown15.Value / 1000       '[ro]
+        mu = 1.983 / 10 ^ 5                     'dyn visco air [Pa.s]
+        safety = 0.5
+
+        Reynolds = ro * vel * dia / mu
+
+        If Reynolds > 2.4 * 10 ^ 5 Then
+            ht = 0.04 * Ka / dia * Reynolds ^ 0.8
+            ht *= (1 - safety)
+        Else
+            ht = 80
+        End If
+
+        TextBox12.Text = Math.Round(d_od, 2).ToString
+        TextBox13.Text = Math.Round(Reynolds, 0).ToString
+        TextBox14.Text = mu.ToString
+        TextBox15.Text = Math.Round(ht, 0).ToString
+        TextBox19.Text = TextBox15.Text
+        TextBox17.Text = Math.Round(vel, 1).ToString
+        TextBox18.Text = Math.Round(safety * 100, 1).ToString
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -334,11 +367,11 @@ Public Class Form1
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown6.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = TextBox15.Text
             oTable.Cell(row, 3).Range.Text = "[W/m2K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown8.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = TextBox20.Text
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Effective disk area"
@@ -413,8 +446,13 @@ Public Class Form1
 
         If (ComboBox2.SelectedIndex > -1) Then          'Prevent exceptions
             Dim words() As String = mat_conductivity(ComboBox2.SelectedIndex).Split(separators, StringSplitOptions.None)
-            NumericUpDown8.Value = CDec(words(2))       'Conductivity cooling disk
+            TextBox20.Text = words(2)       'Conductivity cooling disk
         End If
         Calc_shaft()
     End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown13.ValueChanged, NumericUpDown13.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
+        Calc_shaft()
+    End Sub
+
 End Class

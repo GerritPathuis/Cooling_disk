@@ -196,6 +196,12 @@ Public Class Form1
         TextBox4.Text = Math.Round(d_area_calc, 2).ToString
         TextBox5.Text = Math.Round(power_conducted, 0).ToString
         TextBox6.Text = Math.Round(power_transferred, 0).ToString
+
+        'Checks
+        TextBox5.BackColor = CType(IIf(Abs(power_conducted - power_transferred) > 30, Color.Red, Color.White), Color)
+        TextBox6.BackColor = TextBox5.BackColor
+        NumericUpDown7.BackColor = CType(IIf(NumericUpDown7.Value <= NumericUpDown1.Value + 20, Color.Red, Color.Yellow), Color)
+        NumericUpDown9.BackColor = CType(IIf(NumericUpDown9.Value <= NumericUpDown7.Value + 50, Color.Red, Color.Yellow), Color)
     End Sub
 
     Private Sub Calc_transfer()

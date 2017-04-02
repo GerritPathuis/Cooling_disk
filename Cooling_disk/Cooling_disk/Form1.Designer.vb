@@ -295,10 +295,10 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(16, 156)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(152, 16)
+        Me.Label5.Size = New System.Drawing.Size(175, 16)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "Max Fan temperature [c]"
         '
@@ -474,7 +474,7 @@ Partial Class Form1
         Me.NumericUpDown7.Size = New System.Drawing.Size(67, 22)
         Me.NumericUpDown7.TabIndex = 1
         Me.NumericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown7.Value = New Decimal(New Integer() {130, 0, 0, 0})
+        Me.NumericUpDown7.Value = New Decimal(New Integer() {140, 0, 0, 0})
         '
         'NumericUpDown9
         '
@@ -547,24 +547,24 @@ Partial Class Form1
         'NumericUpDown14
         '
         Me.NumericUpDown14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown14.Location = New System.Drawing.Point(231, 22)
+        Me.NumericUpDown14.Location = New System.Drawing.Point(231, 24)
         Me.NumericUpDown14.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
         Me.NumericUpDown14.Minimum = New Decimal(New Integer() {40, 0, 0, -2147483648})
         Me.NumericUpDown14.Name = "NumericUpDown14"
         Me.NumericUpDown14.Size = New System.Drawing.Size(53, 22)
         Me.NumericUpDown14.TabIndex = 0
         Me.NumericUpDown14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown14.Value = New Decimal(New Integer() {21, 0, 0, 0})
+        Me.NumericUpDown14.Value = New Decimal(New Integer() {30, 0, 0, 0})
         '
         'Label18
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(17, 27)
+        Me.Label18.Location = New System.Drawing.Point(17, 26)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(149, 16)
+        Me.Label18.Size = New System.Drawing.Size(182, 16)
         Me.Label18.TabIndex = 2
-        Me.Label18.Text = "Ambient temperatuur [c]"
+        Me.Label18.Text = "Ambient/plant temperatuur [c]"
         '
         'GroupBox4
         '
@@ -661,7 +661,7 @@ Partial Class Form1
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(663, 550)
+        Me.TabPage1.Size = New System.Drawing.Size(663, 593)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True

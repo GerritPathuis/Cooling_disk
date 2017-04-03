@@ -202,7 +202,7 @@ Partial Class Form1
         Me.NumericUpDown3.Size = New System.Drawing.Size(67, 22)
         Me.NumericUpDown3.TabIndex = 5
         Me.NumericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown3.Value = New Decimal(New Integer() {100, 0, 0, 0})
+        Me.NumericUpDown3.Value = New Decimal(New Integer() {75, 0, 0, 0})
         '
         'Label4
         '
@@ -688,6 +688,7 @@ Partial Class Form1
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(164, 20)
         Me.TextBox9.TabIndex = 15
+        Me.TextBox9.Text = "Q17.10"
         '
         'Label26
         '
@@ -1076,7 +1077,7 @@ Partial Class Form1
         Me.ClientSize = New System.Drawing.Size(671, 619)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "Form1"
-        Me.Text = "Cooling disk sizing"
+        Me.Text = "Cooling disk sizing, 03-04-2017"
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()

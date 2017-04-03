@@ -51,17 +51,17 @@ Public Class Form1
     "Gold;20;315",
     "Hastelloy B;20;10",
     "Hastelloy C;21;8.7",
-    "Incoloy-600, 93c;93;15.7",
-    "Incoloy-600, 200c;200;17.4",
-    "Incoloy-600, 427c;427;20.9",
+    "Inconel or Alloy 600 @ 93c;93;15.7",
+    "Inconel or Alloy 600 @ 200c;200;17.4",
+    "Inconel or Alloy 600 @ 427c;427;20.9",
     "Iridium;100;147",
-   "Iron-nodular pearlitic;100;31",
-   "Iron-pure;20;73",
-   "Iron-wrought;20;59",
-   "Lead;20;35",
-   "Manganese Bronze;20;106",
-   "Magnesium;20;159",
-   "Mercury;20;8.4",
+    "Iron-nodular pearlitic;100;31",
+    "Iron-pure;20;73",
+    "Iron-wrought;20;59",
+    "Lead;20;35",
+    "Manganese Bronze;20;106",
+    "Magnesium;20;159",
+    "Mercury;20;8.4",
    "Molybdenum;20;140",
    "Monel;100;26",
    "Nickel;20;90",
@@ -190,7 +190,7 @@ Public Class Form1
             TextBox7.Text = Math.Round(temp_disk, 1).ToString
         End If
 
-        TextBox1.Text = Math.Round(Shaft_area, 2).ToString
+        TextBox1.Text = Math.Round(Shaft_area, 3).ToString
         TextBox2.Text = Math.Round(d_area_actual, 2).ToString
         TextBox3.Text = Math.Round(area_eff, 3).ToString
         TextBox4.Text = Math.Round(d_area_calc, 2).ToString
@@ -326,7 +326,7 @@ Public Class Form1
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Heat conductivity coeff"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 1).ToString
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Max fan operating temp"
@@ -339,7 +339,7 @@ Public Class Form1
             oTable.Cell(row, 3).Range.Text = "[m2]"
 
             oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
-            oTable.Columns(2).Width = oWord.InchesToPoints(1.55)
+            oTable.Columns(2).Width = oWord.InchesToPoints(2.1)
             oTable.Columns(3).Width = oWord.InchesToPoints(0.8)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
@@ -373,20 +373,20 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown10.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
-            oTable.Cell(row, 2).Range.Text = TextBox15.Text
-            oTable.Cell(row, 3).Range.Text = "[W/m2K]"
-            row += 1
             oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff"
             oTable.Cell(row, 2).Range.Text = TextBox20.Text
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
+            oTable.Cell(row, 2).Range.Text = TextBox15.Text
+            oTable.Cell(row, 3).Range.Text = "[W/m2K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Effective disk area"
             oTable.Cell(row, 2).Range.Text = TextBox4.Text
             oTable.Cell(row, 3).Range.Text = "[m2]"
 
             oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
-            oTable.Columns(2).Width = oWord.InchesToPoints(1.55)
+            oTable.Columns(2).Width = oWord.InchesToPoints(2.1)
             oTable.Columns(3).Width = oWord.InchesToPoints(0.8)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
@@ -404,7 +404,7 @@ Public Class Form1
             row += 1
             oTable.Cell(row, 1).Range.Text = "Ambient temperature"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown14.Value, 0).ToString
-            oTable.Cell(row, 3).Range.Text = "[c]"
+            oTable.Cell(row, 3).Range.Text = "[°c]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Conducted power"
             oTable.Cell(row, 2).Range.Text = TextBox5.Text
@@ -416,17 +416,17 @@ Public Class Form1
             row += 1
             oTable.Cell(row, 1).Range.Text = "Calculated shaft temperature"
             oTable.Cell(row, 2).Range.Text = TextBox7.Text
-            oTable.Cell(row, 3).Range.Text = "[c]"
+            oTable.Cell(row, 3).Range.Text = "[°c]"
             row += 1
 
             oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
-            oTable.Columns(2).Width = oWord.InchesToPoints(1.55)
+            oTable.Columns(2).Width = oWord.InchesToPoints(2.1)
             oTable.Columns(3).Width = oWord.InchesToPoints(0.8)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
 
 
-            ufilename = "Fan_cooling_disk_report_" & TextBox2.Text & "_" & TextBox2.Text & DateTime.Now.ToString("_yyyy_MM_dd") & "(" & TextBox3.Text & ")" & ".docx"
+            ufilename = "Fan_cooling_disk_report_" & TextBox9.Text & "_" & TextBox10.Text & DateTime.Now.ToString("_yyyy_MM_dd") & "(" & TextBox3.Text & ")" & ".docx"
             If Directory.Exists(dirpath_Rap) Then
                 ufilename = dirpath_Rap & ufilename
             Else

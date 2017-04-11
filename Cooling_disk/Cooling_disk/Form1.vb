@@ -215,16 +215,18 @@ Public Class Form1
         Ka = NumericUpDown13.Value              'conductivity air
         ro = NumericUpDown15.Value / 1000       '[ro]
         mu = 1.983 / 10 ^ 5                     'dyn visco air [Pa.s]
-        safety = 0.5
+        safety = 0.3
 
         Reynolds = ro * vel * dia / mu
 
         If Reynolds > 2.4 * 10 ^ 5 Then
             ht = 0.04 * Ka / dia * Reynolds ^ 0.8
             ht *= (1 - safety)
-        Else
-            ht = 80
         End If
+
+        '----- http://www.engineeringtoolbox.com/convective-heat-transfer-d_430.html ---
+        If ht <= 20 Then ht = 20         '[W/m2.k] @ standing still
+
 
         TextBox12.Text = Math.Round(d_od, 2).ToString
         TextBox13.Text = Math.Round(Reynolds, 0).ToString

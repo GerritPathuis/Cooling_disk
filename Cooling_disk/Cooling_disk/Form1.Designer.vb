@@ -109,6 +109,7 @@ Partial Class Form1
         Me.Label28 = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
+        Me.Label37 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -745,6 +746,7 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label37)
         Me.TabPage2.Controls.Add(Me.Label23)
         Me.TabPage2.Controls.Add(Me.Label22)
         Me.TabPage2.Controls.Add(Me.TextBox8)
@@ -1014,10 +1016,9 @@ Partial Class Form1
         '
         Me.NumericUpDown12.BackColor = System.Drawing.Color.Yellow
         Me.NumericUpDown12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown12.Increment = New Decimal(New Integer() {250, 0, 0, 0})
+        Me.NumericUpDown12.Increment = New Decimal(New Integer() {100, 0, 0, 0})
         Me.NumericUpDown12.Location = New System.Drawing.Point(276, 47)
         Me.NumericUpDown12.Maximum = New Decimal(New Integer() {3000, 0, 0, 0})
-        Me.NumericUpDown12.Minimum = New Decimal(New Integer() {100, 0, 0, 0})
         Me.NumericUpDown12.Name = "NumericUpDown12"
         Me.NumericUpDown12.Size = New System.Drawing.Size(77, 22)
         Me.NumericUpDown12.TabIndex = 17
@@ -1069,6 +1070,15 @@ Partial Class Form1
         Me.Label30.Size = New System.Drawing.Size(212, 16)
         Me.Label30.TabIndex = 10
         Me.Label30.Text = "Ka, thermal conductivity air [W/mK]"
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Location = New System.Drawing.Point(8, 392)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(299, 13)
+        Me.Label37.TabIndex = 6
+        Me.Label37.Text = "Non ventilated brake disks standing still estimate 20 [W/m2K] "
         '
         'Form1
         '
@@ -1201,4 +1211,5 @@ Partial Class Form1
     Friend WithEvents TextBox18 As TextBox
     Friend WithEvents TextBox19 As TextBox
     Friend WithEvents TextBox20 As TextBox
+    Friend WithEvents Label37 As Label
 End Class

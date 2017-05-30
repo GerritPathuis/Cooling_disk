@@ -27,11 +27,15 @@ Public Class Form1
    "and the presence of recirculation on the suction side of the fins"}
 
 
+    Public Shared howto() As String = {"How to ..",
+   "Iterate the grey bearing house temperature",
+   "until the purple values (generated and dissipated power) are identical."}
+
     'Explanation "Metal;Temp;[W/mK]",
     Public Shared mat_conductivity() As String = {
     "Admiralty Brass;20;111",
     "Aluminum-pure;93;215",
-     "Aluminum-Bronze;20;76",
+    "Aluminum-Bronze;20;76",
     "Antimony;20;19",
     "Beryllium;20;218",
     "Beryllium Copper;20;66",
@@ -105,6 +109,10 @@ Public Class Form1
 
         For hh = 0 To (transfer.Length - 1)
             TextBox8.Text &= transfer(hh) & vbCrLf
+        Next hh
+
+        For hh = 0 To (Howto.Length - 1)
+            TextBox37.Text &= howto(hh) & vbCrLf
         Next hh
 
         '-------Fill combobox1 and 2, Steel selection------------------
@@ -463,5 +471,91 @@ Public Class Form1
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown13.ValueChanged, NumericUpDown13.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
         Calc_shaft()
     End Sub
+    'Sleeve bearing calculation
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown18.ValueChanged, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown22.ValueChanged, NumericUpDown21.ValueChanged, NumericUpDown20.ValueChanged, NumericUpDown19.ValueChanged
+        Dim load_kg, load_N As Double
+        Dim dia, b_length, speed, rps As Double
+        Dim clearance, clear_ratio, renk_clear As Double
+        Dim coeff, power_loss As Double
+        Dim oil_pr, oil_cp As Double
+        Dim heat_loss_house, area_house, coeff_house, dt As Double
+        Dim friction_torque As Double
 
+        '----- load ----
+        load_kg = NumericUpDown18.Value             '[kg]
+        load_N = load_kg * 10                       '[N]
+        TextBox26.Text = load_N.ToString("00")
+
+        '------ speed in bearing----
+        dia = NumericUpDown17.Value / 1000                  '[m]
+        b_length = dia * NumericUpDown19.Value              '[m]
+        TextBox30.Text = (b_length * 1000).ToString("00")   '[mm]
+
+        rps = NumericUpDown16.Value / 60            '[rotation per second]
+        speed = Math.PI * dia * rps                 '[m/s]
+        TextBox22.Text = speed.ToString("0.0")
+
+        '----- RENK clearance---
+        If speed < 10 Then  'Speed < 10 [m/s]
+            Select Case True
+                Case dia < 0.1
+                    renk_clear = 1.6 / 10 ^ 3
+                Case dia >= 0.1 And dia < 0.25
+                    renk_clear = 1.32 / 10 ^ 3
+                Case dia >= 0.25
+                    renk_clear = 1.12 / 10 ^ 3
+            End Select
+        Else            'Speed >= 10 [m/s]
+            Select Case True
+                Case dia < 0.1
+                    renk_clear = 1.9 / 10 ^ 3
+                Case dia >= 0.1 And dia < 0.25
+                    renk_clear = 1.6 / 10 ^ 3
+                Case dia >= 0.25
+                    renk_clear = 1.32 / 10 ^ 3
+            End Select
+        End If
+        TextBox35.Text = (renk_clear * 10 ^ 3).ToString("0.0")
+
+        '----- clearance---
+        clear_ratio = 1 / (2 * renk_clear)
+        TextBox36.Text = clear_ratio.ToString("0.0")
+        clearance = (dia * 0.5) / clear_ratio
+        TextBox21.Text = (clearance * 1000).ToString("0")   '[mu]
+
+        '--- oil pressure----
+        oil_pr = load_N / (dia * b_length)                  '[Pa]
+        oil_cp = 30 / 1000                                  '[cP]--> [N.s/m2]
+        TextBox32.Text = oil_cp.ToString("0.000")           '[N.s/m2]
+        TextBox31.Text = (oil_pr / 10 ^ 6).ToString("0.00") '[MPa]
+        If oil_pr > 2.5 * 10 ^ 6 Or oil_pr < 0.5 * 10 ^ 6 Then
+            TextBox31.BackColor = Color.Red
+        Else
+            TextBox31.BackColor = Color.LightGreen
+        End If
+
+
+        '---- Petroff's equation--
+        coeff = 2 * PI ^ 2 * oil_cp * rps / oil_pr * clear_ratio
+        TextBox33.Text = coeff.ToString("0.0000")    '[-]
+
+        '--- power loss due to friction
+        friction_torque = coeff * load_N * dia / 2    '[Nm]   
+        power_loss = friction_torque * rps * 2 * PI    '[W]
+        TextBox34.Text = friction_torque.ToString("0.0")
+        TextBox23.Text = power_loss.ToString("00")
+
+        '-----Heat loss house----
+        coeff_house = NumericUpDown22.Value
+        dt = NumericUpDown21.Value - NumericUpDown20.Value
+        area_house = 70 * dia * b_length                    '[m2]
+        heat_loss_house = area_house * dt * coeff_house     '[W]
+
+        TextBox24.Text = area_house.ToString("0.00")
+        TextBox25.Text = heat_loss_house.ToString("00")
+    End Sub
+
+    Private Sub TextBox37_TextChanged(sender As Object, e As EventArgs) Handles TextBox37.TextChanged
+
+    End Sub
 End Class

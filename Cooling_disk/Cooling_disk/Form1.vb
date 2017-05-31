@@ -31,6 +31,13 @@ Public Class Form1
    "Iterate the grey bearing house temperature",
    "until the purple values (generated and dissipated power) are identical."}
 
+    Public Shared renk() As String = {"Renk E_type Sleeve bearings",
+   "ERWLQ 09 dia=  80-100mm",
+   "ERWLQ 11 dia= 100-125mm",
+   "ERWLQ 14 dia= 125-160mm",
+   "ERWLQ 18 dia= 160-200mm"}
+
+
     'Explanation "Metal;Temp;[W/mK]",
     Public Shared mat_conductivity() As String = {
     "Admiralty Brass;20;111",
@@ -113,6 +120,10 @@ Public Class Form1
 
         For hh = 0 To (Howto.Length - 1)
             TextBox37.Text &= howto(hh) & vbCrLf
+        Next hh
+
+        For hh = 0 To (renk.Length - 1)
+            TextBox39.Text &= renk(hh) & vbCrLf
         Next hh
 
         '-------Fill combobox1 and 2, Steel selection------------------
@@ -471,8 +482,9 @@ Public Class Form1
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown13.ValueChanged, NumericUpDown13.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
         Calc_shaft()
     End Sub
+
     'Sleeve bearing calculation
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown18.ValueChanged, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown22.ValueChanged, NumericUpDown21.ValueChanged, NumericUpDown20.ValueChanged, NumericUpDown19.ValueChanged
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown18.ValueChanged, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown22.ValueChanged, NumericUpDown21.ValueChanged, NumericUpDown20.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown8.ValueChanged, NumericUpDown6.ValueChanged, NumericUpDown23.ValueChanged
         Dim load_kg, load_N As Double
         Dim dia, b_length, speed, rps As Double
         Dim clearance, clear_ratio, renk_clear As Double
@@ -553,9 +565,19 @@ Public Class Form1
 
         TextBox24.Text = area_house.ToString("0.00")
         TextBox25.Text = heat_loss_house.ToString("00")
+
+        '============================================
+        'Heat flowing trough shaft to the bearing
+        Dim ht, s_area, power_con, c_length, dtt As Double
+
+        ht = NumericUpDown4.Value       'Heat transfer coeff
+        c_length = NumericUpDown8.Value / 1000  'cooling disk-bearing
+        dtt = NumericUpDown23.Value - NumericUpDown6.Value
+        s_area = PI / 4 * dia ^ 2       'shaft section area
+
+        power_con = s_area * dtt * ht / c_length
+        TextBox29.Text = ht.ToString("0.00")
+        TextBox38.Text = power_con.ToString("0")
     End Sub
 
-    Private Sub TextBox37_TextChanged(sender As Object, e As EventArgs) Handles TextBox37.TextChanged
-
-    End Sub
 End Class

@@ -31,13 +31,14 @@ Public Class Form1
    "Iterate the grey bearing house temperature",
    "until the purple values (generated and dissipated power) are identical."}
 
-    Public Shared renk() As String = {"Renk E_type Sleeve bearings",
-   "ERWLQ 09 dia=  80-100mm",
-   "ERWLQ 11 dia= 100-125mm",
-   "ERWLQ 14 dia= 125-160mm",
-   "ERWLQ 18 dia= 160-200mm"}
-
-
+    'Renk sleeve bearing housing cooling area
+    Public Shared renk() As String = {
+   "Renk ERWLQ 09 dia=  80-100; 0.37",
+   "Renk ERWLQ 11 dia= 100-125; 0.64",
+   "Renk ERWLQ 14 dia= 125-160; 0.74",
+   "Renk ERWLQ 18 dia= 160-200; 1.13",
+   "Renk ERWLQ 22 dia= 200-250; 1.48"}
+    
     'Explanation "Metal;Temp;[W/mK]",
     Public Shared mat_conductivity() As String = {
     "Admiralty Brass;20;111",
@@ -127,18 +128,21 @@ Public Class Form1
         Next hh
 
         '-------Fill combobox1 and 2, Steel selection------------------
-        ComboBox1.Items.Clear()
-        ComboBox2.Items.Clear()
-
-        For hh = 0 To (mat_conductivity.Length - 2)            'Fill combobox3 with steel data
+        For hh = 0 To (mat_conductivity.Length - 2)  'Fill combobox3 with steel data
             words = mat_conductivity(hh).Split(separators, StringSplitOptions.None)
             ComboBox1.Items.Add(words(0))
             ComboBox2.Items.Add(words(0))
         Next hh
 
+        For hh = 0 To (renk.Length - 2)            'Fill combobox3 with steel data
+            words = renk(hh).Split(separators, StringSplitOptions.None)
+            ComboBox3.Items.Add(words(0))
+        Next hh
+
         '----------------- prevent out of bounds------------------
         ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 9, -1))   'C45
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
+        ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged
@@ -485,6 +489,9 @@ Public Class Form1
 
     'Sleeve bearing calculation
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown18.ValueChanged, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown22.ValueChanged, NumericUpDown21.ValueChanged, NumericUpDown20.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown8.ValueChanged, NumericUpDown6.ValueChanged, NumericUpDown23.ValueChanged
+        Calc_sleeve_bearing()
+    End Sub
+    Private Sub Calc_sleeve_bearing()
         Dim load_kg, load_N As Double
         Dim dia, b_length, speed, rps As Double
         Dim clearance, clear_ratio, renk_clear As Double
@@ -492,6 +499,13 @@ Public Class Form1
         Dim oil_pr, oil_cp As Double
         Dim heat_loss_house, area_house, coeff_house, dt As Double
         Dim friction_torque As Double
+        Dim separators() As String = {";"}
+
+        '-----------Renk cooling area-----------
+        If (ComboBox3.SelectedIndex > -1) Then      'Prevent exceptions
+            Dim words() As String = renk(ComboBox3.SelectedIndex).Split(separators, StringSplitOptions.None)
+            TextBox29.Text = words(1)               'Renk cooling area
+        End If
 
         '----- load ----
         load_kg = NumericUpDown18.Value             '[kg]
@@ -535,7 +549,7 @@ Public Class Form1
         clearance = (dia * 0.5) / clear_ratio
         TextBox21.Text = (clearance * 1000).ToString("0")   '[mu]
 
-        '--- oil pressure----
+        '--- oil film pressure----
         oil_pr = load_N / (dia * b_length)                  '[Pa]
         oil_cp = 30 / 1000                                  '[cP]--> [N.s/m2]
         TextBox32.Text = oil_cp.ToString("0.000")           '[N.s/m2]
@@ -545,7 +559,6 @@ Public Class Form1
         Else
             TextBox31.BackColor = Color.LightGreen
         End If
-
 
         '---- Petroff's equation--
         coeff = 2 * PI ^ 2 * oil_cp * rps / oil_pr * clear_ratio
@@ -560,7 +573,7 @@ Public Class Form1
         '-----Heat loss house----
         coeff_house = NumericUpDown22.Value
         dt = NumericUpDown21.Value - NumericUpDown20.Value
-        area_house = 70 * dia * b_length                    '[m2]
+        Double.TryParse(TextBox29.Text, area_house)         '[m2]
         heat_loss_house = area_house * dt * coeff_house     '[W]
 
         TextBox24.Text = area_house.ToString("0.00")
@@ -580,4 +593,7 @@ Public Class Form1
         TextBox38.Text = power_con.ToString("0")
     End Sub
 
+    Private Sub ComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox3.SelectedIndexChanged
+        Calc_sleeve_bearing()
+    End Sub
 End Class

@@ -31,14 +31,34 @@ Public Class Form1
    "Iterate the grey bearing house temperature",
    "until the purple values (generated and dissipated power) are identical."}
 
-    'Renk sleeve bearing housing cooling area
-    Public Shared renk() As String = {
-   "Renk ERWLQ 09 dia=  80-100; 0.37",
-   "Renk ERWLQ 11 dia= 100-125; 0.64",
-   "Renk ERWLQ 14 dia= 125-160; 0.74",
-   "Renk ERWLQ 18 dia= 160-200; 1.13",
-   "Renk ERWLQ 22 dia= 200-250; 1.48"}
-    
+    'sleeve bearing housing; diam; cooling area; L/d ratio
+    'Dodge always air cooling
+    Public Shared b_house() As String = {
+   "Renk ERWLQ 09 ;80-100; 0.37; 1.0",
+   "Renk ERWLQ 11 ;100-125; 0.64; 1.0",
+   "Renk ERWLQ 14 ;125-160; 0.74; 1.0",
+   "Renk ERWLQ 18 ;160-200; 1.13; 1.0",
+   "Renk ERWLQ 22 ;200-250; 1.48; 1.0",
+   "Dodge 3-7/16"";87.31; 0.094; 1.8",
+   "Dodge 3-15/16"";100.01; 0.093; 1.8",
+   "Dodge 4-7/15"";112.71; 0.125; 1.8",
+   "Dodge 4-15/16"";125.41; 0.188; 1.8",
+   "Dodge 5-7/16"" ;138.11; 0.265; 1.8",
+   "Dodge 6"";152.40; 0.412; 1.8",
+   "Dodge 7"";177.80; 0.680; 1.8",
+   "Dodge 8"";203.20; 1.059; 1.8",
+   "Dodge 9"";228.60; 1.672; 1.8",
+   "Dodge 10"";254.00; 2.574; 1.8",
+   "Dodge 12"";304.80; 4.903; 1.8"}
+
+
+    Public Shared sleeve_LD_ratio() As String = {
+    "Sleeve Length/dia ratio",
+    "Text book ~ 0.8",
+    "Renk      ~ 1.0",
+    "DVB       ~ 1.0",
+    "Dodge     ~ 1.8"}
+
     'Explanation "Metal;Temp;[W/mK]",
     Public Shared mat_conductivity() As String = {
     "Admiralty Brass;20;111",
@@ -123,8 +143,8 @@ Public Class Form1
             TextBox37.Text &= howto(hh) & vbCrLf
         Next hh
 
-        For hh = 0 To (renk.Length - 1)
-            TextBox39.Text &= renk(hh) & vbCrLf
+        For hh = 0 To (sleeve_LD_ratio.Length - 1)
+            TextBox40.Text &= sleeve_LD_ratio(hh) & vbCrLf
         Next hh
 
         '-------Fill combobox1 and 2, Steel selection------------------
@@ -134,8 +154,8 @@ Public Class Form1
             ComboBox2.Items.Add(words(0))
         Next hh
 
-        For hh = 0 To (renk.Length - 2)            'Fill combobox3 with steel data
-            words = renk(hh).Split(separators, StringSplitOptions.None)
+        For hh = 0 To (b_house.Length - 1)            'Fill combobox3 with steel data
+            words = b_house(hh).Split(separators, StringSplitOptions.None)
             ComboBox3.Items.Add(words(0))
         Next hh
 
@@ -503,8 +523,10 @@ Public Class Form1
 
         '-----------Renk cooling area-----------
         If (ComboBox3.SelectedIndex > -1) Then      'Prevent exceptions
-            Dim words() As String = renk(ComboBox3.SelectedIndex).Split(separators, StringSplitOptions.None)
-            TextBox29.Text = words(1)               'Renk cooling area
+            Dim words() As String = b_house(ComboBox3.SelectedIndex).Split(separators, StringSplitOptions.None)
+            TextBox39.Text = words(1)               'diameter area
+            TextBox29.Text = words(2)               'cooling area
+            Decimal.TryParse(words(3), NumericUpDown19.Value)
         End If
 
         '----- load ----

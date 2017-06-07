@@ -51,13 +51,19 @@ Public Class Form1
    "Dodge 10"";254.00; 2.574; 1.8",
    "Dodge 12"";304.80; 4.903; 1.8"}
 
-
     Public Shared sleeve_LD_ratio() As String = {
     "Sleeve Length/dia ratio",
     "Text book ~ 0.8",
     "Renk      ~ 1.0",
     "DVB       ~ 1.0",
     "Dodge     ~ 1.8"}
+
+    'oil type; kin visco [mm2/s=cP]; Density [kg/m3]
+    Public Shared oil() As String = {
+    "ISO 3448 VG 32; 32; 857",
+    "ISO 3448 VG 46; 46; 861",
+    "ISO 3448 VG 68; 68; 865",
+    "ISO 3448 VG 100; 100; 869"}
 
     'Explanation "Metal;Temp;[W/mK]",
     Public Shared mat_conductivity() As String = {
@@ -159,10 +165,16 @@ Public Class Form1
             ComboBox3.Items.Add(words(0))
         Next hh
 
+        For hh = 0 To (oil.Length - 1)            'Fill combobox4 with oil data
+            words = oil(hh).Split(separators, StringSplitOptions.None)
+            ComboBox4.Items.Add(words(0))
+        Next hh
+
         '----------------- prevent out of bounds------------------
         ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 9, -1))   'C45
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
         ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
+        ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged
@@ -516,7 +528,7 @@ Public Class Form1
         Dim dia, b_length, speed, rps As Double
         Dim clearance, clear_ratio, renk_clear As Double
         Dim coeff, power_loss As Double
-        Dim oil_pr, oil_cp As Double
+        Dim oil_pr, oil_dyn, oil_Kin, density As Double
         Dim heat_loss_house, area_house, coeff_house, dt As Double
         Dim friction_torque As Double
         Dim separators() As String = {";"}
@@ -527,6 +539,14 @@ Public Class Form1
             TextBox39.Text = words(1)               'diameter area
             TextBox29.Text = words(2)               'cooling area
             Decimal.TryParse(words(3), NumericUpDown19.Value)
+        End If
+
+        If (ComboBox4.SelectedIndex > -1) Then      'Prevent exceptions
+            Dim words() As String = oil(ComboBox4.SelectedIndex).Split(separators, StringSplitOptions.None)
+            Double.TryParse(words(1), oil_Kin)          'Kin viscosity
+            Double.TryParse(words(2), density)          'Density
+            oil_dyn = oil_Kin * density / 10 ^ 6        '[mm2/s]--> [N.s/m2]
+            TextBox32.Text = oil_dyn.ToString("0.000")  '[N.s/m2]
         End If
 
         '----- load ----
@@ -573,8 +593,6 @@ Public Class Form1
 
         '--- oil film pressure----
         oil_pr = load_N / (dia * b_length)                  '[Pa]
-        oil_cp = 30 / 1000                                  '[cP]--> [N.s/m2]
-        TextBox32.Text = oil_cp.ToString("0.000")           '[N.s/m2]
         TextBox31.Text = (oil_pr / 10 ^ 6).ToString("0.00") '[MPa]
         If oil_pr > 2.5 * 10 ^ 6 Or oil_pr < 0.5 * 10 ^ 6 Then
             TextBox31.BackColor = Color.Red
@@ -583,7 +601,7 @@ Public Class Form1
         End If
 
         '---- Petroff's equation--
-        coeff = 2 * PI ^ 2 * oil_cp * rps / oil_pr * clear_ratio
+        coeff = 2 * PI ^ 2 * oil_dyn * rps / oil_pr * clear_ratio
         TextBox33.Text = coeff.ToString("0.0000")    '[-]
 
         '--- power loss due to friction
@@ -616,6 +634,10 @@ Public Class Form1
     End Sub
 
     Private Sub ComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox3.SelectedIndexChanged
+        Calc_sleeve_bearing()
+    End Sub
+
+    Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
         Calc_sleeve_bearing()
     End Sub
 End Class

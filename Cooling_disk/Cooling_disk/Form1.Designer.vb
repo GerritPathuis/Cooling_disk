@@ -122,6 +122,9 @@ Partial Class Form1
         Me.Label54 = New System.Windows.Forms.Label()
         Me.TextBox37 = New System.Windows.Forms.TextBox()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.Label60 = New System.Windows.Forms.Label()
+        Me.Label50 = New System.Windows.Forms.Label()
+        Me.TextBox39 = New System.Windows.Forms.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.ComboBox3 = New System.Windows.Forms.ComboBox()
         Me.Label52 = New System.Windows.Forms.Label()
@@ -149,7 +152,6 @@ Partial Class Form1
         Me.TextBox21 = New System.Windows.Forms.TextBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.TextBox32 = New System.Windows.Forms.TextBox()
-        Me.Label46 = New System.Windows.Forms.Label()
         Me.TextBox31 = New System.Windows.Forms.TextBox()
         Me.Label45 = New System.Windows.Forms.Label()
         Me.TextBox30 = New System.Windows.Forms.TextBox()
@@ -166,9 +168,8 @@ Partial Class Form1
         Me.NumericUpDown16 = New System.Windows.Forms.NumericUpDown()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.Label42 = New System.Windows.Forms.Label()
-        Me.Label50 = New System.Windows.Forms.Label()
-        Me.TextBox39 = New System.Windows.Forms.TextBox()
-        Me.Label60 = New System.Windows.Forms.Label()
+        Me.ComboBox4 = New System.Windows.Forms.ComboBox()
+        Me.Label61 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1309,6 +1310,33 @@ Partial Class Form1
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Bearing house natural cooled"
         '
+        'Label60
+        '
+        Me.Label60.AutoSize = True
+        Me.Label60.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label60.Location = New System.Drawing.Point(21, 45)
+        Me.Label60.Name = "Label60"
+        Me.Label60.Size = New System.Drawing.Size(135, 16)
+        Me.Label60.TabIndex = 52
+        Me.Label60.Text = "House shaft diameter"
+        '
+        'Label50
+        '
+        Me.Label50.AutoSize = True
+        Me.Label50.Location = New System.Drawing.Point(304, 48)
+        Me.Label50.Name = "Label50"
+        Me.Label50.Size = New System.Drawing.Size(23, 13)
+        Me.Label50.TabIndex = 51
+        Me.Label50.Text = "mm"
+        '
+        'TextBox39
+        '
+        Me.TextBox39.Location = New System.Drawing.Point(243, 45)
+        Me.TextBox39.Name = "TextBox39"
+        Me.TextBox39.Size = New System.Drawing.Size(56, 20)
+        Me.TextBox39.TabIndex = 50
+        Me.TextBox39.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Label59
         '
         Me.Label59.AutoSize = True
@@ -1480,6 +1508,8 @@ Partial Class Form1
         'GroupBox7
         '
         Me.GroupBox7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.GroupBox7.Controls.Add(Me.Label61)
+        Me.GroupBox7.Controls.Add(Me.ComboBox4)
         Me.GroupBox7.Controls.Add(Me.TextBox36)
         Me.GroupBox7.Controls.Add(Me.Label53)
         Me.GroupBox7.Controls.Add(Me.TextBox35)
@@ -1489,7 +1519,6 @@ Partial Class Form1
         Me.GroupBox7.Controls.Add(Me.TextBox21)
         Me.GroupBox7.Controls.Add(Me.Label40)
         Me.GroupBox7.Controls.Add(Me.TextBox32)
-        Me.GroupBox7.Controls.Add(Me.Label46)
         Me.GroupBox7.Controls.Add(Me.TextBox31)
         Me.GroupBox7.Controls.Add(Me.Label45)
         Me.GroupBox7.Controls.Add(Me.TextBox30)
@@ -1535,7 +1564,7 @@ Partial Class Form1
         '
         Me.TextBox35.Location = New System.Drawing.Point(274, 105)
         Me.TextBox35.Name = "TextBox35"
-        Me.TextBox35.Size = New System.Drawing.Size(52, 20)
+        Me.TextBox35.Size = New System.Drawing.Size(77, 20)
         Me.TextBox35.TabIndex = 47
         Me.TextBox35.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1590,16 +1619,6 @@ Partial Class Form1
         Me.TextBox32.Size = New System.Drawing.Size(77, 20)
         Me.TextBox32.TabIndex = 39
         Me.TextBox32.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label46
-        '
-        Me.Label46.AutoSize = True
-        Me.Label46.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label46.Location = New System.Drawing.Point(19, 215)
-        Me.Label46.Name = "Label46"
-        Me.Label46.Size = New System.Drawing.Size(251, 16)
-        Me.Label46.TabIndex = 38
-        Me.Label46.Text = "Oil vicosity (30cP @ 65c SAE 40) [Ns/m2]"
         '
         'TextBox31
         '
@@ -1768,32 +1787,24 @@ Partial Class Form1
         Me.Label42.TabIndex = 10
         Me.Label42.Text = "Friction coefficient (Petroff) [-]"
         '
-        'Label50
+        'ComboBox4
         '
-        Me.Label50.AutoSize = True
-        Me.Label50.Location = New System.Drawing.Point(304, 48)
-        Me.Label50.Name = "Label50"
-        Me.Label50.Size = New System.Drawing.Size(23, 13)
-        Me.Label50.TabIndex = 51
-        Me.Label50.Text = "mm"
+        Me.ComboBox4.BackColor = System.Drawing.Color.Yellow
+        Me.ComboBox4.FormattingEnabled = True
+        Me.ComboBox4.Location = New System.Drawing.Point(153, 215)
+        Me.ComboBox4.Name = "ComboBox4"
+        Me.ComboBox4.Size = New System.Drawing.Size(116, 21)
+        Me.ComboBox4.TabIndex = 53
         '
-        'TextBox39
+        'Label61
         '
-        Me.TextBox39.Location = New System.Drawing.Point(243, 45)
-        Me.TextBox39.Name = "TextBox39"
-        Me.TextBox39.Size = New System.Drawing.Size(56, 20)
-        Me.TextBox39.TabIndex = 50
-        Me.TextBox39.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label60
-        '
-        Me.Label60.AutoSize = True
-        Me.Label60.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label60.Location = New System.Drawing.Point(21, 45)
-        Me.Label60.Name = "Label60"
-        Me.Label60.Size = New System.Drawing.Size(135, 16)
-        Me.Label60.TabIndex = 52
-        Me.Label60.Text = "House shaft diameter"
+        Me.Label61.AutoSize = True
+        Me.Label61.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label61.Location = New System.Drawing.Point(20, 217)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(127, 16)
+        Me.Label61.TabIndex = 39
+        Me.Label61.Text = "Bearing Oil [N.s/m2]"
         '
         'Form1
         '
@@ -1968,7 +1979,6 @@ Partial Class Form1
     Friend WithEvents TextBox31 As TextBox
     Friend WithEvents Label45 As Label
     Friend WithEvents TextBox32 As TextBox
-    Friend WithEvents Label46 As Label
     Friend WithEvents GroupBox8 As GroupBox
     Public WithEvents NumericUpDown22 As NumericUpDown
     Friend WithEvents Label19 As Label
@@ -2004,4 +2014,6 @@ Partial Class Form1
     Friend WithEvents Label60 As Label
     Friend WithEvents Label50 As Label
     Friend WithEvents TextBox39 As TextBox
+    Friend WithEvents ComboBox4 As ComboBox
+    Friend WithEvents Label61 As Label
 End Class

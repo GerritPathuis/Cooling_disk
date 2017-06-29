@@ -138,8 +138,9 @@ Public Class Form1
         Dim separators() As String = {";"}
         Dim hh As Integer
 
-        Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
-        Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+        '------------Geeft problemen binnen VTK---------------
+        'Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
+        'Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
 
         For hh = 0 To (transfer.Length - 1)
             TextBox8.Text &= transfer(hh) & vbCrLf
@@ -532,13 +533,15 @@ Public Class Form1
         Dim heat_loss_house, area_house, coeff_house, dt As Double
         Dim friction_torque As Double
         Dim separators() As String = {";"}
+        Dim temp As Decimal
 
         '-----------Renk cooling area-----------
         If (ComboBox3.SelectedIndex > -1) Then      'Prevent exceptions
             Dim words() As String = b_house(ComboBox3.SelectedIndex).Split(separators, StringSplitOptions.None)
             TextBox39.Text = words(1)               'diameter area
             TextBox29.Text = words(2)               'cooling area
-            Decimal.TryParse(words(3), NumericUpDown19.Value)
+            Decimal.TryParse(words(3), temp)
+            IIf(temp > NumericUpDown19.Minimum And temp > NumericUpDown19.Maximum, temp, 1)
         End If
 
         If (ComboBox4.SelectedIndex > -1) Then      'Prevent exceptions

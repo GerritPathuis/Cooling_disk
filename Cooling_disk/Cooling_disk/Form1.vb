@@ -65,7 +65,20 @@ Public Class Form1
     "ISO 3448 VG 68; 68; 865",
     "ISO 3448 VG 100; 100; 869"}
 
-    'Explanation "Metal;Temp;[W/mK]",
+    'Seal material type; Young modulus [GPa]
+    'From https://www.matbase.com/material-categories/natural-and-synthetic-polymers/
+    Public Shared seal_mat() As String = {
+    "PTFE (Teflon); 0.75",
+    "Polypropylene; 1.40",
+    "NBR (Nitrile rubber); 0.005",
+    "Polyamide 11 (Nylon); 1.4",
+    "Polyamide 12 (Nylon); 2.6",
+    "Polyamide 46 (Nylon); 3.0",
+    "Polyamide 66 (Nylon); 2.0",
+    "Silicone Rubber; 0.005",
+    "Fluor elastomere (Viton); 0.005"}
+
+    'Explanation "Metal;Temp;[W/mK]"
     Public Shared mat_conductivity() As String = {
     "Admiralty Brass;20;111",
     "Aluminum-pure;93;215",
@@ -154,11 +167,12 @@ Public Class Form1
             TextBox40.Text &= sleeve_LD_ratio(hh) & vbCrLf
         Next hh
 
-        '-------Fill combobox1 and 2, Steel selection------------------
+        '-------Fill combobox1,2 and 5 Steel selection------------------
         For hh = 0 To (mat_conductivity.Length - 2)  'Fill combobox3 with steel data
             words = mat_conductivity(hh).Split(separators, StringSplitOptions.None)
             ComboBox1.Items.Add(words(0))
             ComboBox2.Items.Add(words(0))
+            ComboBox5.Items.Add(words(0))
         Next hh
 
         For hh = 0 To (b_house.Length - 1)            'Fill combobox3 with steel data
@@ -171,11 +185,19 @@ Public Class Form1
             ComboBox4.Items.Add(words(0))
         Next hh
 
+        For hh = 0 To (seal_mat.Length - 1)            'Fill combobox6 with seal_material data
+            words = seal_mat(hh).Split(separators, StringSplitOptions.None)
+            ComboBox6.Items.Add(words(0))
+        Next hh
+
+
         '----------------- prevent out of bounds------------------
         ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 9, -1))   'C45
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
         ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
         ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
+        ComboBox5.SelectedIndex = CInt(IIf(ComboBox5.Items.Count > 0, 9, -1))   'C45
+        ComboBox6.SelectedIndex = CInt(IIf(ComboBox6.Items.Count > 0, 0, -1))   'NBR
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged
@@ -516,6 +538,24 @@ Public Class Form1
         Calc_shaft()
     End Sub
 
+    Private Sub ComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox5.SelectedIndexChanged
+        Dim separators() As String = {";"}
+
+        If (ComboBox5.SelectedIndex > -1) Then          'Prevent exceptions
+            Dim words() As String = mat_conductivity(ComboBox5.SelectedIndex).Split(separators, StringSplitOptions.None)
+            NumericUpDown26.Value = CDec(words(2))       'Conductivity fan shaft
+        End If
+    End Sub
+    Private Sub ComboBox6_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim separators() As String = {";"}
+
+        If (ComboBox6.SelectedIndex > -1) Then          'Prevent exceptions
+            Dim words() As String = seal_mat(ComboBox6.SelectedIndex).Split(separators, StringSplitOptions.None)
+            MessageBox.Show(words(1))
+            TextBox42.Text = (words(1))       'Seal Young's modulus
+        End If
+    End Sub
+
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown13.ValueChanged, NumericUpDown13.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
         Calc_shaft()
     End Sub
@@ -642,5 +682,21 @@ Public Class Form1
 
     Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
         Calc_sleeve_bearing()
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged
+        Dim fric_coef, power As Double
+        Dim force, rpm, diam, speed As Double
+
+        fric_coef = NumericUpDown31.Value
+        force = NumericUpDown29.Value
+        rpm = NumericUpDown32.Value
+        diam = NumericUpDown27.Value / 1000     '[m]
+
+        speed = rpm / 60 * PI * diam            '[m/s]
+        power = speed * force * fric_coef       '[W]
+
+        TextBox44.Text = speed.ToString("0.00")
+        TextBox43.Text = power.ToString("0.00")
     End Sub
 End Class

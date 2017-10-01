@@ -684,19 +684,30 @@ Public Class Form1
         Calc_sleeve_bearing()
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged
-        Dim fric_coef, power As Double
-        Dim force, rpm, diam, speed As Double
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged
+        Dim fric_coef, no_seals, power As Double
+        Dim force, torque, rpm, diam, omega As Double
 
-        fric_coef = NumericUpDown31.Value
-        force = NumericUpDown29.Value
-        rpm = NumericUpDown32.Value
+        no_seals = NumericUpDown25.Value        '[-]
+        fric_coef = NumericUpDown31.Value       '[-]
+        force = NumericUpDown29.Value           '[N]
+        rpm = NumericUpDown32.Value             '[rpm]
         diam = NumericUpDown27.Value / 1000     '[m]
 
-        speed = rpm / 60 * PI * diam            '[m/s]
-        power = speed * force * fric_coef       '[W]
+        torque = force * fric_coef * (diam / 2) '[N.m]
+        omega = rpm / 60 * 2 * PI               '[rad/s]
+        power = omega * torque * no_seals       '[W]
 
-        TextBox44.Text = speed.ToString("0.00")
+        TextBox45.Text = torque.ToString("0.00")
+        TextBox44.Text = omega.ToString("0.00")
         TextBox43.Text = power.ToString("0.00")
+
+        '----------- shaft area -----------------
+        Dim shaft_L, shaft_area As Double
+
+        shaft_L = NumericUpDown28.Value / 1000     '[m]
+        shaft_area = shaft_L * diam * PI
+
+        TextBox41.Text = shaft_area.ToString("0.000")
     End Sub
 End Class

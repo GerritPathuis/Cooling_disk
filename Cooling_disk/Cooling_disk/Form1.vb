@@ -172,7 +172,7 @@ Public Class Form1
             words = mat_conductivity(hh).Split(separators, StringSplitOptions.None)
             ComboBox1.Items.Add(words(0))
             ComboBox2.Items.Add(words(0))
-            ComboBox5.Items.Add(words(0))
+
         Next hh
 
         For hh = 0 To (b_house.Length - 1)            'Fill combobox3 with steel data
@@ -185,19 +185,11 @@ Public Class Form1
             ComboBox4.Items.Add(words(0))
         Next hh
 
-        For hh = 0 To (seal_mat.Length - 1)            'Fill combobox6 with seal_material data
-            words = seal_mat(hh).Split(separators, StringSplitOptions.None)
-            ComboBox6.Items.Add(words(0))
-        Next hh
-
-
         '----------------- prevent out of bounds------------------
         ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 9, -1))   'C45
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
         ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
         ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
-        ComboBox5.SelectedIndex = CInt(IIf(ComboBox5.Items.Count > 0, 9, -1))   'C45
-        ComboBox6.SelectedIndex = CInt(IIf(ComboBox6.Items.Count > 0, 0, -1))   'NBR
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged
@@ -538,24 +530,6 @@ Public Class Form1
         Calc_shaft()
     End Sub
 
-    Private Sub ComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox5.SelectedIndexChanged
-        Dim separators() As String = {";"}
-
-        If (ComboBox5.SelectedIndex > -1) Then          'Prevent exceptions
-            Dim words() As String = mat_conductivity(ComboBox5.SelectedIndex).Split(separators, StringSplitOptions.None)
-            NumericUpDown26.Value = CDec(words(2))       'Conductivity fan shaft
-        End If
-    End Sub
-    Private Sub ComboBox6_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Dim separators() As String = {";"}
-
-        If (ComboBox6.SelectedIndex > -1) Then          'Prevent exceptions
-            Dim words() As String = seal_mat(ComboBox6.SelectedIndex).Split(separators, StringSplitOptions.None)
-            MessageBox.Show(words(1))
-            TextBox42.Text = (words(1))       'Seal Young's modulus
-        End If
-    End Sub
-
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown13.ValueChanged, NumericUpDown13.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
         Calc_shaft()
     End Sub
@@ -684,8 +658,8 @@ Public Class Form1
         Calc_sleeve_bearing()
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged
-        Dim fric_coef, no_seals, power As Double
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown27.ValueChanged
+        Dim fric_coef, no_seals, pwr_seal As Double
         Dim force, torque, rpm, diam, omega As Double
 
         no_seals = NumericUpDown25.Value        '[-]
@@ -696,18 +670,45 @@ Public Class Form1
 
         torque = force * fric_coef * (diam / 2) '[N.m]
         omega = rpm / 60 * 2 * PI               '[rad/s]
-        power = omega * torque * no_seals       '[W]
+        pwr_seal = omega * torque * no_seals       '[W]
 
         TextBox45.Text = torque.ToString("0.00")
         TextBox44.Text = omega.ToString("0.00")
-        TextBox43.Text = power.ToString("0.00")
+        TextBox43.Text = pwr_seal.ToString("0.0")
 
         '----------- shaft area -----------------
-        Dim shaft_L, shaft_area As Double
+        Dim shaft_L, shaft_area, ht_coef, Pwr_air As Double
+        Dim dt, dt_average As Double
+        ht_coef = 20                                    '[W/m2K]
+        shaft_L = NumericUpDown28.Value / 1000          '[m]
+        shaft_area = shaft_L * diam * PI                '[m2]
 
-        shaft_L = NumericUpDown28.Value / 1000     '[m]
-        shaft_area = shaft_L * diam * PI
 
+
+
+        '-----------------------------
+        '-------------- heat ---------------
+        dt = 0
+        For i = 0 To 400
+            dt_average = dt / 2                             '[c]
+            Pwr_air = dt_average * shaft_area * ht_coef     '[W]
+
+
+            If Abs(Pwr_air - pwr_seal) < 0.1 Then
+                Exit For        'Speeding things up
+            End If
+
+            If (Pwr_air < pwr_seal) Then
+                dt += 0.05
+            Else
+                dt -= 0.01
+            End If
+        Next
+
+        '------------------------------
         TextBox41.Text = shaft_area.ToString("0.000")
+        TextBox51.Text = Pwr_air.ToString("0.0")
+        TextBox48.Text = dt.ToString("0.0")
     End Sub
+
 End Class

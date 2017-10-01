@@ -295,7 +295,7 @@ Public Class Form1
         End If
 
         '----- http://www.engineeringtoolbox.com/convective-heat-transfer-d_430.html ---
-        If ht <= 20 Then ht = 20         '[W/m2.k] @ standing still
+        If ht <= 20 Then ht = 10         '[W/m2.k] @ standing still
 
 
         TextBox12.Text = Math.Round(d_od, 2).ToString
@@ -679,14 +679,11 @@ Public Class Form1
         '----------- shaft area -----------------
         Dim shaft_L, shaft_area, ht_coef, Pwr_air As Double
         Dim dt, dt_average As Double
-        ht_coef = 20                                    '[W/m2K]
+
+        ht_coef = 10                                    '[W/m2K]
         shaft_L = NumericUpDown28.Value / 1000          '[m]
         shaft_area = shaft_L * diam * PI                '[m2]
 
-
-
-
-        '-----------------------------
         '-------------- heat ---------------
         dt = 0
         For i = 0 To 400
@@ -709,6 +706,7 @@ Public Class Form1
         TextBox41.Text = shaft_area.ToString("0.000")
         TextBox51.Text = Pwr_air.ToString("0.0")
         TextBox48.Text = dt.ToString("0.0")
+        TextBox56.Text = ht_coef.ToString("0.0")
     End Sub
 
 End Class

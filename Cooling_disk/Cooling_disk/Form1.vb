@@ -197,7 +197,7 @@ Public Class Form1
     End Sub
 
     Private Sub Calc_shaft()
-        Dim f_od, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
+        Dim shaft_OD, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
         Dim d_no, d_od, d_hub_od, d_Heat_trans, d_thick, fin_height As Double
         Dim d_area_actual, d_area_calc, area_factor1, area_factor2, area_eff, d_coeff As Double
         Dim power_conducted, power_transferred As Double
@@ -213,12 +213,12 @@ Public Class Form1
         temp_disk = (temp_amb + temp_fan) / 2
 
         '-------------- shaft-----------------
-        f_od = NumericUpDown1.Value / 1000      '[mm]->[m]
+        shaft_OD = NumericUpDown1.Value / 1000      '[mm]->[m]
         f_id = NumericUpDown2.Value / 1000
         F_length = NumericUpDown3.Value / 1000
         F_coeff = NumericUpDown4.Value
         F_temp = NumericUpDown5.Value
-        Shaft_area = Math.PI / 4 * (f_od ^ 2 - f_id ^ 2)
+        Shaft_area = Math.PI / 4 * (shaft_OD ^ 2 - f_id ^ 2)
 
         '-------------- disk-----------------
         d_no = NumericUpDown11.Value    'Number of disks
@@ -260,8 +260,8 @@ Public Class Form1
             TextBox7.Text = Math.Round(temp_disk, 1).ToString
         End If
 
-        TextBox1.Text = Math.Round(Shaft_area, 3).ToString
-        TextBox2.Text = Math.Round(d_area_actual, 2).ToString
+        TextBox1.Text = Shaft_area.ToString("0.000")
+        TextBox2.Text = d_area_actual.ToString("0.00")
         TextBox3.Text = Math.Round(area_eff, 3).ToString
         TextBox4.Text = Math.Round(d_area_calc, 2).ToString
         TextBox5.Text = Math.Round(power_conducted, 0).ToString
@@ -284,8 +284,8 @@ Public Class Form1
         speed = NumericUpDown12.Value           '[rpm]
         vel = speed / 60 * PI * d_od            '[m/s]
 
-        ka_air = 0.0257                             '[W/mK]conductivity air
-        ro_air = NumericUpDown15.Value              '[ro] air
+        ka_air = 0.0257                         '[W/mK]conductivity air
+        ro_air = 1.205                          '[ro] air
 
         mu = 1.983 / 10 ^ 5                     'dyn visco air [Pa.s]
         safety = 0.3
@@ -299,12 +299,13 @@ Public Class Form1
         End If
 
         If Reynolds < 2000 Then
-            ht = 2                     '[W/m2K]
+            ht = 2                          '[W/m2K]
         End If
 
         ht *= (1 - safety)
 
-        TextBox58.Text = nusselt.ToString("0")   '[W/mK]conductivity air
+        TextBox61.Text = ro_air.ToString("0.000")   '[kg/m3] air
+        TextBox58.Text = nusselt.ToString("0")      '[W/mK]conductivity air
         TextBox57.Text = ka_air.ToString("0.000")   '[W/mK]conductivity air
         TextBox12.Text = Math.Round(d_od, 2).ToString
         TextBox13.Text = Math.Round(Reynolds, 0).ToString
@@ -538,8 +539,9 @@ Public Class Form1
         Calc_shaft()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown12.ValueChanged, NumericUpDown12.Enter, TabControl1.Enter, TabPage3.Click
         Calc_shaft()
+
     End Sub
 
     'Sleeve bearing calculation
@@ -666,35 +668,36 @@ Public Class Form1
         Calc_sleeve_bearing()
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown27.ValueChanged
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown27.ValueChanged, TabPage5.Enter
         Dim fric_coef, no_seals, pwr_seal As Double
         Dim force, torque, rpm, diam, omega As Double
 
         no_seals = NumericUpDown25.Value        '[-]
         fric_coef = NumericUpDown31.Value       '[-]
         force = NumericUpDown29.Value           '[N]
-        rpm = NumericUpDown32.Value             '[rpm]
+        rpm = NumericUpDown12.Value             '[rpm]
         diam = NumericUpDown27.Value / 1000     '[m]
 
         torque = force * fric_coef * (diam / 2) '[N.m]
         omega = rpm / 60 * 2 * PI               '[rad/s]
-        pwr_seal = omega * torque * no_seals       '[W]
+        pwr_seal = omega * torque * no_seals    '[W]
 
         TextBox45.Text = torque.ToString("0.00")
-        TextBox44.Text = omega.ToString("0.00")
+        TextBox44.Text = omega.ToString("0.0")
         TextBox43.Text = pwr_seal.ToString("0.0")
 
         '----------- shaft area -----------------
         Dim shaft_L, shaft_area, ht_coef, Pwr_air As Double
         Dim dt, dt_average As Double
 
-        ht_coef = 10                                    '[W/m2K]
+
+        Double.TryParse(TextBox15.Text, ht_coef) '[W/m2K]
         shaft_L = NumericUpDown28.Value / 1000          '[m]
         shaft_area = shaft_L * diam * PI                '[m2]
 
         '-------------- heat ---------------
         dt = 0
-        For i = 0 To 400
+        For i = 0 To 1400
             dt_average = dt / 2                             '[c]
             Pwr_air = dt_average * shaft_area * ht_coef     '[W]
 
@@ -704,9 +707,9 @@ Public Class Form1
             End If
 
             If (Pwr_air < pwr_seal) Then
-                dt += 0.05
+                dt += 0.1
             Else
-                dt -= 0.01
+                dt -= 0.5
             End If
         Next
 
@@ -715,6 +718,7 @@ Public Class Form1
         TextBox51.Text = Pwr_air.ToString("0.0")
         TextBox48.Text = dt.ToString("0.0")
         TextBox56.Text = ht_coef.ToString("0.0")
+        TextBox59.Text = rpm.ToString("00")
     End Sub
 
 End Class

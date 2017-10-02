@@ -70,6 +70,7 @@ Partial Class Form1
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Label76 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -89,6 +90,7 @@ Partial Class Form1
         Me.TextBox16 = New System.Windows.Forms.TextBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.TextBox61 = New System.Windows.Forms.TextBox()
         Me.TextBox58 = New System.Windows.Forms.TextBox()
         Me.TextBox57 = New System.Windows.Forms.TextBox()
         Me.Label36 = New System.Windows.Forms.Label()
@@ -189,6 +191,7 @@ Partial Class Form1
         Me.NumericUpDown28 = New System.Windows.Forms.NumericUpDown()
         Me.Label65 = New System.Windows.Forms.Label()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.TextBox59 = New System.Windows.Forms.TextBox()
         Me.Label75 = New System.Windows.Forms.Label()
         Me.TextBox45 = New System.Windows.Forms.TextBox()
         Me.NumericUpDown25 = New System.Windows.Forms.NumericUpDown()
@@ -218,6 +221,7 @@ Partial Class Form1
         Me.NumericUpDown36 = New System.Windows.Forms.NumericUpDown()
         Me.Label86 = New System.Windows.Forms.Label()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.TextBox60 = New System.Windows.Forms.TextBox()
         Me.Label67 = New System.Windows.Forms.Label()
         Me.TextBox42 = New System.Windows.Forms.TextBox()
         Me.Label63 = New System.Windows.Forms.Label()
@@ -233,10 +237,6 @@ Partial Class Form1
         Me.NumericUpDown34 = New System.Windows.Forms.NumericUpDown()
         Me.Label83 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.TextBox59 = New System.Windows.Forms.TextBox()
-        Me.TextBox60 = New System.Windows.Forms.TextBox()
-        Me.TextBox61 = New System.Windows.Forms.TextBox()
-        Me.Label76 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -826,6 +826,15 @@ Partial Class Form1
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'Label76
+        '
+        Me.Label76.AutoSize = True
+        Me.Label76.Location = New System.Drawing.Point(19, 600)
+        Me.Label76.Name = "Label76"
+        Me.Label76.Size = New System.Drawing.Size(363, 13)
+        Me.Label76.TabIndex = 16
+        Me.Label76.Text = "Cooling disk OD x t=  150x3, 200x5, 250x5, 315x7, 400x8, 500x10, 630x11 "
+        '
         'GroupBox5
         '
         Me.GroupBox5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
@@ -1031,6 +1040,14 @@ Partial Class Form1
         Me.GroupBox6.TabIndex = 16
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Disk data"
+        '
+        'TextBox61
+        '
+        Me.TextBox61.Location = New System.Drawing.Point(276, 129)
+        Me.TextBox61.Name = "TextBox61"
+        Me.TextBox61.Size = New System.Drawing.Size(77, 20)
+        Me.TextBox61.TabIndex = 31
+        Me.TextBox61.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TextBox58
         '
@@ -2063,7 +2080,7 @@ Partial Class Form1
         Me.NumericUpDown28.Size = New System.Drawing.Size(67, 22)
         Me.NumericUpDown28.TabIndex = 5
         Me.NumericUpDown28.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown28.Value = New Decimal(New Integer() {100, 0, 0, 0})
+        Me.NumericUpDown28.Value = New Decimal(New Integer() {150, 0, 0, 0})
         '
         'Label65
         '
@@ -2098,6 +2115,14 @@ Partial Class Form1
         Me.GroupBox10.TabIndex = 0
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Lip seal data"
+        '
+        'TextBox59
+        '
+        Me.TextBox59.Location = New System.Drawing.Point(227, 127)
+        Me.TextBox59.Name = "TextBox59"
+        Me.TextBox59.Size = New System.Drawing.Size(67, 20)
+        Me.TextBox59.TabIndex = 31
+        Me.TextBox59.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label75
         '
@@ -2420,6 +2445,14 @@ Partial Class Form1
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Stffing box data"
         '
+        'TextBox60
+        '
+        Me.TextBox60.Location = New System.Drawing.Point(226, 127)
+        Me.TextBox60.Name = "TextBox60"
+        Me.TextBox60.Size = New System.Drawing.Size(67, 20)
+        Me.TextBox60.TabIndex = 33
+        Me.TextBox60.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Label67
         '
         Me.Label67.AutoSize = True
@@ -2569,39 +2602,6 @@ Partial Class Form1
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox4.TabIndex = 23
         Me.PictureBox4.TabStop = False
-        '
-        'TextBox59
-        '
-        Me.TextBox59.Location = New System.Drawing.Point(227, 127)
-        Me.TextBox59.Name = "TextBox59"
-        Me.TextBox59.Size = New System.Drawing.Size(67, 20)
-        Me.TextBox59.TabIndex = 31
-        Me.TextBox59.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox60
-        '
-        Me.TextBox60.Location = New System.Drawing.Point(226, 127)
-        Me.TextBox60.Name = "TextBox60"
-        Me.TextBox60.Size = New System.Drawing.Size(67, 20)
-        Me.TextBox60.TabIndex = 33
-        Me.TextBox60.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox61
-        '
-        Me.TextBox61.Location = New System.Drawing.Point(276, 129)
-        Me.TextBox61.Name = "TextBox61"
-        Me.TextBox61.Size = New System.Drawing.Size(77, 20)
-        Me.TextBox61.TabIndex = 31
-        Me.TextBox61.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label76
-        '
-        Me.Label76.AutoSize = True
-        Me.Label76.Location = New System.Drawing.Point(19, 600)
-        Me.Label76.Name = "Label76"
-        Me.Label76.Size = New System.Drawing.Size(363, 13)
-        Me.Label76.TabIndex = 16
-        Me.Label76.Text = "Cooling disk OD x t=  150x3, 200x5, 250x5, 315x7, 400x8, 500x10, 630x11 "
         '
         'Form1
         '

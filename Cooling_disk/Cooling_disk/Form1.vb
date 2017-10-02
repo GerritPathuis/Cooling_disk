@@ -275,29 +275,37 @@ Public Class Form1
     End Sub
 
     Private Sub Calc_transfer()
-        Dim d_od, d_id, dia, speed, Reynolds, ht, ro, Ka, vel, mu, safety As Double
+        Dim d_od, d_id, dia, speed, Reynolds, ht, ro_air, ka_air, vel, mu, safety As Double
+        Dim nusselt As Double
 
         d_od = NumericUpDown9.Value / 1000      '[mm]->[m]
         d_id = NumericUpDown7.Value / 1000      '[mm]->[m]
         dia = (d_od + d_id) / 2
         speed = NumericUpDown12.Value           '[rpm]
         vel = speed / 60 * PI * d_od            '[m/s]
-        Ka = NumericUpDown13.Value              'conductivity air
-        ro = NumericUpDown15.Value / 1000       '[ro]
+
+        ka_air = 0.0257                             '[W/mK]conductivity air
+        ro_air = NumericUpDown15.Value              '[ro] air
+
         mu = 1.983 / 10 ^ 5                     'dyn visco air [Pa.s]
         safety = 0.3
 
-        Reynolds = ro * vel * dia / mu
+        Reynolds = ro_air * vel * dia / mu
 
-        If Reynolds > 2.4 * 10 ^ 5 Then
-            ht = 0.04 * Ka / dia * Reynolds ^ 0.8
-            ht *= (1 - safety)
+        'See Ain Shams Engineering journal (2014) 5, 177-185
+        If Reynolds >= 2000 And Reynolds < 1000000 Then
+            nusselt = 0.022 * Reynolds ^ 0.821
+            ht = nusselt * ka_air / dia     '[W/m2K]
         End If
 
-        '----- http://www.engineeringtoolbox.com/convective-heat-transfer-d_430.html ---
-        If ht <= 20 Then ht = 10         '[W/m2.k] @ standing still
+        If Reynolds < 2000 Then
+            ht = 2                     '[W/m2K]
+        End If
 
+        ht *= (1 - safety)
 
+        TextBox58.Text = nusselt.ToString("0")   '[W/mK]conductivity air
+        TextBox57.Text = ka_air.ToString("0.000")   '[W/mK]conductivity air
         TextBox12.Text = Math.Round(d_od, 2).ToString
         TextBox13.Text = Math.Round(Reynolds, 0).ToString
         TextBox14.Text = mu.ToString
@@ -530,7 +538,7 @@ Public Class Form1
         Calc_shaft()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown13.ValueChanged, NumericUpDown13.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown15.ValueChanged, NumericUpDown15.Enter, NumericUpDown12.ValueChanged, NumericUpDown12.Enter
         Calc_shaft()
     End Sub
 

@@ -293,27 +293,25 @@ Public Class Form1
         Reynolds = ro_air * vel * dia / mu
 
         'See Ain Shams Engineering journal (2014) 5, 177-185
-        If Reynolds >= 2000 And Reynolds < 1000000 Then
+        If Reynolds >= 1000 And Reynolds < 1000000 Then
             nusselt = 0.022 * Reynolds ^ 0.821
             ht = nusselt * ka_air / dia     '[W/m2K]
         End If
 
-        If Reynolds < 2000 Then
-            ht = 2                          '[W/m2K]
+        If Reynolds < 1000 Then
+            nusselt = 10
+            ht = nusselt * ka_air / dia     '[W/m2K]
         End If
-
-        ht *= (1 - safety)
 
         TextBox61.Text = ro_air.ToString("0.000")   '[kg/m3] air
         TextBox58.Text = nusselt.ToString("0")      '[W/mK]conductivity air
         TextBox57.Text = ka_air.ToString("0.000")   '[W/mK]conductivity air
-        TextBox12.Text = Math.Round(d_od, 2).ToString
-        TextBox13.Text = Math.Round(Reynolds, 0).ToString
+        TextBox12.Text = d_od.ToString("0.00")
+        TextBox13.Text = Reynolds.ToString("0")
         TextBox14.Text = mu.ToString
-        TextBox15.Text = Math.Round(ht, 0).ToString
+        TextBox15.Text = ht.ToString("0.0")
         TextBox19.Text = TextBox15.Text
         TextBox17.Text = Math.Round(vel, 1).ToString
-        TextBox18.Text = Math.Round(safety * 100, 1).ToString
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -541,7 +539,6 @@ Public Class Form1
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, NumericUpDown12.ValueChanged, NumericUpDown12.Enter, TabControl1.Enter, TabPage3.Click
         Calc_shaft()
-
     End Sub
 
     'Sleeve bearing calculation
@@ -690,10 +687,9 @@ Public Class Form1
         Dim shaft_L, shaft_area, ht_coef, Pwr_air As Double
         Dim dt, dt_average As Double
 
-
         Double.TryParse(TextBox15.Text, ht_coef) '[W/m2K]
         shaft_L = NumericUpDown28.Value / 1000          '[m]
-        shaft_area = shaft_L * diam * PI                '[m2]
+        shaft_area = 2 * shaft_L * diam * PI                '[m2]
 
         '-------------- heat ---------------
         dt = 0

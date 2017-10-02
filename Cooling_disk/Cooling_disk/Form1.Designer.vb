@@ -93,8 +93,6 @@ Partial Class Form1
         Me.TextBox61 = New System.Windows.Forms.TextBox()
         Me.TextBox58 = New System.Windows.Forms.TextBox()
         Me.TextBox57 = New System.Windows.Forms.TextBox()
-        Me.Label36 = New System.Windows.Forms.Label()
-        Me.TextBox18 = New System.Windows.Forms.TextBox()
         Me.TextBox17 = New System.Windows.Forms.TextBox()
         Me.TextBox14 = New System.Windows.Forms.TextBox()
         Me.Label35 = New System.Windows.Forms.Label()
@@ -979,9 +977,9 @@ Partial Class Form1
         'PictureBox2
         '
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(10, 269)
+        Me.PictureBox2.Location = New System.Drawing.Point(10, 242)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(508, 377)
+        Me.PictureBox2.Size = New System.Drawing.Size(539, 404)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox2.TabIndex = 21
         Me.PictureBox2.TabStop = False
@@ -1019,8 +1017,6 @@ Partial Class Form1
         Me.GroupBox6.Controls.Add(Me.TextBox61)
         Me.GroupBox6.Controls.Add(Me.TextBox58)
         Me.GroupBox6.Controls.Add(Me.TextBox57)
-        Me.GroupBox6.Controls.Add(Me.Label36)
-        Me.GroupBox6.Controls.Add(Me.TextBox18)
         Me.GroupBox6.Controls.Add(Me.TextBox17)
         Me.GroupBox6.Controls.Add(Me.TextBox14)
         Me.GroupBox6.Controls.Add(Me.Label35)
@@ -1036,7 +1032,7 @@ Partial Class Form1
         Me.GroupBox6.Controls.Add(Me.Label30)
         Me.GroupBox6.Location = New System.Drawing.Point(8, 19)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(450, 244)
+        Me.GroupBox6.Size = New System.Drawing.Size(450, 217)
         Me.GroupBox6.TabIndex = 16
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Disk data"
@@ -1064,24 +1060,6 @@ Partial Class Form1
         Me.TextBox57.Size = New System.Drawing.Size(77, 20)
         Me.TextBox57.TabIndex = 29
         Me.TextBox57.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label36
-        '
-        Me.Label36.AutoSize = True
-        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label36.Location = New System.Drawing.Point(16, 183)
-        Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(105, 16)
-        Me.Label36.TabIndex = 28
-        Me.Label36.Text = "Safety factor [%]"
-        '
-        'TextBox18
-        '
-        Me.TextBox18.Location = New System.Drawing.Point(276, 181)
-        Me.TextBox18.Name = "TextBox18"
-        Me.TextBox18.Size = New System.Drawing.Size(77, 20)
-        Me.TextBox18.TabIndex = 27
-        Me.TextBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TextBox17
         '
@@ -1113,7 +1091,7 @@ Partial Class Form1
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.Location = New System.Drawing.Point(16, 210)
+        Me.Label34.Location = New System.Drawing.Point(16, 183)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(170, 16)
         Me.Label34.TabIndex = 23
@@ -1151,7 +1129,6 @@ Partial Class Form1
         '
         Me.NumericUpDown12.BackColor = System.Drawing.Color.Yellow
         Me.NumericUpDown12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown12.Increment = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumericUpDown12.Location = New System.Drawing.Point(276, 47)
         Me.NumericUpDown12.Maximum = New Decimal(New Integer() {3000, 0, 0, 0})
         Me.NumericUpDown12.Name = "NumericUpDown12"
@@ -1162,7 +1139,7 @@ Partial Class Form1
         '
         'TextBox15
         '
-        Me.TextBox15.Location = New System.Drawing.Point(276, 208)
+        Me.TextBox15.Location = New System.Drawing.Point(276, 181)
         Me.TextBox15.Name = "TextBox15"
         Me.TextBox15.Size = New System.Drawing.Size(77, 20)
         Me.TextBox15.TabIndex = 16
@@ -2766,8 +2743,6 @@ Partial Class Form1
     Friend WithEvents Label35 As Label
     Friend WithEvents TextBox14 As TextBox
     Friend WithEvents TextBox17 As TextBox
-    Friend WithEvents Label36 As Label
-    Friend WithEvents TextBox18 As TextBox
     Friend WithEvents TextBox19 As TextBox
     Friend WithEvents TextBox20 As TextBox
     Friend WithEvents Label37 As Label

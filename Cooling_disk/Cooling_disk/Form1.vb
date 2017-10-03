@@ -724,12 +724,11 @@ Public Class Form1
 
         '-------------- heat ---------------
         dt = 0
-        For i = 0 To 1400
+        For i = 0 To 4000
             dt_average = dt / 2                         '[c]
             Pwr_air = dt_average * shaft_area * ht_coef '[W]
 
-
-            If Abs(Pwr_air - pwr_seal) < 0.1 Then
+            If Abs(Pwr_air - pwr_seal) < 0.2 Then
                 Exit For        'Speeding things up
             End If
 
@@ -752,11 +751,12 @@ Public Class Form1
         TextBox59.BackColor = CType(IIf(rpm > 60, Color.Red, Color.LightGreen), Color)
     End Sub
 
-    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown36.ValueChanged, NumericUpDown34.ValueChanged, NumericUpDown33.ValueChanged
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown36.ValueChanged, NumericUpDown34.ValueChanged, NumericUpDown33.ValueChanged, TabPage6.Enter
         Calc_transfer()
         Calc_stuff()
     End Sub
     Private Sub Calc_stuff()
+        Dim i As Integer
         Dim gland_pressure, fric_coef, pwr_gland, gland_l As Double
         Dim force, torque, rpm, diam, omega As Double
 
@@ -772,7 +772,6 @@ Public Class Form1
         omega = rpm / 60 * 2 * PI               '[rad/s]
         pwr_gland = omega * torque              '[W]
 
-
         '----------- shaft area -----------------
         Dim shaft_L, shaft_area, ht_coef, Pwr_air As Double
         Dim dt, dt_average As Double
@@ -783,17 +782,16 @@ Public Class Form1
 
         '-------------- heat ---------------
         dt = 0
-        For i = 0 To 1400
+        For i = 0 To 4000
             dt_average = dt / 2                         '[c]
             Pwr_air = dt_average * shaft_area * ht_coef '[W]
 
-
-            If Abs(Pwr_air - pwr_gland) < 1 Then
+            If Abs(Pwr_air - pwr_gland) < 0.2 Then
                 Exit For        'Speeding things up
             End If
 
             If (Pwr_air < pwr_gland) Then
-                dt += 1
+                dt += 0.1
             Else
                 dt -= 0.5
             End If
@@ -808,6 +806,7 @@ Public Class Form1
         TextBox54.Text = dt.ToString("0")
         TextBox55.Text = Pwr_air.ToString("0.0")
         TextBox68.Text = (diam * 1000).ToString("0")
+        TextBox69.Text = ht_coef.ToString("0.0")
         TextBox54.BackColor = CType(IIf(dt > 100, Color.Red, Color.LightGreen), Color)
     End Sub
 End Class

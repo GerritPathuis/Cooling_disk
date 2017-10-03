@@ -196,6 +196,7 @@ Partial Class Form1
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.TextBox67 = New System.Windows.Forms.TextBox()
         Me.TextBox41 = New System.Windows.Forms.TextBox()
         Me.Label46 = New System.Windows.Forms.Label()
         Me.Label64 = New System.Windows.Forms.Label()
@@ -225,6 +226,7 @@ Partial Class Form1
         Me.Label87 = New System.Windows.Forms.Label()
         Me.Label88 = New System.Windows.Forms.Label()
         Me.GroupBox15 = New System.Windows.Forms.GroupBox()
+        Me.TextBox68 = New System.Windows.Forms.TextBox()
         Me.TextBox53 = New System.Windows.Forms.TextBox()
         Me.Label84 = New System.Windows.Forms.Label()
         Me.Label85 = New System.Windows.Forms.Label()
@@ -247,8 +249,8 @@ Partial Class Form1
         Me.NumericUpDown34 = New System.Windows.Forms.NumericUpDown()
         Me.Label83 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.TextBox67 = New System.Windows.Forms.TextBox()
-        Me.TextBox68 = New System.Windows.Forms.TextBox()
+        Me.TextBox69 = New System.Windows.Forms.TextBox()
+        Me.Label95 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2158,6 +2160,14 @@ Partial Class Form1
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Shaft data"
         '
+        'TextBox67
+        '
+        Me.TextBox67.Location = New System.Drawing.Point(231, 22)
+        Me.TextBox67.Name = "TextBox67"
+        Me.TextBox67.Size = New System.Drawing.Size(67, 20)
+        Me.TextBox67.TabIndex = 12
+        Me.TextBox67.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'TextBox41
         '
         Me.TextBox41.Location = New System.Drawing.Point(231, 76)
@@ -2410,13 +2420,15 @@ Partial Class Form1
         'GroupBox16
         '
         Me.GroupBox16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.GroupBox16.Controls.Add(Me.Label95)
+        Me.GroupBox16.Controls.Add(Me.TextBox69)
         Me.GroupBox16.Controls.Add(Me.TextBox54)
         Me.GroupBox16.Controls.Add(Me.TextBox55)
         Me.GroupBox16.Controls.Add(Me.Label87)
         Me.GroupBox16.Controls.Add(Me.Label88)
         Me.GroupBox16.Location = New System.Drawing.Point(10, 399)
         Me.GroupBox16.Name = "GroupBox16"
-        Me.GroupBox16.Size = New System.Drawing.Size(315, 89)
+        Me.GroupBox16.Size = New System.Drawing.Size(315, 123)
         Me.GroupBox16.TabIndex = 26
         Me.GroupBox16.TabStop = False
         Me.GroupBox16.Text = "To air transferred power"
@@ -2424,7 +2436,7 @@ Partial Class Form1
         'TextBox54
         '
         Me.TextBox54.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox54.Location = New System.Drawing.Point(226, 20)
+        Me.TextBox54.Location = New System.Drawing.Point(231, 55)
         Me.TextBox54.Name = "TextBox54"
         Me.TextBox54.Size = New System.Drawing.Size(67, 22)
         Me.TextBox54.TabIndex = 12
@@ -2432,7 +2444,7 @@ Partial Class Form1
         '
         'TextBox55
         '
-        Me.TextBox55.Location = New System.Drawing.Point(226, 49)
+        Me.TextBox55.Location = New System.Drawing.Point(231, 84)
         Me.TextBox55.Name = "TextBox55"
         Me.TextBox55.Size = New System.Drawing.Size(67, 20)
         Me.TextBox55.TabIndex = 11
@@ -2442,7 +2454,7 @@ Partial Class Form1
         '
         Me.Label87.AutoSize = True
         Me.Label87.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label87.Location = New System.Drawing.Point(17, 20)
+        Me.Label87.Location = New System.Drawing.Point(22, 55)
         Me.Label87.Name = "Label87"
         Me.Label87.Size = New System.Drawing.Size(185, 16)
         Me.Label87.TabIndex = 8
@@ -2452,7 +2464,7 @@ Partial Class Form1
         '
         Me.Label88.AutoSize = True
         Me.Label88.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label88.Location = New System.Drawing.Point(16, 49)
+        Me.Label88.Location = New System.Drawing.Point(21, 84)
         Me.Label88.Name = "Label88"
         Me.Label88.Size = New System.Drawing.Size(174, 16)
         Me.Label88.TabIndex = 10
@@ -2473,6 +2485,14 @@ Partial Class Form1
         Me.GroupBox15.TabIndex = 25
         Me.GroupBox15.TabStop = False
         Me.GroupBox15.Text = "Shaft data"
+        '
+        'TextBox68
+        '
+        Me.TextBox68.Location = New System.Drawing.Point(231, 22)
+        Me.TextBox68.Name = "TextBox68"
+        Me.TextBox68.Size = New System.Drawing.Size(67, 20)
+        Me.TextBox68.TabIndex = 12
+        Me.TextBox68.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TextBox53
         '
@@ -2661,7 +2681,7 @@ Partial Class Form1
         Me.NumericUpDown33.Size = New System.Drawing.Size(67, 22)
         Me.NumericUpDown33.TabIndex = 19
         Me.NumericUpDown33.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown33.Value = New Decimal(New Integer() {65, 0, 0, 131072})
+        Me.NumericUpDown33.Value = New Decimal(New Integer() {25, 0, 0, 131072})
         '
         'Label82
         '
@@ -2707,21 +2727,24 @@ Partial Class Form1
         Me.PictureBox4.TabIndex = 23
         Me.PictureBox4.TabStop = False
         '
-        'TextBox67
+        'TextBox69
         '
-        Me.TextBox67.Location = New System.Drawing.Point(231, 22)
-        Me.TextBox67.Name = "TextBox67"
-        Me.TextBox67.Size = New System.Drawing.Size(67, 20)
-        Me.TextBox67.TabIndex = 12
-        Me.TextBox67.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TextBox69.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox69.Location = New System.Drawing.Point(231, 27)
+        Me.TextBox69.Name = "TextBox69"
+        Me.TextBox69.Size = New System.Drawing.Size(67, 22)
+        Me.TextBox69.TabIndex = 13
+        Me.TextBox69.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'TextBox68
+        'Label95
         '
-        Me.TextBox68.Location = New System.Drawing.Point(231, 22)
-        Me.TextBox68.Name = "TextBox68"
-        Me.TextBox68.Size = New System.Drawing.Size(67, 20)
-        Me.TextBox68.TabIndex = 12
-        Me.TextBox68.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Label95.AutoSize = True
+        Me.Label95.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label95.Location = New System.Drawing.Point(25, 30)
+        Me.Label95.Name = "Label95"
+        Me.Label95.Size = New System.Drawing.Size(170, 16)
+        Me.Label95.TabIndex = 14
+        Me.Label95.Text = "Heat transfer coef. [W/m2K]"
         '
         'Form1
         '
@@ -3036,4 +3059,6 @@ Partial Class Form1
     Friend WithEvents TextBox66 As TextBox
     Friend WithEvents TextBox67 As TextBox
     Friend WithEvents TextBox68 As TextBox
+    Friend WithEvents Label95 As Label
+    Friend WithEvents TextBox69 As TextBox
 End Class

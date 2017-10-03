@@ -692,7 +692,7 @@ Public Class Form1
         Calc_sleeve_bearing()
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown27.ValueChanged, TabPage5.Enter
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown28.ValueChanged, TabPage5.Enter
         Calc_transfer()
         Calc_seal()
     End Sub
@@ -704,7 +704,7 @@ Public Class Form1
         fric_coef = NumericUpDown31.Value       '[-]
         force = NumericUpDown29.Value           '[N]
         rpm = NumericUpDown12.Value             '[rpm]
-        diam = NumericUpDown27.Value / 1000     '[m]
+        diam = NumericUpDown1.Value / 1000      '[m]
 
         torque = force * fric_coef * (diam / 2) '[N.m]
         omega = rpm / 60 * 2 * PI               '[rad/s]
@@ -746,6 +746,68 @@ Public Class Form1
         TextBox48.Text = dt.ToString("0.0")
         TextBox56.Text = ht_coef.ToString("0.0")
         TextBox59.Text = rpm.ToString("00")
+        TextBox67.Text = (diam * 1000).ToString("0")
+
+        TextBox48.BackColor = CType(IIf(dt > 40, Color.Red, Color.LightGreen), Color)
+        TextBox59.BackColor = CType(IIf(rpm > 60, Color.Red, Color.LightGreen), Color)
     End Sub
 
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown36.ValueChanged, NumericUpDown34.ValueChanged, NumericUpDown33.ValueChanged
+        Calc_transfer()
+        Calc_stuff()
+    End Sub
+    Private Sub Calc_stuff()
+        Dim gland_pressure, fric_coef, pwr_gland, gland_l As Double
+        Dim force, torque, rpm, diam, omega As Double
+
+        gland_pressure = NumericUpDown34.Value * 10 ^ 5        '[-]
+        fric_coef = NumericUpDown33.Value       '[-]
+
+        rpm = NumericUpDown12.Value             '[rpm]
+        diam = NumericUpDown1.Value / 1000      '[m]
+        gland_l = NumericUpDown36.Value / 1000  '[m]
+        force = gland_pressure * diam * gland_l '[N]
+
+        torque = force * fric_coef * (diam / 2) '[N.m]
+        omega = rpm / 60 * 2 * PI               '[rad/s]
+        pwr_gland = omega * torque              '[W]
+
+
+        '----------- shaft area -----------------
+        Dim shaft_L, shaft_area, ht_coef, Pwr_air As Double
+        Dim dt, dt_average As Double
+
+        Double.TryParse(TextBox62.Text, ht_coef)        '[W/m2K]
+        shaft_L = NumericUpDown28.Value / 1000          '[m]
+        shaft_area = 2 * shaft_L * diam * PI            '[m2]
+
+        '-------------- heat ---------------
+        dt = 0
+        For i = 0 To 1400
+            dt_average = dt / 2                         '[c]
+            Pwr_air = dt_average * shaft_area * ht_coef '[W]
+
+
+            If Abs(Pwr_air - pwr_gland) < 1 Then
+                Exit For        'Speeding things up
+            End If
+
+            If (Pwr_air < pwr_gland) Then
+                dt += 1
+            Else
+                dt -= 0.5
+            End If
+        Next
+
+        TextBox42.Text = force.ToString("0")
+        TextBox49.Text = torque.ToString("0.0")
+        TextBox60.Text = rpm.ToString("0")
+        TextBox50.Text = omega.ToString("0.0")
+        TextBox52.Text = pwr_gland.ToString("0.0")
+        TextBox53.Text = shaft_area.ToString("0.000")
+        TextBox54.Text = dt.ToString("0")
+        TextBox55.Text = Pwr_air.ToString("0.0")
+        TextBox68.Text = (diam * 1000).ToString("0")
+        TextBox54.BackColor = CType(IIf(dt > 100, Color.Red, Color.LightGreen), Color)
+    End Sub
 End Class

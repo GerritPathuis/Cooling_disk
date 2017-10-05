@@ -221,6 +221,8 @@ Partial Class Form1
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.GroupBox16 = New System.Windows.Forms.GroupBox()
+        Me.Label95 = New System.Windows.Forms.Label()
+        Me.TextBox69 = New System.Windows.Forms.TextBox()
         Me.TextBox54 = New System.Windows.Forms.TextBox()
         Me.TextBox55 = New System.Windows.Forms.TextBox()
         Me.Label87 = New System.Windows.Forms.Label()
@@ -249,8 +251,6 @@ Partial Class Form1
         Me.NumericUpDown34 = New System.Windows.Forms.NumericUpDown()
         Me.Label83 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.TextBox69 = New System.Windows.Forms.TextBox()
-        Me.Label95 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -387,6 +387,7 @@ Partial Class Form1
         '
         'NumericUpDown4
         '
+        Me.NumericUpDown4.BackColor = System.Drawing.Color.Silver
         Me.NumericUpDown4.DecimalPlaces = 1
         Me.NumericUpDown4.Enabled = False
         Me.NumericUpDown4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -457,6 +458,7 @@ Partial Class Form1
         '
         'TextBox1
         '
+        Me.TextBox1.Enabled = False
         Me.TextBox1.Location = New System.Drawing.Point(230, 183)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(68, 20)
@@ -528,6 +530,8 @@ Partial Class Form1
         '
         'TextBox20
         '
+        Me.TextBox20.BackColor = System.Drawing.Color.Silver
+        Me.TextBox20.Enabled = False
         Me.TextBox20.Location = New System.Drawing.Point(229, 154)
         Me.TextBox20.Name = "TextBox20"
         Me.TextBox20.Size = New System.Drawing.Size(68, 20)
@@ -536,6 +540,7 @@ Partial Class Form1
         '
         'TextBox19
         '
+        Me.TextBox19.Enabled = False
         Me.TextBox19.Location = New System.Drawing.Point(229, 178)
         Me.TextBox19.Name = "TextBox19"
         Me.TextBox19.Size = New System.Drawing.Size(68, 20)
@@ -583,6 +588,7 @@ Partial Class Form1
         '
         'TextBox4
         '
+        Me.TextBox4.Enabled = False
         Me.TextBox4.Location = New System.Drawing.Point(229, 250)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(68, 20)
@@ -601,6 +607,7 @@ Partial Class Form1
         '
         'TextBox3
         '
+        Me.TextBox3.Enabled = False
         Me.TextBox3.Location = New System.Drawing.Point(229, 226)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(68, 20)
@@ -619,6 +626,7 @@ Partial Class Form1
         '
         'TextBox2
         '
+        Me.TextBox2.Enabled = False
         Me.TextBox2.Location = New System.Drawing.Point(229, 202)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(68, 20)
@@ -2433,6 +2441,25 @@ Partial Class Form1
         Me.GroupBox16.TabStop = False
         Me.GroupBox16.Text = "To air transferred power"
         '
+        'Label95
+        '
+        Me.Label95.AutoSize = True
+        Me.Label95.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label95.Location = New System.Drawing.Point(25, 30)
+        Me.Label95.Name = "Label95"
+        Me.Label95.Size = New System.Drawing.Size(170, 16)
+        Me.Label95.TabIndex = 14
+        Me.Label95.Text = "Heat transfer coef. [W/m2K]"
+        '
+        'TextBox69
+        '
+        Me.TextBox69.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox69.Location = New System.Drawing.Point(231, 27)
+        Me.TextBox69.Name = "TextBox69"
+        Me.TextBox69.Size = New System.Drawing.Size(67, 22)
+        Me.TextBox69.TabIndex = 13
+        Me.TextBox69.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'TextBox54
         '
         Me.TextBox54.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -2726,25 +2753,6 @@ Partial Class Form1
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox4.TabIndex = 23
         Me.PictureBox4.TabStop = False
-        '
-        'TextBox69
-        '
-        Me.TextBox69.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox69.Location = New System.Drawing.Point(231, 27)
-        Me.TextBox69.Name = "TextBox69"
-        Me.TextBox69.Size = New System.Drawing.Size(67, 22)
-        Me.TextBox69.TabIndex = 13
-        Me.TextBox69.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label95
-        '
-        Me.Label95.AutoSize = True
-        Me.Label95.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label95.Location = New System.Drawing.Point(25, 30)
-        Me.Label95.Name = "Label95"
-        Me.Label95.Size = New System.Drawing.Size(170, 16)
-        Me.Label95.TabIndex = 14
-        Me.Label95.Text = "Heat transfer coef. [W/m2K]"
         '
         'Form1
         '

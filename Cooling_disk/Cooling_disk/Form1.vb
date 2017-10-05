@@ -192,7 +192,7 @@ Public Class Form1
         ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged, TabPage1.Enter
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged, TabPage1.Enter, NumericUpDown12.ValueChanged
         Calc_transfer()
         Calc_shaft()
     End Sub
@@ -267,7 +267,7 @@ Public Class Form1
         TextBox6.Text = Math.Round(power_transferred, 0).ToString
 
         'Checks
-        TextBox5.BackColor = CType(IIf(Abs(power_conducted - power_transferred) > 30, Color.Red, Color.White), Color)
+        TextBox5.BackColor = CType(IIf(Abs(power_conducted - power_transferred) > 15, Color.Red, Color.White), Color)
         TextBox6.BackColor = TextBox5.BackColor
         NumericUpDown7.BackColor = CType(IIf(NumericUpDown7.Value <= NumericUpDown1.Value + 20, Color.Red, Color.Yellow), Color)
         NumericUpDown9.BackColor = CType(IIf(NumericUpDown9.Value <= NumericUpDown7.Value + 50, Color.Red, Color.Yellow), Color)
@@ -291,11 +291,14 @@ Public Class Form1
         mu = 1.846 / 10 ^ 5                     'dyn visco air [Pa.s] @ 300K
         safety = 0.3
 
-        Reynolds_disk = ro_air * vel * dia / mu
+        reynolds_disk = ro_air * vel * dia / mu
 
+
+        If reynolds_disk >= 500000 Then reynolds_disk = 500000
         'See Ain Shams Engineering journal (2014) 5, 177-185
-        If Reynolds_disk >= 1000 And Reynolds_disk < 1000000 Then
-            nusselt = 0.022 * Reynolds_disk ^ 0.821
+
+        If reynolds_disk >= 1000 And reynolds_disk < 500000 Then
+            nusselt = 0.022 * reynolds_disk ^ 0.821
             ht = nusselt * ka_air / dia     '[W/m2K]
         End If
 

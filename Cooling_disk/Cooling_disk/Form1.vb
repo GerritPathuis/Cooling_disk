@@ -187,8 +187,8 @@ Public Class Form1
         Next hh
 
         '----------------- prevent out of bounds------------------
-        ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 9, -1))   'C45
-        ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-pure
+        ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 10, -1))  'C45
+        ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-235 
         ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
         ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
     End Sub
@@ -268,6 +268,7 @@ Public Class Form1
         TextBox6.Text = Math.Round(power_transferred, 0).ToString
 
         'Checks
+        TextBox7.BackColor = CType(IIf(temp_disk > 100, Color.Red, Color.White), Color)
         TextBox5.BackColor = CType(IIf(Abs(power_conducted - power_transferred) > 15, Color.Red, Color.White), Color)
         TextBox6.BackColor = TextBox5.BackColor
         NumericUpDown7.BackColor = CType(IIf(NumericUpDown7.Value <= NumericUpDown1.Value + 20, Color.Red, Color.Yellow), Color)
@@ -295,10 +296,10 @@ Public Class Form1
         reynolds_disk = ro_air * vel * dia / mu
 
 
-        If reynolds_disk >= 500000 Then reynolds_disk = 500000
+        If reynolds_disk >= 1300000 Then reynolds_disk = 1300000
         'See Ain Shams Engineering journal (2014) 5, 177-185
 
-        If reynolds_disk >= 1000 And reynolds_disk < 500000 Then
+        If reynolds_disk >= 1000 And reynolds_disk <= 1300000 Then
             nusselt = 0.022 * reynolds_disk ^ 0.821
             ht = nusselt * ka_air / dia     '[W/m2K]
         End If

@@ -2760,6 +2760,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(671, 719)
         Me.Controls.Add(Me.TabControl1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
         Me.Text = "Cooling disk sizing, 02-10-2017"
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()

@@ -81,6 +81,7 @@ Public Class Form1
     'Explanation "Metal;Temp;[W/mK]"
     Public Shared mat_conductivity() As String = {
     "Admiralty Brass;20;111",
+    "Aluminum-235 (Troester) Kuhl Scheibe;20;145",
     "Aluminum-pure;93;215",
     "Aluminum-Bronze;20;76",
     "Antimony;20;19",

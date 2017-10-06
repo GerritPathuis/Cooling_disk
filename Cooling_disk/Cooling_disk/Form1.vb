@@ -501,7 +501,7 @@ Public Class Form1
             row += 1
             oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff."
             oTable.Cell(row, 2).Range.Text = TextBox20.Text
-            oTable.Cell(row, 3).Range.Text = "[W/mK]"
+            oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
             oTable.Cell(row, 2).Range.Text = TextBox15.Text

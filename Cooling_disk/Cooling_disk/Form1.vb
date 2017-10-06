@@ -160,10 +160,14 @@ Public Class Form1
         Dim words() As String
         Dim separators() As String = {";"}
         Dim hh As Integer
+        Dim Pro_user As String
 
         '----Noodzakelijk ivm punt en komma binnen mat_conductivity()--------
         Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
         Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+
+        Pro_user = Environment.UserName     'User name on the screen
+        Me.Text = Me.Text & " (" & Pro_user & ")"
 
         For hh = 0 To (transfer.Length - 1)
             TextBox8.Text &= transfer(hh) & vbCrLf

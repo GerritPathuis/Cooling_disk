@@ -1,15 +1,17 @@
 ﻿Imports System.Globalization
+Imports System.Text
 Imports System.IO
 Imports System.Math
 Imports System.Threading
+Imports System.Management
 Imports Word = Microsoft.Office.Interop.Word
 
 
 Public Class Form1
 
     '----------- directory's-----------
-    Dim dirpath_Eng As String = "N:\Engineering\VBasic\Fan_sizing_input\"
-    Dim dirpath_Rap As String = "N:\Engineering\VBasic\Fan_rapport_copy\"
+    Dim dirpath_Eng As String = "N:\Engineering\VBasic\Cool_disk_input\"
+    Dim dirpath_Rap As String = "N:\Engineering\VBasic\Cool_disk_copy\"
     Dim dirpath_Home As String = "C:\Temp\"
 
     Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
@@ -552,7 +554,7 @@ Public Class Form1
             oDoc.Bookmarks.Item("\endofdoc").Range.InsertParagraphAfter()
 
 
-            ufilename = "Fan_cooling_disk_report_" & TextBox9.Text & "_" & TextBox10.Text & DateTime.Now.ToString("_yyyy_MM_dd") & "(" & TextBox3.Text & ")" & ".docx"
+            ufilename = "Cool_disk_report_" & TextBox9.Text & "_" & TextBox10.Text & DateTime.Now.ToString("_yyyy_MM_dd") & "(" & TextBox3.Text & ")" & ".docx"
             If Directory.Exists(dirpath_Rap) Then
                 ufilename = dirpath_Rap & ufilename
             Else
@@ -831,5 +833,193 @@ Public Class Form1
         TextBox68.Text = (diam * 1000).ToString("0")
         TextBox69.Text = ht_coef.ToString("0.0")
         TextBox54.BackColor = CType(IIf(dt > 100, Color.Red, Color.LightGreen), Color)
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Save_tofile()
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Read_file()
+    End Sub
+    'Retrieve control settings and case_x_conditions from file
+    'Split the file string into 5 separate strings
+    'Each string represents a control type (combobox, checkbox,..)
+    'Then split up the secton string into part to read into the parameters
+    Private Sub Read_file()
+        Dim control_words(), words() As String
+        Dim i As Integer
+        Dim ttt As Double
+        Dim k As Integer = 0
+        Dim all_num, all_combo, all_check, all_radio As New List(Of Control)
+        Dim separators() As String = {";"}
+        Dim separators1() As String = {"BREAK"}
+
+        OpenFileDialog1.FileName = "Cool_disk*"
+        If Directory.Exists(dirpath_Eng) Then
+            OpenFileDialog1.InitialDirectory = dirpath_Eng  'used at VTK
+        Else
+            OpenFileDialog1.InitialDirectory = dirpath_Home  'used at home
+        End If
+
+        OpenFileDialog1.Title = "Open a Text File"
+        OpenFileDialog1.Filter = "VTK Files|*.vtk"
+
+        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim readText As String = File.ReadAllText(OpenFileDialog1.FileName, Encoding.ASCII)
+            control_words = readText.Split(separators1, StringSplitOptions.None) 'Split the read file content
+
+            '----- retrieve case condition-----
+            words = control_words(0).Split(separators, StringSplitOptions.None) 'Split first line the read file content
+            TextBox9.Text = words(0)                  'Project number
+            TextBox10.Text = words(1)                 'Item name
+            TextBox11.Text = words(2)                 'Fan type
+
+            '---------- terugzetten numeric controls -----------------
+            FindControlRecursive(all_num, Me, GetType(NumericUpDown))
+            all_num = all_num.OrderBy(Function(x) x.Name).ToList()                  'Alphabetical order
+            words = control_words(1).Split(separators, StringSplitOptions.None)     'Split the read file content
+            For i = 0 To all_num.Count - 1
+                Dim grbx As NumericUpDown = CType(all_num(i), NumericUpDown)
+                '--- dit deel voorkomt problemen bij het uitbreiden van het aantal numeric controls--
+                If (i < words.Length - 1) Then
+                    If Not (Double.TryParse(words(i + 1), ttt)) Then MessageBox.Show("Numeric controls conversion problem occured")
+                    If ttt <= grbx.Maximum And ttt >= grbx.Minimum Then
+                        grbx.Value = CDec(ttt)          'OK
+                    Else
+                        grbx.Value = grbx.Minimum       'NOK
+                        MessageBox.Show("Numeric controls value out of ousode min-max range, Minimum value is used")
+                    End If
+                Else
+                    MessageBox.Show("Warning last Numeric controls not found in file")  'NOK
+                End If
+            Next
+
+            '---------- terugzetten combobox controls -----------------
+            FindControlRecursive(all_combo, Me, GetType(ComboBox))
+            all_combo = all_combo.OrderBy(Function(x) x.Name).ToList()                  'Alphabetical order
+            words = control_words(2).Split(separators, StringSplitOptions.None) 'Split the read file content
+            For i = 0 To all_combo.Count - 1
+                Dim grbx As ComboBox = CType(all_combo(i), ComboBox)
+                '--- dit deel voorkomt problemen bij het uitbreiden van het aantal checkboxes--
+                If (i < words.Length - 1) Then
+                    grbx.SelectedItem = words(i + 1)
+                Else
+                    MessageBox.Show("Warning last combobox not found in file")
+                End If
+            Next
+
+            '---------- terugzetten checkbox controls -----------------
+            FindControlRecursive(all_check, Me, GetType(CheckBox))
+            all_check = all_check.OrderBy(Function(x) x.Name).ToList()                  'Alphabetical order
+            words = control_words(3).Split(separators, StringSplitOptions.None) 'Split the read file content
+            For i = 0 To all_check.Count - 1
+                Dim grbx As CheckBox = CType(all_check(i), CheckBox)
+                '--- dit deel voorkomt problemen bij het uitbreiden van het aantal checkboxes--
+                If (i < words.Length - 1) Then
+                    Boolean.TryParse(words(i + 1), grbx.Checked)
+                Else
+                    MessageBox.Show("Warning last checkbox not found in file")
+                End If
+            Next
+
+            '---------- terugzetten radiobuttons controls -----------------
+            FindControlRecursive(all_radio, Me, GetType(RadioButton))
+            all_radio = all_radio.OrderBy(Function(x) x.Name).ToList()                  'Alphabetical order
+            words = control_words(4).Split(separators, StringSplitOptions.None) 'Split the read file content
+            For i = 0 To all_radio.Count - 1
+                Dim grbx As RadioButton = CType(all_radio(i), RadioButton)
+                '--- dit deel voorkomt problemen bij het uitbreiden van het aantal radiobuttons--
+                If (i < words.Length - 1) Then
+                    Boolean.TryParse(words(i + 1), grbx.Checked)
+                Else
+                    MessageBox.Show("Warning last radiobutton not found in file")
+                End If
+            Next
+
+        End If
+    End Sub
+    '----------- Find all controls on form1------
+    'Nota Bene, sequence of found control may be differen, List sort is required
+    Public Shared Function FindControlRecursive(ByVal list As List(Of Control), ByVal parent As Control, ByVal ctrlType As System.Type) As List(Of Control)
+        If parent Is Nothing Then Return list
+
+        If parent.GetType Is ctrlType Then
+            list.Add(parent)
+        End If
+        For Each child As Control In parent.Controls
+            FindControlRecursive(list, child, ctrlType)
+        Next
+        Return list
+    End Function
+
+    'Save control settings and case_x_conditions to file
+    Private Sub Save_tofile()
+        Dim temp_string As String
+        Dim filename As String = "Cool_disk_select_" & TextBox9.Text & "_" & TextBox10.Text & "_" & TextBox11.Text & DateTime.Now.ToString("_yyyy_MM_dd") & ".vtk"
+        Dim all_num, all_combo, all_check, all_radio As New List(Of Control)
+        Dim i As Integer
+
+        If String.IsNullOrEmpty(TextBox10.Text) Then TextBox10.Text = "-"
+        If String.IsNullOrEmpty(TextBox11.Text) Then TextBox11.Text = "-"
+
+        temp_string = TextBox9.Text & ";" & TextBox10.Text & ";" & TextBox11.Text & ";"
+        temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
+
+        '-------- find all numeric, combobox, checkbox and radiobutton controls -----------------
+        FindControlRecursive(all_num, Me, GetType(NumericUpDown))   'Find the control
+        all_num = all_num.OrderBy(Function(x) x.Name).ToList()      'Alphabetical order
+        For i = 0 To all_num.Count - 1
+            Dim grbx As NumericUpDown = CType(all_num(i), NumericUpDown)
+            temp_string &= grbx.Value.ToString & ";"
+        Next
+        temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
+
+        '-------- find all combobox controls and save
+        FindControlRecursive(all_combo, Me, GetType(ComboBox))      'Find the control
+        all_combo = all_combo.OrderBy(Function(x) x.Name).ToList()   'Alphabetical order
+        For i = 0 To all_combo.Count - 1
+            Dim grbx As ComboBox = CType(all_combo(i), ComboBox)
+            temp_string &= grbx.SelectedItem.ToString & ";"
+        Next
+        temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
+
+        '-------- find all checkbox controls and save
+        FindControlRecursive(all_check, Me, GetType(CheckBox))      'Find the control
+        all_check = all_check.OrderBy(Function(x) x.Name).ToList()  'Alphabetical order
+        For i = 0 To all_check.Count - 1
+            Dim grbx As CheckBox = CType(all_check(i), CheckBox)
+            temp_string &= grbx.Checked.ToString & ";"
+        Next
+        temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
+
+        '-------- find all radio controls and save
+        FindControlRecursive(all_radio, Me, GetType(RadioButton))   'Find the control
+        all_radio = all_radio.OrderBy(Function(x) x.Name).ToList()  'Alphabetical order
+        For i = 0 To all_radio.Count - 1
+            Dim grbx As RadioButton = CType(all_radio(i), RadioButton)
+            temp_string &= grbx.Checked.ToString & ";"
+        Next
+        temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
+
+        '---- if path not exist then create one----------
+        Try
+            If (Not System.IO.Directory.Exists(dirpath_Home)) Then System.IO.Directory.CreateDirectory(dirpath_Home)
+            If (Not System.IO.Directory.Exists(dirpath_Eng)) Then System.IO.Directory.CreateDirectory(dirpath_Eng)
+            If (Not System.IO.Directory.Exists(dirpath_Rap)) Then System.IO.Directory.CreateDirectory(dirpath_Rap)
+        Catch ex As Exception
+        End Try
+
+        Try
+            If CInt(temp_string.Length.ToString) > 100 Then      'String may be empty
+                If Directory.Exists(dirpath_Eng) Then
+                    File.WriteAllText(dirpath_Eng & filename, temp_string, Encoding.ASCII)      'used at VTK
+                Else
+                    File.WriteAllText(dirpath_Home & filename, temp_string, Encoding.ASCII)     'used at home
+                End If
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Line 5062, " & ex.Message)  ' Show the exception's message.
+        End Try
     End Sub
 End Class

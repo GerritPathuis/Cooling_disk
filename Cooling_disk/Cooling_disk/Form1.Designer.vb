@@ -261,6 +261,10 @@ Partial Class Form1
         Me.Label96 = New System.Windows.Forms.Label()
         Me.TextBox71 = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -793,7 +797,7 @@ Partial Class Form1
         Me.GroupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox3.Controls.Add(Me.NumericUpDown14)
         Me.GroupBox3.Controls.Add(Me.Label18)
-        Me.GroupBox3.Location = New System.Drawing.Point(345, 148)
+        Me.GroupBox3.Location = New System.Drawing.Point(345, 220)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(305, 61)
         Me.GroupBox3.TabIndex = 12
@@ -831,7 +835,7 @@ Partial Class Form1
         Me.GroupBox4.Controls.Add(Me.TextBox6)
         Me.GroupBox4.Controls.Add(Me.Label16)
         Me.GroupBox4.Controls.Add(Me.Label17)
-        Me.GroupBox4.Location = New System.Drawing.Point(345, 215)
+        Me.GroupBox4.Location = New System.Drawing.Point(345, 287)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(305, 128)
         Me.GroupBox4.TabIndex = 13
@@ -911,6 +915,8 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Button8)
+        Me.TabPage1.Controls.Add(Me.Button7)
         Me.TabPage1.Controls.Add(Me.TextBox70)
         Me.TabPage1.Controls.Add(Me.Label76)
         Me.TabPage1.Controls.Add(Me.GroupBox5)
@@ -930,7 +936,7 @@ Partial Class Form1
         '
         'TextBox70
         '
-        Me.TextBox70.Location = New System.Drawing.Point(345, 356)
+        Me.TextBox70.Location = New System.Drawing.Point(345, 428)
         Me.TextBox70.Multiline = True
         Me.TextBox70.Name = "TextBox70"
         Me.TextBox70.Size = New System.Drawing.Size(305, 100)
@@ -985,6 +991,7 @@ Partial Class Form1
         Me.TextBox10.Name = "TextBox10"
         Me.TextBox10.Size = New System.Drawing.Size(164, 20)
         Me.TextBox10.TabIndex = 13
+        Me.TextBox10.Text = "a"
         '
         'Label24
         '
@@ -1002,6 +1009,7 @@ Partial Class Form1
         Me.TextBox11.Name = "TextBox11"
         Me.TextBox11.Size = New System.Drawing.Size(164, 20)
         Me.TextBox11.TabIndex = 11
+        Me.TextBox11.Text = "b"
         '
         'Label25
         '
@@ -1015,7 +1023,7 @@ Partial Class Form1
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(345, 508)
+        Me.Button2.Location = New System.Drawing.Point(345, 549)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(124, 23)
         Me.Button2.TabIndex = 14
@@ -2904,6 +2912,30 @@ Partial Class Form1
         Me.PictureBox1.TabIndex = 24
         Me.PictureBox1.TabStop = False
         '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.Button7.Location = New System.Drawing.Point(390, 174)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(220, 40)
+        Me.Button7.TabIndex = 18
+        Me.Button7.Text = "Save input"
+        Me.Button7.UseVisualStyleBackColor = False
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.Button8.Location = New System.Drawing.Point(390, 139)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(220, 23)
+        Me.Button8.TabIndex = 19
+        Me.Button8.Text = "Retrieve input"
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3233,4 +3265,8 @@ Partial Class Form1
     Friend WithEvents Label98 As Label
     Friend WithEvents TextBox73 As TextBox
     Friend WithEvents TextBox72 As TextBox
+    Friend WithEvents Button8 As Button
+    Friend WithEvents Button7 As Button
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

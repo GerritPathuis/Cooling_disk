@@ -159,9 +159,9 @@ Public Class Form1
         Dim separators() As String = {";"}
         Dim hh As Integer
 
-        '------------Geeft problemen binnen VTK---------------
-        'Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
-        'Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+        '----Noodzakelijk ivm punt en komma binnen mat_conductivity()--------
+        Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
+        Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
 
         For hh = 0 To (transfer.Length - 1)
             TextBox8.Text &= transfer(hh) & vbCrLf
@@ -211,8 +211,8 @@ Public Class Form1
 
     Private Sub Calc_shaft()
         Dim shaft_OD, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
-        Dim d_no, d_od, d_hub_od, d_Heat_trans, d_thick, fin_height As Double
-        Dim d_area_actual, d_area_calc, area_factor1, area_factor2, area_eff, d_coeff As Double
+        Dim d_no, d_od, d_hub_od, d_Heat_transf, d_thick, fin_height As Double
+        Dim d_area_actual, d_area_calc, area_factor1, area_factor2, fin_eff, Conduct As Double
         Dim power_conducted, power_transferred As Double
         Dim dT_conduct, dT_transfer As Double
         Dim temp_fan, temp_amb, temp_disk As Double
@@ -233,20 +233,21 @@ Public Class Form1
 
         '-------------- disk-----------------
         d_no = NumericUpDown11.Value    'Number of disks
-        d_od = NumericUpDown9.Value / 1000
-        d_hub_od = NumericUpDown7.Value / 1000
-        d_thick = NumericUpDown10.Value / 1000
+        d_od = NumericUpDown9.Value / 1000      '[m]
+        d_hub_od = NumericUpDown7.Value / 1000  '[m]
+        d_thick = NumericUpDown10.Value / 1000  '[m]
 
-        Double.TryParse(TextBox15.Text, d_Heat_trans)
-        Double.TryParse(TextBox20.Text, d_coeff)
-        d_area_actual = d_no * 2 * Math.PI / 4 * (d_od ^ 2 - d_hub_od ^ 2)  'Natural log !!
+        Double.TryParse(TextBox15.Text, d_Heat_transf)   '[W/m2k]
+        Double.TryParse(TextBox20.Text, Conduct)        '[W/mk]
+        d_area_actual = d_no * 2 * Math.PI / 4 * (d_od ^ 2 - d_hub_od ^ 2)
 
         fin_height = (d_od - d_hub_od) / 2
-        area_factor1 = fin_height * (d_Heat_trans / (d_coeff * 0.5 * d_thick)) ^ 0.5
-        area_factor2 = 1 + 0.35 * Math.Log(d_od / d_hub_od)
+        area_factor1 = fin_height * (d_Heat_transf / (Conduct * 0.5 * d_thick)) ^ 0.5
+        area_factor2 = 1 + 0.35 * Math.Log(d_od / d_hub_od) 'Natural log !!
+        'MessageBox.Show(Conduct.ToString)
 
-        area_eff = Math.Tanh(area_factor1 * area_factor2) / (area_factor1 * area_factor2)
-        d_area_calc = d_area_actual * area_eff
+        fin_eff = Math.Tanh(area_factor1 * area_factor2) / (area_factor1 * area_factor2)
+        d_area_calc = d_area_actual * fin_eff
 
         '-------------- heat ---------------
         If temp_disk > 0 Then        'Preventing VB start problems!!
@@ -255,7 +256,7 @@ Public Class Form1
                 dT_transfer = temp_disk - temp_amb
 
                 power_conducted = Shaft_area * dT_conduct * F_coeff / F_length
-                power_transferred = dT_transfer * d_area_calc * d_Heat_trans
+                power_transferred = dT_transfer * d_area_calc * d_Heat_transf
 
                 If Abs(power_conducted - power_transferred) < 2 Then
                     Exit For        'Speeding things up
@@ -273,7 +274,11 @@ Public Class Form1
 
         TextBox1.Text = Shaft_area.ToString("0.000")
         TextBox2.Text = d_area_actual.ToString("0.00")
-        TextBox3.Text = Math.Round(area_eff, 3).ToString
+
+        TextBox72.Text = area_factor1.ToString("0.00")
+        TextBox73.Text = area_factor2.ToString("0.00")
+
+        TextBox3.Text = Math.Round(fin_eff, 3).ToString
         TextBox4.Text = Math.Round(d_area_calc, 2).ToString
         TextBox5.Text = Math.Round(power_conducted, 0).ToString
         TextBox6.Text = Math.Round(power_transferred, 0).ToString

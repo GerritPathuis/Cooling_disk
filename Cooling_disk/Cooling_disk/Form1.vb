@@ -19,7 +19,7 @@ Public Class Form1
    "convection terms for three nominal speeds.",
    "For the given experiment, conduction And radiation were determined to be negligible.",
    "Rotor rotational speeds of 342, 684 And 1025 rpm yielded fin convection heat transfer",
-   "coefficients of 27.0, 52.7, 78.3 Wm-2 K-1, respectively, indicating a linear relationship.",
+   "coefficients of 27.0, 52.7, 78.3 W/m2.K1, respectively, indicating a linear relationship.",
    "At the slowest speed, the internal convection represented 45.5% of the total heat transfer, increasing to 55.4% at 1025 rpm.",
    "The flow aspect of the experiment involved the determination of the velocity field through the internal passages formed by the radial fins.",
    "Utilizing PIV, the phase-averaged velocity field was determined.",
@@ -64,6 +64,13 @@ Public Class Form1
     "ISO 3448 VG 46; 46; 861",
     "ISO 3448 VG 68; 68; 865",
     "ISO 3448 VG 100; 100; 869"}
+
+    Public Shared oil_temp() As String = {
+    "Oil temperatures",
+    "Mineral oil operate @ 110-126 °C",
+    "Full synthetic operate @ 110- 148 °C",
+    "Keep the shaft temp below 100 °C",
+    "  "}
 
     'Seal material type; Young modulus [GPa]
     'From https://www.matbase.com/material-categories/natural-and-synthetic-polymers/
@@ -168,12 +175,16 @@ Public Class Form1
             TextBox40.Text &= sleeve_LD_ratio(hh) & vbCrLf
         Next hh
 
+
+        For hh = 0 To (oil_temp.Length - 1)
+            TextBox70.Text &= oil_temp(hh) & vbCrLf
+        Next hh
+
         '-------Fill combobox1,2 and 5 Steel selection------------------
         For hh = 0 To (mat_conductivity.Length - 2)  'Fill combobox3 with steel data
             words = mat_conductivity(hh).Split(separators, StringSplitOptions.None)
             ComboBox1.Items.Add(words(0))
             ComboBox2.Items.Add(words(0))
-
         Next hh
 
         For hh = 0 To (b_house.Length - 1)            'Fill combobox3 with steel data
@@ -280,6 +291,8 @@ Public Class Form1
         Dim ro_air, ka_air, vel, vel_shaft, mu, safety As Double
         Dim nusselt, nusselt_shaft, reynolds_disk, reynolds_shaft As Double
         Dim ht, ht_shaft As Double
+
+        NumericUpDown12.Increment = CDec(IIf(NumericUpDown12.Value >= 50, 10, 1))     'Speed [rpm]
 
         disk_od = NumericUpDown9.Value / 1000   '[mm]->[m]
         d_hub = NumericUpDown7.Value / 1000     '[mm]->[m]
@@ -435,11 +448,11 @@ Public Class Form1
             row += 1
             oTable.Cell(row, 1).Range.Text = "Heat conductivity coeff"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 1).ToString
-            oTable.Cell(row, 3).Range.Text = "[W/mK]"
+            oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Max fan operating temp"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown5.Value, 0).ToString
-            oTable.Cell(row, 3).Range.Text = "[c]"
+            oTable.Cell(row, 3).Range.Text = "[°C]"
 
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft cross section"
@@ -477,17 +490,17 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown7.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Uniform disk thcknes"
+            oTable.Cell(row, 1).Range.Text = "Uniform disk thickness"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown10.Value, 0).ToString
-            oTable.Cell(row, 3).Range.Text = "[W/mK]"
+            oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff"
+            oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff."
             oTable.Cell(row, 2).Range.Text = TextBox20.Text
             oTable.Cell(row, 3).Range.Text = "[W/mK]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
             oTable.Cell(row, 2).Range.Text = TextBox15.Text
-            oTable.Cell(row, 3).Range.Text = "[W/m2K]"
+            oTable.Cell(row, 3).Range.Text = "[W/m2.K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Effective disk area"
             oTable.Cell(row, 2).Range.Text = TextBox4.Text
@@ -512,7 +525,7 @@ Public Class Form1
             row += 1
             oTable.Cell(row, 1).Range.Text = "Ambient temperature"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown14.Value, 0).ToString
-            oTable.Cell(row, 3).Range.Text = "[°c]"
+            oTable.Cell(row, 3).Range.Text = "[°C]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Conducted power"
             oTable.Cell(row, 2).Range.Text = TextBox5.Text
@@ -524,7 +537,7 @@ Public Class Form1
             row += 1
             oTable.Cell(row, 1).Range.Text = "Calculated shaft temperature"
             oTable.Cell(row, 2).Range.Text = TextBox7.Text
-            oTable.Cell(row, 3).Range.Text = "[°c]"
+            oTable.Cell(row, 3).Range.Text = "[°C]"
             row += 1
 
             oTable.Columns(1).Width = oWord.InchesToPoints(2.0)   'Change width of columns
@@ -617,7 +630,7 @@ Public Class Form1
 
         rps = NumericUpDown16.Value / 60            '[rotation per second]
         speed = Math.PI * dia * rps                 '[m/s]
-        TextBox22.Text = speed.ToString("0.0")
+        TextBox22.Text = speed.ToString("0.00")
 
         '----- RENK clearance---
         If speed < 10 Then  'Speed < 10 [m/s]
@@ -645,7 +658,7 @@ Public Class Form1
         clear_ratio = 1 / (2 * renk_clear)
         TextBox36.Text = clear_ratio.ToString("0.0")
         clearance = (dia * 0.5) / clear_ratio
-        TextBox21.Text = (clearance * 1000).ToString("0")   '[mu]
+        TextBox21.Text = (clearance * 1000).ToString("0.00")   '[mm]
 
         '--- oil film pressure----
         oil_pr = load_N / (dia * b_length)                  '[Pa]

@@ -447,7 +447,7 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown2.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Length casing-cooling disk"
+            oTable.Cell(row, 1).Range.Text = "Distance casing-cooling disk"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown3.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
@@ -536,7 +536,7 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = TextBox5.Text
             oTable.Cell(row, 3).Range.Text = "[W]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "To air transferred power"
+            oTable.Cell(row, 1).Range.Text = "Power to air transferred"
             oTable.Cell(row, 2).Range.Text = TextBox6.Text
             oTable.Cell(row, 3).Range.Text = "[W]"
             row += 1

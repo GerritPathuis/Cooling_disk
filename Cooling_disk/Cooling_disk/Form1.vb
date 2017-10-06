@@ -15,6 +15,7 @@ Public Class Form1
     Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
    "analytical methods for better understanding of convection through the fins of a brake rotor",
    "The experimental approach involved two aspects, assessment of both heat transfer And fluid motion",
+   " ",
    "A transient experiment was conducted to quantify the internal (fin) convection And external (rotor surface)",
    "convection terms for three nominal speeds.",
    "For the given experiment, conduction And radiation were determined to be negligible.",
@@ -25,7 +26,6 @@ Public Class Form1
    "Utilizing PIV, the phase-averaged velocity field was determined.",
    "A number of detrimental flow patterns were observed, notably entrance effects",
    "and the presence of recirculation on the suction side of the fins"}
-
 
     Public Shared howto() As String = {"How to ..",
    "Iterate the grey bearing house temperature",

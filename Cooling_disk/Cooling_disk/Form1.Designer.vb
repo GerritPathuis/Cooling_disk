@@ -72,6 +72,7 @@ Partial Class Form1
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TextBox70 = New System.Windows.Forms.TextBox()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
@@ -251,7 +252,10 @@ Partial Class Form1
         Me.NumericUpDown34 = New System.Windows.Forms.NumericUpDown()
         Me.Label83 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.TextBox70 = New System.Windows.Forms.TextBox()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.TextBox71 = New System.Windows.Forms.TextBox()
+        Me.Label96 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -306,6 +310,8 @@ Partial Class Form1
         CType(Me.NumericUpDown33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown34, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage7.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'NumericUpDown1
@@ -848,6 +854,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Controls.Add(Me.TabPage6)
+        Me.TabControl1.Controls.Add(Me.TabPage7)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -873,6 +880,14 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'TextBox70
+        '
+        Me.TextBox70.Location = New System.Drawing.Point(345, 356)
+        Me.TextBox70.Multiline = True
+        Me.TextBox70.Name = "TextBox70"
+        Me.TextBox70.Size = New System.Drawing.Size(305, 100)
+        Me.TextBox70.TabIndex = 17
         '
         'Label76
         '
@@ -1006,7 +1021,7 @@ Partial Class Form1
         Me.TextBox8.Location = New System.Drawing.Point(8, 6)
         Me.TextBox8.Multiline = True
         Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(647, 183)
+        Me.TextBox8.Size = New System.Drawing.Size(647, 209)
         Me.TextBox8.TabIndex = 3
         '
         'TabPage3
@@ -2789,13 +2804,47 @@ Partial Class Form1
         Me.PictureBox4.TabIndex = 23
         Me.PictureBox4.TabStop = False
         '
-        'TextBox70
+        'TabPage7
         '
-        Me.TextBox70.Location = New System.Drawing.Point(345, 356)
-        Me.TextBox70.Multiline = True
-        Me.TextBox70.Name = "TextBox70"
-        Me.TextBox70.Size = New System.Drawing.Size(305, 100)
-        Me.TextBox70.TabIndex = 17
+        Me.TabPage7.Controls.Add(Me.Label96)
+        Me.TabPage7.Controls.Add(Me.TextBox71)
+        Me.TabPage7.Controls.Add(Me.PictureBox1)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage7.Size = New System.Drawing.Size(663, 693)
+        Me.TabPage7.TabIndex = 6
+        Me.TabPage7.Text = "C. disk size"
+        Me.TabPage7.UseVisualStyleBackColor = True
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 66)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(657, 624)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 24
+        Me.PictureBox1.TabStop = False
+        '
+        'TextBox71
+        '
+        Me.TextBox71.Location = New System.Drawing.Point(8, 20)
+        Me.TextBox71.Name = "TextBox71"
+        Me.TextBox71.Size = New System.Drawing.Size(327, 20)
+        Me.TextBox71.TabIndex = 34
+        Me.TextBox71.Text = "http://www.troester-maschinenbau.de"
+        '
+        'Label96
+        '
+        Me.Label96.AutoSize = True
+        Me.Label96.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label96.Location = New System.Drawing.Point(24, 349)
+        Me.Label96.Name = "Label96"
+        Me.Label96.Size = New System.Drawing.Size(203, 16)
+        Me.Label96.TabIndex = 35
+        Me.Label96.Text = "Alu 235, max 70 [m/s], passing k6"
         '
         'Form1
         '
@@ -2805,7 +2854,7 @@ Partial Class Form1
         Me.Controls.Add(Me.TabControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
-        Me.Text = "Cooling disk sizing, 02-10-2017"
+        Me.Text = "Cooling disk sizing, 06-10-2017"
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2881,6 +2930,9 @@ Partial Class Form1
         CType(Me.NumericUpDown33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown34, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3114,4 +3166,8 @@ Partial Class Form1
     Friend WithEvents Label95 As Label
     Friend WithEvents TextBox69 As TextBox
     Friend WithEvents TextBox70 As TextBox
+    Friend WithEvents TabPage7 As TabPage
+    Friend WithEvents TextBox71 As TextBox
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Label96 As Label
 End Class

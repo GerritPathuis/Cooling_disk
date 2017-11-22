@@ -76,6 +76,8 @@ Partial Class Form1
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
         Me.TextBox70 = New System.Windows.Forms.TextBox()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
@@ -246,7 +248,6 @@ Partial Class Form1
         Me.TextBox42 = New System.Windows.Forms.TextBox()
         Me.Label63 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
-        Me.Label77 = New System.Windows.Forms.Label()
         Me.Label78 = New System.Windows.Forms.Label()
         Me.TextBox50 = New System.Windows.Forms.TextBox()
         Me.Label80 = New System.Windows.Forms.Label()
@@ -261,8 +262,6 @@ Partial Class Form1
         Me.Label96 = New System.Windows.Forms.Label()
         Me.TextBox71 = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Button7 = New System.Windows.Forms.Button()
-        Me.Button8 = New System.Windows.Forms.Button()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -933,6 +932,26 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.Button8.Location = New System.Drawing.Point(390, 139)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(220, 23)
+        Me.Button8.TabIndex = 19
+        Me.Button8.Text = "Retrieve input"
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.Button7.Location = New System.Drawing.Point(390, 174)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(220, 40)
+        Me.Button7.TabIndex = 18
+        Me.Button7.Text = "Save input"
+        Me.Button7.UseVisualStyleBackColor = False
         '
         'TextBox70
         '
@@ -2695,7 +2714,6 @@ Partial Class Form1
         Me.GroupBox13.Controls.Add(Me.TextBox42)
         Me.GroupBox13.Controls.Add(Me.Label63)
         Me.GroupBox13.Controls.Add(Me.TextBox49)
-        Me.GroupBox13.Controls.Add(Me.Label77)
         Me.GroupBox13.Controls.Add(Me.Label78)
         Me.GroupBox13.Controls.Add(Me.TextBox50)
         Me.GroupBox13.Controls.Add(Me.Label80)
@@ -2707,7 +2725,7 @@ Partial Class Form1
         Me.GroupBox13.Controls.Add(Me.Label83)
         Me.GroupBox13.Location = New System.Drawing.Point(10, 15)
         Me.GroupBox13.Name = "GroupBox13"
-        Me.GroupBox13.Size = New System.Drawing.Size(313, 241)
+        Me.GroupBox13.Size = New System.Drawing.Size(313, 219)
         Me.GroupBox13.TabIndex = 24
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Stffing box data"
@@ -2756,16 +2774,6 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 29
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label77
-        '
-        Me.Label77.AutoSize = True
-        Me.Label77.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label77.Location = New System.Drawing.Point(13, 209)
-        Me.Label77.Name = "Label77"
-        Me.Label77.Size = New System.Drawing.Size(140, 16)
-        Me.Label77.TabIndex = 26
-        Me.Label77.Text = "Shaft surface Ra= 0.32"
-        '
         'Label78
         '
         Me.Label78.AutoSize = True
@@ -2808,9 +2816,9 @@ Partial Class Form1
         Me.Label81.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label81.Location = New System.Drawing.Point(14, 125)
         Me.Label81.Name = "Label81"
-        Me.Label81.Size = New System.Drawing.Size(111, 16)
+        Me.Label81.Size = New System.Drawing.Size(114, 16)
         Me.Label81.TabIndex = 22
-        Me.Label81.Text = "Disk speed [rpm]"
+        Me.Label81.Text = "Shaft speed [rpm]"
         '
         'NumericUpDown33
         '
@@ -2911,26 +2919,6 @@ Partial Class Form1
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 24
         Me.PictureBox1.TabStop = False
-        '
-        'Button7
-        '
-        Me.Button7.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.Button7.Location = New System.Drawing.Point(390, 174)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(220, 40)
-        Me.Button7.TabIndex = 18
-        Me.Button7.Text = "Save input"
-        Me.Button7.UseVisualStyleBackColor = False
-        '
-        'Button8
-        '
-        Me.Button8.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.Button8.Location = New System.Drawing.Point(390, 139)
-        Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(220, 23)
-        Me.Button8.TabIndex = 19
-        Me.Button8.Text = "Retrieve input"
-        Me.Button8.UseVisualStyleBackColor = False
         '
         'OpenFileDialog1
         '
@@ -3217,7 +3205,6 @@ Partial Class Form1
     Friend WithEvents TextBox42 As TextBox
     Friend WithEvents Label63 As Label
     Friend WithEvents TextBox49 As TextBox
-    Friend WithEvents Label77 As Label
     Friend WithEvents Label78 As Label
     Friend WithEvents TextBox50 As TextBox
     Friend WithEvents Label80 As Label

@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\vtkfile\data2\Engineering\VBasic\Cooling_disk\</InstallUrl>
-    <ApplicationRevision>24</ApplicationRevision>
+    <InstallUrl>\\DCF1\data2%24\Engineering\VBasic\Cooling_disk\</InstallUrl>
+    <ApplicationRevision>25</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

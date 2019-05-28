@@ -63,7 +63,7 @@ Public Class Form1
     "K400   ;400;  8; 68; 145;125",
     "K400 SO;400;  8; 74; 170;155",
     "K500   ;500; 10; 68; 180;165",
-    "K600   ;600; 11; 78; 225;200"}
+    "K630   ;630; 11; 78; 225;200"}
 
     Dim sleeve_LD_ratio() As String = {
     "Sleeve Length/dia ratio",
@@ -438,37 +438,40 @@ Public Class Form1
 
             '------------------ Fan data----------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 8, 3)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 9, 3)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 9
             oTable.Range.Font.Bold = CInt(False)
             oTable.Rows.Item(1).Range.Font.Bold = CInt(True)
             row = 1
-            oTable.Cell(row, 1).Range.Text = "Fan shaft dimensions"
+            oTable.Cell(row, 1).Range.Text = "Fan shaft"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft material"
             oTable.Cell(row, 2).Range.Text = ComboBox1.Text
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft OD"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown1.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown1.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft ID"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown2.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown2.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Distance casing-cooling disk"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown3.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown3.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Heat conductivity coeff"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 1).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown4.Value.ToString("0.0")
             oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Max fan operating temp"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown5.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown5.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[°C]"
-
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Shaft speed"
+            oTable.Cell(row, 2).Range.Text = NumericUpDown12.Value.ToString("0")
+            oTable.Cell(row, 3).Range.Text = "[rpm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft cross section"
             oTable.Cell(row, 2).Range.Text = TextBox1.Text
@@ -494,11 +497,11 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = ComboBox2.Text
             row += 1
             oTable.Cell(row, 1).Range.Text = "Number of disks"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown11.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown11.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[-]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Outside diameter disk"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown9.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown9.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Hub diameter"
@@ -506,7 +509,7 @@ Public Class Form1
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Uniform disk thickness"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown10.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown7.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Disk conductivity coeff."
@@ -539,7 +542,7 @@ Public Class Form1
 
             row += 1
             oTable.Cell(row, 1).Range.Text = "Ambient temperature"
-            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown14.Value, 0).ToString
+            oTable.Cell(row, 2).Range.Text = NumericUpDown14.Value.ToString("0")
             oTable.Cell(row, 3).Range.Text = "[°C]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Conducted power"

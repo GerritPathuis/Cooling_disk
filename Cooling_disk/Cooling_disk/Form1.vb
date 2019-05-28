@@ -14,7 +14,7 @@ Public Class Form1
     Dim dirpath_Rap As String = "N:\Engineering\VBasic\Cool_disk_copy\"
     Dim dirpath_Home As String = "C:\Temp\"
 
-    Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
+    Dim transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
    "analytical methods for better understanding of convection through the fins of a brake rotor",
    "The experimental approach involved two aspects, assessment of both heat transfer And fluid motion",
    " ",
@@ -29,13 +29,13 @@ Public Class Form1
    "A number of detrimental flow patterns were observed, notably entrance effects",
    "and the presence of recirculation on the suction side of the fins"}
 
-    Public Shared howto() As String = {"How to ..",
+    Dim howto() As String = {"How to ..",
    "Iterate the grey bearing house temperature",
    "until the purple values (generated and dissipated power) are identical."}
 
     'sleeve bearing housing; diam; cooling area; L/d ratio
     'Dodge always air cooling
-    Public Shared b_house() As String = {
+    Dim b_house() As String = {
    "Renk ERWLQ 09 ;80-100; 0.37; 1.0",
    "Renk ERWLQ 11 ;100-125; 0.64; 1.0",
    "Renk ERWLQ 14 ;125-160; 0.74; 1.0",
@@ -53,7 +53,19 @@ Public Class Form1
    "Dodge 10"";254.00; 2.574; 1.8",
    "Dodge 12"";304.80; 4.903; 1.8"}
 
-    Public Shared sleeve_LD_ratio() As String = {
+    'Troesner cooling disk
+    'Type, Dia, Thick, wide, dia hub, dia_shaft_max
+    Dim Troester() As String = {
+    "K150   ;150;  3; 30; 60 ; 50",
+    "K200   ;200;  5; 30; 60 ; 50",
+    "K250   ;250;  5; 34; 85 ; 70",
+    "K315   ;315;  7; 54; 112; 95",
+    "K400   ;400;  8; 68; 145;125",
+    "K400 SO;400;  8; 74; 170;155",
+    "K500   ;500; 10; 68; 180;165",
+    "K600   ;600; 11; 78; 225;200"}
+
+    Dim sleeve_LD_ratio() As String = {
     "Sleeve Length/dia ratio",
     "Text book ~ 0.8",
     "Renk      ~ 1.0",
@@ -61,34 +73,21 @@ Public Class Form1
     "Dodge     ~ 1.8"}
 
     'oil type; kin visco [mm2/s=cP]; Density [kg/m3]
-    Public Shared oil() As String = {
+    Dim oil() As String = {
     "ISO 3448 VG 32; 32; 857",
     "ISO 3448 VG 46; 46; 861",
     "ISO 3448 VG 68; 68; 865",
     "ISO 3448 VG 100; 100; 869"}
 
-    Public Shared oil_temp() As String = {
+    Dim oil_temp() As String = {
     "Oil temperatures",
     "Mineral oil operate @ 110-126 °C",
     "Full synthetic operate @ 110- 148 °C",
     "Keep the shaft temp below 100 °C",
     "  "}
 
-    'Seal material type; Young modulus [GPa]
-    'From https://www.matbase.com/material-categories/natural-and-synthetic-polymers/
-    Public Shared seal_mat() As String = {
-    "PTFE (Teflon); 0.75",
-    "Polypropylene; 1.40",
-    "NBR (Nitrile rubber); 0.005",
-    "Polyamide 11 (Nylon); 1.4",
-    "Polyamide 12 (Nylon); 2.6",
-    "Polyamide 46 (Nylon); 3.0",
-    "Polyamide 66 (Nylon); 2.0",
-    "Silicone Rubber; 0.005",
-    "Fluor elastomere (Viton); 0.005"}
-
     'Explanation "Metal;Temp;[W/mK]"
-    Public Shared mat_conductivity() As String = {
+    Dim mat_conductivity() As String = {
     "Admiralty Brass;20;111",
     "Aluminum-235 (Troester) Kuhl Scheibe;20;145",
     "Aluminum-pure;93;215",
@@ -203,13 +202,19 @@ Public Class Form1
             ComboBox4.Items.Add(words(0))
         Next hh
 
+        For hh = 0 To (Troester.Length - 1)            'Fill combobox5 with Troester disk data
+            words = Troester(hh).Split(separators, StringSplitOptions.None)
+            ComboBox5.Items.Add(words(0))
+        Next hh
+
         '----------------- prevent out of bounds------------------
         ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 10, -1))  'C45
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-235 
         ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
         ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
+        ComboBox5.SelectedIndex = CInt(IIf(ComboBox5.Items.Count > 0, 1, -1))   'Troester
 
-        TextBox9.Text = "Q" & Now.ToString("yy") & ".10"
+        TextBox9.Text = "P" & Now.ToString("yy") & ".10"
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged, TabPage1.Enter, NumericUpDown12.ValueChanged
@@ -218,7 +223,7 @@ Public Class Form1
     End Sub
 
     Private Sub Calc_shaft()
-        Dim shaft_OD, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
+        Dim shaft_OD, f_id, F_length, F_coeff, Shaft_area As Double
         Dim d_no, d_od, d_hub_od, d_Heat_transf, d_thick, fin_height As Double
         Dim d_area_actual, d_area_calc, area_factor1, area_factor2, fin_eff, Conduct As Double
         Dim power_conducted, power_transferred As Double
@@ -236,7 +241,6 @@ Public Class Form1
         f_id = NumericUpDown2.Value / 1000
         F_length = NumericUpDown3.Value / 1000
         F_coeff = NumericUpDown4.Value
-        F_temp = NumericUpDown5.Value
         Shaft_area = Math.PI / 4 * (shaft_OD ^ 2 - f_id ^ 2)
 
         '-------------- disk-----------------
@@ -301,7 +305,7 @@ Public Class Form1
 
     Private Sub Calc_transfer()
         Dim disk_od, d_hub, dia, d_shaft, speed As Double
-        Dim ro_air, ka_air, vel, vel_shaft, mu, safety As Double
+        Dim ro_air, ka_air, vel, vel_shaft, mu As Double
         Dim nusselt, nusselt_shaft, reynolds_disk, reynolds_shaft As Double
         Dim ht, ht_shaft As Double
 
@@ -317,10 +321,8 @@ Public Class Form1
         ro_air = 1.205                          '[ro] air
         'http://www.engineeringtoolbox.com/dry-air-properties-d_973.html
         mu = 1.846 / 10 ^ 5                     'dyn visco air [Pa.s] @ 300K
-        safety = 0.3
 
         reynolds_disk = ro_air * vel * dia / mu
-
 
         If reynolds_disk >= 1300000 Then reynolds_disk = 1300000
         'See Ain Shams Engineering journal (2014) 5, 177-185
@@ -567,7 +569,7 @@ Public Class Form1
                 ufilename = dirpath_Home & ufilename
             End If
             oWord.ActiveDocument.SaveAs(ufilename.ToString)
-        Catch ex As Exception
+        Catch ex As DirectoryNotFoundException
             MessageBox.Show(ex.Message & "Problem storing file to" & dirpath_Rap)  ' Show the exception's message.
         End Try
     End Sub
@@ -856,7 +858,6 @@ Public Class Form1
         Dim control_words(), words() As String
         Dim i As Integer
         Dim ttt As Double
-        Dim k As Integer = 0
         Dim all_num, all_combo, all_check, all_radio As New List(Of Control)
         Dim separators() As String = {";"}
         Dim separators1() As String = {"BREAK"}
@@ -947,7 +948,8 @@ Public Class Form1
     End Sub
     '----------- Find all controls on form1------
     'Nota Bene, sequence of found control may be differen, List sort is required
-    Public Shared Function FindControlRecursive(ByVal list As List(Of Control), ByVal parent As Control, ByVal ctrlType As System.Type) As List(Of Control)
+    Public Shared Function FindControlRecursive(ByVal list As List(Of Control), ByVal parent As Control, ByVal ctrlType As Type) As List(Of Control)
+
         If parent Is Nothing Then Return list
 
         If parent.GetType Is ctrlType Then
@@ -1013,7 +1015,8 @@ Public Class Form1
             If (Not System.IO.Directory.Exists(dirpath_Home)) Then System.IO.Directory.CreateDirectory(dirpath_Home)
             If (Not System.IO.Directory.Exists(dirpath_Eng)) Then System.IO.Directory.CreateDirectory(dirpath_Eng)
             If (Not System.IO.Directory.Exists(dirpath_Rap)) Then System.IO.Directory.CreateDirectory(dirpath_Rap)
-        Catch ex As Exception
+        Catch ex As DirectoryNotFoundException
+            MessageBox.Show("Line 1033, " & ex.Message)  ' Show the exception's message.
         End Try
 
         Try
@@ -1024,8 +1027,34 @@ Public Class Form1
                     File.WriteAllText(dirpath_Home & filename, temp_string, Encoding.ASCII)     'used at home
                 End If
             End If
-        Catch ex As Exception
-            MessageBox.Show("Line 5062, " & ex.Message)  ' Show the exception's message.
+        Catch ex As DirectoryNotFoundException
+            MessageBox.Show("Line 1045, " & ex.Message)  ' Show the exception's message.
         End Try
+    End Sub
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click, ComboBox5.SelectedIndexChanged
+        Troesner_disk()
+    End Sub
+
+    Private Sub Troesner_disk()
+        'Write Troester Cooling data to input screen 
+        Dim tmp As Decimal
+        Dim separators() As String = {";"}
+        If (ComboBox5.SelectedIndex > -1) Then      'Prevent exceptions
+            Dim words() As String = Troester(ComboBox5.SelectedIndex).Split(separators, StringSplitOptions.None)
+
+            'Diameter cooling disk
+            Decimal.TryParse(words(1), tmp)
+            NumericUpDown9.Value = tmp
+
+            'Thickness cooling disk
+            Decimal.TryParse(words(2), tmp)
+            NumericUpDown10.Value = tmp
+
+            'Diameter hub
+            Decimal.TryParse(words(4), tmp)
+            NumericUpDown7.Value = tmp
+
+            ComboBox2.SelectedIndex = 1   'Aluminium-235 
+        End If
     End Sub
 End Class

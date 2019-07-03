@@ -40,6 +40,8 @@ Partial Class Form1
         Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button9 = New System.Windows.Forms.Button()
+        Me.ComboBox5 = New System.Windows.Forms.ComboBox()
         Me.Label99 = New System.Windows.Forms.Label()
         Me.Label98 = New System.Windows.Forms.Label()
         Me.TextBox73 = New System.Windows.Forms.TextBox()
@@ -76,8 +78,6 @@ Partial Class Form1
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.Button9 = New System.Windows.Forms.Button()
-        Me.ComboBox5 = New System.Windows.Forms.ComboBox()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.TextBox70 = New System.Windows.Forms.TextBox()
@@ -550,6 +550,25 @@ Partial Class Form1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Cooling disk data"
         '
+        'Button9
+        '
+        Me.Button9.Location = New System.Drawing.Point(163, 19)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(134, 28)
+        Me.Button9.TabIndex = 1
+        Me.Button9.Text = "Enter Troester data"
+        Me.Button9.UseVisualStyleBackColor = True
+        '
+        'ComboBox5
+        '
+        Me.ComboBox5.BackColor = System.Drawing.Color.Yellow
+        Me.ComboBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBox5.FormattingEnabled = True
+        Me.ComboBox5.Location = New System.Drawing.Point(16, 21)
+        Me.ComboBox5.Name = "ComboBox5"
+        Me.ComboBox5.Size = New System.Drawing.Size(127, 24)
+        Me.ComboBox5.TabIndex = 0
+        '
         'Label99
         '
         Me.Label99.AutoSize = True
@@ -808,15 +827,16 @@ Partial Class Form1
         '
         'NumericUpDown14
         '
-        Me.NumericUpDown14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.NumericUpDown14.BackColor = System.Drawing.Color.Yellow
+        Me.NumericUpDown14.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown14.Location = New System.Drawing.Point(231, 24)
         Me.NumericUpDown14.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
         Me.NumericUpDown14.Minimum = New Decimal(New Integer() {40, 0, 0, -2147483648})
         Me.NumericUpDown14.Name = "NumericUpDown14"
-        Me.NumericUpDown14.Size = New System.Drawing.Size(53, 22)
+        Me.NumericUpDown14.Size = New System.Drawing.Size(53, 24)
         Me.NumericUpDown14.TabIndex = 0
         Me.NumericUpDown14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown14.Value = New Decimal(New Integer() {20, 0, 0, 0})
+        Me.NumericUpDown14.Value = New Decimal(New Integer() {30, 0, 0, 0})
         '
         'Label18
         '
@@ -934,25 +954,6 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Cooling disk"
         Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'Button9
-        '
-        Me.Button9.Location = New System.Drawing.Point(163, 19)
-        Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(134, 28)
-        Me.Button9.TabIndex = 1
-        Me.Button9.Text = "Enter Troester data"
-        Me.Button9.UseVisualStyleBackColor = True
-        '
-        'ComboBox5
-        '
-        Me.ComboBox5.BackColor = System.Drawing.Color.Yellow
-        Me.ComboBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox5.FormattingEnabled = True
-        Me.ComboBox5.Location = New System.Drawing.Point(16, 21)
-        Me.ComboBox5.Name = "ComboBox5"
-        Me.ComboBox5.Size = New System.Drawing.Size(127, 24)
-        Me.ComboBox5.TabIndex = 0
         '
         'Button8
         '

@@ -5,6 +5,7 @@ Imports System.Math
 Imports System.Threading
 Imports System.Management
 Imports Word = Microsoft.Office.Interop.Word
+Imports System.Windows.Forms
 
 
 Public Class Form1
@@ -951,7 +952,7 @@ Public Class Form1
     End Sub
     '----------- Find all controls on form1------
     'Nota Bene, sequence of found control may be differen, List sort is required
-    Public Shared Function FindControlRecursive(ByVal list As List(Of Control), ByVal parent As Control, ByVal ctrlType As Type) As List(Of Control)
+    Public Shared Function FindControlRecursive(ByVal list As List(Of Control), ByVal parent As Control, ByVal ctrlType As System.Type) As List(Of Control)
 
         If parent Is Nothing Then Return list
 

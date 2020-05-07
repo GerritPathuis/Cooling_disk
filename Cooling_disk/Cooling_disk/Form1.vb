@@ -67,6 +67,21 @@ Public Class Form1
     "ISO 3448 VG 68; 68; 865",
     "ISO 3448 VG 100; 100; 869"}
 
+    'Heat shield
+    'http://www-eng.lbl.gov/~dw/projects/DW4229_LHC_detector_analysis/calculations/emissivity2.pdf
+    Public Shared shield_mat() As String = {
+    "Aluminum, Commercial Sheet; 0.09",
+    "Aluminum, Oxidized; 0.11",
+    "Aluminum, Heavily Oxidized; 0.25",
+    "Aluminum, Highly Polished; 0.05",
+    "Aluminum, Anodized; 0.77",
+    "Steel, Galvanized; 0.25",
+    "Steel, Oxidized; 0.79",
+    "Steel, Polished; 0.07",
+    "Stainless 304, weathered; 0.87",
+    "Stainless 304, 2B finish; 0.11",
+    "Stainless 304, heated; 0.40"}
+
     Public Shared oil_temp() As String = {
     "Oil temperatures",
     "Mineral oil operate @ 110-126 °C",
@@ -203,20 +218,33 @@ Public Class Form1
             ComboBox4.Items.Add(words(0))
         Next hh
 
+        For hh = 0 To (shield_mat.Length - 1)      'Fill combobox5 shield materials
+            words = shield_mat(hh).Split(separators, StringSplitOptions.None)
+            ComboBox5.Items.Add(words(0))
+        Next hh
+
         '----------------- prevent out of bounds------------------
         ComboBox1.SelectedIndex = CInt(IIf(ComboBox1.Items.Count > 0, 10, -1))  'C45
         ComboBox2.SelectedIndex = CInt(IIf(ComboBox2.Items.Count > 0, 1, -1))   'Aluminium-235 
         ComboBox3.SelectedIndex = CInt(IIf(ComboBox3.Items.Count > 0, 2, -1))   'Renk
         ComboBox4.SelectedIndex = CInt(IIf(ComboBox4.Items.Count > 0, 1, -1))   'Oil selection
+        ComboBox5.SelectedIndex = CInt(IIf(ComboBox5.Items.Count > 0, 1, -1))   'Shield mat.  selection
 
         TextBox9.Text = "Q" & Now.ToString("yy") & ".10"
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged, TabPage1.Enter, NumericUpDown12.ValueChanged
+        Calc_sequence()
+    End Sub
+    Public Sub Calc_sequence()
         Calc_transfer()
         Calc_radiation()
         Calc_shaft()
+        Calc_sleeve_bearing()
+        Calc_seal()
+        Calc_stuff_box()
     End Sub
+
 
     Private Sub Calc_shaft()
         Dim shaft_OD, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
@@ -319,10 +347,12 @@ Public Class Form1
         Dim ε As Double        'surface_factor
         Dim q As Double         'Heat [w]
 
+
+        Double.TryParse(TextBox76.Text, ε)          'Emissivity mshield materail 
         t1 = NumericUpDown5.Value + 273.15          'Casing temperature
         σ = 5.6703 * 10 ^ -8                        '[W/m2K4]
         area_disk = PI / 4 * (NumericUpDown9.Value ^ 2 - NumericUpDown1.Value ^ 2) / 10 ^ 6 '[m2]
-        ε = 0.2                                     'Aluminum Heavily Oxidized 
+
         q = ε * σ * area_disk * t1 ^ 4              '[W]
 
         TextBox74.Text = q.ToString("F0")           'Radiated heat
@@ -465,7 +495,7 @@ Public Class Form1
 
             '------------------ Fan data----------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 8, 3)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 9, 3)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 9
             oTable.Range.Font.Bold = CInt(False)
@@ -488,14 +518,17 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown3.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Heat conductivity coeff"
+            oTable.Cell(row, 1).Range.Text = "Heat conductivity coeff."
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown4.Value, 1).ToString
             oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Max fan operating temp"
+            oTable.Cell(row, 1).Range.Text = "Max. fan operating temp."
+            oTable.Cell(row, 2).Range.Text = Round(NumericUpDown13.Value, 0).ToString
+            oTable.Cell(row, 3).Range.Text = "[°C]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Max. Casing temp. at disk"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown5.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[°C]"
-
             row += 1
             oTable.Cell(row, 1).Range.Text = "Shaft cross section"
             oTable.Cell(row, 2).Range.Text = TextBox1.Text
@@ -528,7 +561,7 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown9.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Hub diameter"
+            oTable.Cell(row, 1).Range.Text = "Hub outside diameter"
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown7.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[mm]"
             row += 1
@@ -540,7 +573,7 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = TextBox20.Text
             oTable.Cell(row, 3).Range.Text = "[W/m.K]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Disk heat transfer (external)"
+            oTable.Cell(row, 1).Range.Text = "Disk to air heat transfer coef."
             oTable.Cell(row, 2).Range.Text = TextBox15.Text
             oTable.Cell(row, 3).Range.Text = "[W/m2.K]"
             row += 1
@@ -556,7 +589,7 @@ Public Class Form1
 
             '------------------ Results data----------------------
             'Insert a table, fill it with data and change the column widths.
-            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 5, 3)
+            oTable = oDoc.Tables.Add(oDoc.Bookmarks.Item("\endofdoc").Range, 7, 3)
             oTable.Range.ParagraphFormat.SpaceAfter = 1
             oTable.Range.Font.Size = 9
             oTable.Range.Font.Bold = CInt(False)
@@ -569,8 +602,16 @@ Public Class Form1
             oTable.Cell(row, 2).Range.Text = Round(NumericUpDown14.Value, 0).ToString
             oTable.Cell(row, 3).Range.Text = "[°C]"
             row += 1
-            oTable.Cell(row, 1).Range.Text = "Conducted power"
+            oTable.Cell(row, 1).Range.Text = "Shaft conducted power"
             oTable.Cell(row, 2).Range.Text = TextBox5.Text
+            oTable.Cell(row, 3).Range.Text = "[W]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "C-Disk incoming radiation"
+            oTable.Cell(row, 2).Range.Text = TextBox74.Text
+            oTable.Cell(row, 3).Range.Text = "[W]"
+            row += 1
+            oTable.Cell(row, 1).Range.Text = "Total power to dissipate"
+            oTable.Cell(row, 2).Range.Text = TextBox75.Text
             oTable.Cell(row, 3).Range.Text = "[W]"
             row += 1
             oTable.Cell(row, 1).Range.Text = "Power to air transferred"
@@ -608,8 +649,7 @@ Public Class Form1
             Dim words() As String = mat_conductivity(ComboBox1.SelectedIndex).Split(separators, StringSplitOptions.None)
             NumericUpDown4.Value = CDec(words(2))       'Conductivity fan shaft
         End If
-        Calc_transfer()
-        Calc_shaft()
+        Calc_sequence()
     End Sub
 
     Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
@@ -619,13 +659,11 @@ Public Class Form1
             Dim words() As String = mat_conductivity(ComboBox2.SelectedIndex).Split(separators, StringSplitOptions.None)
             TextBox20.Text = words(2)       'Conductivity cooling disk
         End If
-        Calc_transfer()
-        Calc_shaft()
+        Calc_sequence()
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabControl1.Enter, TabPage3.Enter
-        Calc_transfer()
-        Calc_shaft()
+        Calc_sequence()
     End Sub
 
     'Sleeve bearing calculation
@@ -745,16 +783,15 @@ Public Class Form1
     End Sub
 
     Private Sub ComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox3.SelectedIndexChanged
-        Calc_sleeve_bearing()
+        Calc_sequence()
     End Sub
 
     Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
-        Calc_sleeve_bearing()
+        Calc_sequence()
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, NumericUpDown31.ValueChanged, NumericUpDown29.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown28.ValueChanged, TabPage5.Enter
-        Calc_transfer()
-        Calc_seal()
+        Calc_sequence()
     End Sub
     Private Sub Calc_seal()
         Dim fric_coef, no_seals, pwr_seal As Double
@@ -812,10 +849,9 @@ Public Class Form1
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown36.ValueChanged, NumericUpDown34.ValueChanged, NumericUpDown33.ValueChanged, TabPage6.Enter
-        Calc_transfer()
-        Calc_stuff()
+        Calc_sequence()
     End Sub
-    Private Sub Calc_stuff()
+    Private Sub Calc_stuff_box()
         Dim i As Integer
         Dim gland_pressure, fric_coef, pwr_gland, gland_l As Double
         Dim force, torque, rpm, diam, omega As Double
@@ -1220,5 +1256,13 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub ComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox5.SelectedIndexChanged
+        Dim separators() As String = {";"}
 
+        If (ComboBox5.SelectedIndex > -1) Then          'Prevent exceptions
+            Dim words() As String = shield_mat(ComboBox5.SelectedIndex).Split(separators, StringSplitOptions.None)
+            TextBox76.Text = words(1)       'Conductivity cooling disk
+        End If
+        Calc_sequence()
+    End Sub
 End Class

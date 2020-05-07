@@ -70,9 +70,9 @@ Public Class Form1
     Public Shared oil_temp() As String = {
     "Oil temperatures",
     "Mineral oil operate @ 110-126 °C",
-    "Full synthetic operate @ 110- 148 °C",
+    "Full synthetic operate @ 110-148 °C",
     "Keep the shaft temp below 100 °C",
-    "  "}
+    "In case of sleeve bearing below 80 °C"}
 
     'Seal material type; Young modulus [GPa]
     'From https://www.matbase.com/material-categories/natural-and-synthetic-polymers/
@@ -214,6 +214,7 @@ Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, NumericUpDown9.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown5.ValueChanged, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged, NumericUpDown11.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown14.ValueChanged, TabPage1.Enter, NumericUpDown12.ValueChanged
         Calc_transfer()
+        Calc_radiation()
         Calc_shaft()
     End Sub
 
@@ -221,15 +222,17 @@ Public Class Form1
         Dim shaft_OD, f_id, F_length, F_coeff, F_temp, Shaft_area As Double
         Dim d_no, d_od, d_hub_od, d_Heat_transf, d_thick, fin_height As Double
         Dim d_area_actual, d_area_calc, area_factor1, area_factor2, fin_eff, Conduct As Double
-        Dim power_conducted, power_transferred As Double
+        Dim power_conducted, power_transferred, power_radiation As Double
+        Dim power_in As Double
         Dim dT_conduct, dT_transfer As Double
         Dim temp_fan, temp_amb, temp_disk As Double
         Dim i As Integer
+        Dim stepp As Double
 
         '-------------- temps ----------------
-        temp_fan = NumericUpDown5.Value
-        temp_amb = NumericUpDown14.Value
-        temp_disk = (temp_amb + temp_fan) / 2
+        temp_fan = NumericUpDown13.Value        'Internal fan temp
+        temp_amb = NumericUpDown14.Value        'Ambient air tem
+        temp_disk = (temp_amb + temp_fan) / 2   'Start value
 
         '-------------- shaft-----------------
         shaft_OD = NumericUpDown1.Value / 1000      '[mm]->[m]
@@ -248,6 +251,8 @@ Public Class Form1
         Double.TryParse(TextBox15.Text, d_Heat_transf)   '[W/m2k]
         Double.TryParse(TextBox20.Text, Conduct)        '[W/mk]
         d_area_actual = d_no * 2 * Math.PI / 4 * (d_od ^ 2 - d_hub_od ^ 2)
+        Double.TryParse(TextBox74.Text, power_radiation)   '[W/m2k]   
+
 
         fin_height = (d_od - d_hub_od) / 2
         area_factor1 = fin_height * (d_Heat_transf / (Conduct * 0.5 * d_thick)) ^ 0.5
@@ -257,23 +262,30 @@ Public Class Form1
         fin_eff = Math.Tanh(area_factor1 * area_factor2) / (area_factor1 * area_factor2)
         d_area_calc = d_area_actual * fin_eff
 
-        '-------------- heat ---------------
+        '-------------- heat iteration ---------------
         If temp_disk > 0 Then        'Preventing VB start problems!!
             For i = 0 To 500
                 dT_conduct = temp_fan - temp_disk
                 dT_transfer = temp_disk - temp_amb
 
                 power_conducted = Shaft_area * dT_conduct * F_coeff / F_length
+                power_in = power_conducted + power_radiation
                 power_transferred = dT_transfer * d_area_calc * d_Heat_transf
 
-                If Abs(power_conducted - power_transferred) < 2 Then
+                stepp = 0.5
+                If Abs(power_in - power_transferred) < 10 Then stepp = 0.2
+                If Abs(power_in - power_transferred) < 2 Then stepp = 0.1
+                If Abs(power_in - power_transferred) < 1 Then stepp = 0.05
+
+                If Abs(power_in - power_transferred) < 0.7 Then
                     Exit For        'Speeding things up
                 End If
 
-                If (power_conducted > power_transferred) Then
-                    temp_disk += 0.5
+                'Debug.WriteLine("temp_disk " & temp_disk.ToString)
+                If (power_in > power_transferred) Then
+                    temp_disk += stepp
                 Else
-                    temp_disk -= 0.5
+                    temp_disk -= stepp
                 End If
             Next
 
@@ -285,18 +297,35 @@ Public Class Form1
 
         TextBox72.Text = area_factor1.ToString("0.00")
         TextBox73.Text = area_factor2.ToString("0.00")
+        TextBox75.Text = power_in.ToString("F0")
 
-        TextBox3.Text = Math.Round(fin_eff, 3).ToString
-        TextBox4.Text = Math.Round(d_area_calc, 2).ToString
-        TextBox5.Text = Math.Round(power_conducted, 0).ToString
-        TextBox6.Text = Math.Round(power_transferred, 0).ToString
+        TextBox3.Text = fin_eff.ToString("F3")
+        TextBox4.Text = d_area_calc.ToString("F2")
+        TextBox5.Text = power_conducted.ToString("F0")
+        TextBox6.Text = power_transferred.ToString("F0")
 
         'Checks
         TextBox7.BackColor = CType(IIf(temp_disk > 100, Color.Red, Color.White), Color)
-        TextBox5.BackColor = CType(IIf(Abs(power_conducted - power_transferred) > 15, Color.Red, Color.White), Color)
+        TextBox5.BackColor = CType(IIf(Abs(power_in - power_transferred) > 15, Color.Red, Color.White), Color)
         TextBox6.BackColor = TextBox5.BackColor
         NumericUpDown7.BackColor = CType(IIf(NumericUpDown7.Value <= NumericUpDown1.Value + 20, Color.Red, Color.Yellow), Color)
         NumericUpDown9.BackColor = CType(IIf(NumericUpDown9.Value <= NumericUpDown7.Value + 50, Color.Red, Color.Yellow), Color)
+    End Sub
+    Private Sub Calc_radiation()
+        'https://www.engineeringtoolbox.com/emissivity-coefficients-d_447.html
+        Dim area_disk As Double 'Cooling disk one side
+        Dim t1 As Double        'Casing temp
+        Dim σ As Double         'The Stefan-Boltzmann Constant
+        Dim ε As Double        'surface_factor
+        Dim q As Double         'Heat [w]
+
+        t1 = NumericUpDown5.Value + 273.15          'Casing temperature
+        σ = 5.6703 * 10 ^ -8                        '[W/m2K4]
+        area_disk = PI / 4 * (NumericUpDown9.Value ^ 2 - NumericUpDown1.Value ^ 2) / 10 ^ 6 '[m2]
+        ε = 0.2                                     'Aluminum Heavily Oxidized 
+        q = ε * σ * area_disk * t1 ^ 4              '[W]
+
+        TextBox74.Text = q.ToString("F0")           'Radiated heat
     End Sub
 
     Private Sub Calc_transfer()
@@ -841,18 +870,176 @@ Public Class Form1
         TextBox54.BackColor = CType(IIf(dt > 100, Color.Red, Color.LightGreen), Color)
     End Sub
 
-    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        Save_tofile()
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Read_file_vtk5()
     End Sub
 
-    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        Read_file()
+    Private Sub Read_file_vtk5()
+        Dim control_words(), words() As String
+        Dim k As Integer = 0
+        Dim all_num, all_combo, all_check, all_radio As New List(Of Control)
+        Dim separators() As String = {";"}
+        Dim separators1() As String = {"BREAK"}
+
+        OpenFileDialog1.FileName = "Cool_disk*.vtk5"
+        If Directory.Exists(dirpath_Eng) Then
+            OpenFileDialog1.InitialDirectory = dirpath_Eng  'used at VTK
+        Else
+            OpenFileDialog1.InitialDirectory = dirpath_Home  'used at home
+        End If
+
+        OpenFileDialog1.Title = "Open a VTK File"
+        OpenFileDialog1.Filter = "VTK5 Files|*.vtk5"
+
+        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim readText As String = File.ReadAllText(OpenFileDialog1.FileName, Encoding.ASCII)
+            control_words = readText.Split(separators1, StringSplitOptions.None) 'Split the read file content
+
+            '----- retrieve case condition-----
+            words = control_words(0).Split(separators, StringSplitOptions.None) 'Split first line the read file content
+            TextBox9.Text = words(0)                  'Project number
+            TextBox10.Text = words(1)                 'Item name
+            TextBox11.Text = words(2)                 'Fan type
+
+            '---------- terugzetten numeric controls -----------------
+            FindControlRecursive(all_num, Me, GetType(NumericUpDown))
+            words = control_words(1).Split(separators, StringSplitOptions.None)     'Split the read file content
+            Restore_num_controls(words, all_num)
+
+            '---------- terugzetten combobox controls -----------------
+            FindControlRecursive(all_combo, Me, GetType(ComboBox))
+            words = control_words(2).Split(separators, StringSplitOptions.None) 'Split the read file content
+            Restore_combo_controls(words, all_combo)
+
+            '---------- terugzetten checkbox controls -----------------
+            FindControlRecursive(all_check, Me, GetType(CheckBox))
+            words = control_words(3).Split(separators, StringSplitOptions.None) 'Split the read file content
+            Restore_checkbox_controls(words, all_check)
+
+            '---------- terugzetten radiobuttons controls -----------------
+            FindControlRecursive(all_radio, Me, GetType(RadioButton))
+            words = control_words(4).Split(separators, StringSplitOptions.None) 'Split the read file content
+            Restore_radiobutton_controls(words, all_radio)
+        End If
+    End Sub
+
+    Private Sub Restore_combo_controls(words As String(), all_combo As List(Of Control))
+        For i = 0 To all_combo.Count - 1
+            Dim combobx As ComboBox = CType(all_combo(i), ComboBox)
+            '============ find the stored numeric control list ====
+
+            For j = 0 To all_combo.Count - 1
+                If (j * 2 + 2) < words.Count Then
+                    If combobx.Name = words(j * 2 + 1) Then    '==== Found ====
+                        'Debug.WriteLine("FOUND !! combobx.Name= " & combobx.Name & ", words(j *2)= " & words(j * 2) & ", words(j*2+1)= " & words(j * 2 + 1) & ", words(j*2+2)= " & words(j * 2 + 2))
+                        If (i < words.Length - 1) Then
+                            combobx.SelectedItem = words(j * 2 + 2)
+                        Else
+                            MessageBox.Show("Warning last combobox not found in file")
+                        End If
+                        Exit For
+                    End If
+                Else
+                    MessageBox.Show(combobx.Name & " was NOT Stored in file and is NOT updated")
+                End If
+            Next
+        Next
+    End Sub
+
+
+    Private Sub Restore_checkbox_controls(words As String(), all_check As List(Of Control))
+        For i = 0 To all_check.Count - 1
+            Dim chbx As CheckBox = CType(all_check(i), CheckBox)
+            '============ find the stored numeric control list ====
+
+            For j = 0 To all_check.Count - 1
+                If (j * 2 + 2) < words.Count Then
+                    If chbx.Name = words(j * 2 + 1) Then    '==== Found ====
+                        'Debug.WriteLine("FOUND !! chbx.Name= " & chbx.Name & ", words(j *2)= " & words(j * 2) & ", words(j*2+1)= " & words(j * 2 + 1) & ", words(j*2+2)= " & words(j * 2 + 2))
+                        If CBool(words(j * 2 + 2)) = True Then
+                            chbx.Checked = True
+                        Else
+                            chbx.Checked = False
+                        End If
+
+                        Exit For
+                    End If
+                Else
+                    MessageBox.Show(chbx.Name & " was NOT Stored in file and is NOT updated")
+                End If
+            Next
+        Next
+    End Sub
+    Private Sub Restore_radiobutton_controls(words As String(), all_radio As List(Of Control))
+        For i = 0 To all_radio.Count - 1
+            Dim radiobut As RadioButton = CType(all_radio(i), RadioButton)
+            '============ find the stored numeric control list ====
+            For j = 0 To all_radio.Count - 1
+                If (j * 2 + 2) < words.Count Then
+                    If radiobut.Name = words(j * 2 + 1) Then    '==== Found ====
+                        'Debug.WriteLine("j= " & j.ToString & ", FOUND !! radiobut.Name= " & radiobt.Name & ", words(j *2)= " & words(j * 2) & ", words(j*2+1)= " & words(j * 2 + 1) & ", words(j*2+2)= " & words(j * 2 + 2))
+                        Boolean.TryParse(words(j * 2 + 2), radiobut.Checked)
+                        Exit For
+                    End If
+                Else
+                    MessageBox.Show(radiobut.Name & " was NOT Stored in file and is NOT updated")
+                End If
+            Next
+        Next
+    End Sub
+    Private Sub Restore_textbox_controls(words As String(), all_text As List(Of Control))
+        For i = 0 To all_text.Count - 1
+            Dim txtbx As TextBox = CType(all_text(i), TextBox)
+            '============ find the stored numeric control list ====
+            For j = 0 To all_text.Count - 1
+                If (j * 2 + 2) < words.Count Then
+                    If txtbx.Name = words(j * 2 + 1) Then    '==== Found ====
+                        'Debug.WriteLine("j= " & j.ToString & ", FOUND !! txtbx.Name= " & txtbx.Name & ", words(j *2)= " & words(j * 2))
+                        txtbx.Text = words(j * 2 + 2)
+                        Exit For
+                    End If
+                Else
+                    MessageBox.Show(txtbx.Name & " was NOT Stored in file and is NOT updated")
+                End If
+            Next
+        Next
+    End Sub
+    Private Sub Restore_num_controls(words As String(), all_num As List(Of Control))
+        Dim ttt As Double
+
+        For i = 0 To all_num.Count - 1
+            Dim updown As NumericUpDown = CType(all_num(i), NumericUpDown)
+            '============ find the stored numeric control list ====
+
+            For j = 0 To all_num.Count - 1
+                If (j * 2 + 2) < words.Count Then
+                    If updown.Name = words(j * 2 + 1) Then    '==== Found ====
+                        'Debug.WriteLine("FOUND !! updown.Name= " & updown.Name & ", words(j *2)= " & words(j * 2) & ", words(j*2+1)= " & words(j * 2 + 1) & ", words(j*2+2)= " & words(j * 2 + 2))
+                        If Not (Double.TryParse(words(j * 2 + 2), ttt)) Then MessageBox.Show("Numeric controls conversion problem occured")
+                        If ttt <= updown.Maximum And ttt >= updown.Minimum Then
+                            updown.Value = CDec(ttt)          'OK
+                        Else
+                            updown.Value = updown.Minimum       'NOK
+                            MessageBox.Show("Numeric controls value out of outside min-max range, Minimum value is used")
+                        End If
+                        Exit For
+                    End If
+                Else
+                    MessageBox.Show(updown.Name & " was NOT Stored in file and is NOT updated")
+                End If
+            Next
+        Next
+    End Sub
+
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        Read_file_vtk()
     End Sub
     'Retrieve control settings and case_x_conditions from file
     'Split the file string into 5 separate strings
     'Each string represents a control type (combobox, checkbox,..)
     'Then split up the secton string into part to read into the parameters
-    Private Sub Read_file()
+    Private Sub Read_file_vtk()
         Dim control_words(), words() As String
         Dim i As Integer
         Dim ttt As Double
@@ -959,10 +1146,14 @@ Public Class Form1
         Return list
     End Function
 
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Save_tofile_vtk5()
+    End Sub
+
     'Save control settings and case_x_conditions to file
-    Private Sub Save_tofile()
+    Private Sub Save_tofile_vtk5()
         Dim temp_string As String
-        Dim filename As String = "Cool_disk_select_" & TextBox9.Text & "_" & TextBox10.Text & "_" & TextBox11.Text & DateTime.Now.ToString("_yyyy_MM_dd") & ".vtk"
+        Dim filename As String = "Cool_disk_select_" & TextBox9.Text & "_" & TextBox10.Text & "_" & TextBox11.Text & DateTime.Now.ToString("_yyyy_MM_dd") & ".vtk5"
         Dim all_num, all_combo, all_check, all_radio As New List(Of Control)
         Dim i As Integer
 
@@ -976,8 +1167,8 @@ Public Class Form1
         FindControlRecursive(all_num, Me, GetType(NumericUpDown))   'Find the control
         all_num = all_num.OrderBy(Function(x) x.Name).ToList()      'Alphabetical order
         For i = 0 To all_num.Count - 1
-            Dim grbx As NumericUpDown = CType(all_num(i), NumericUpDown)
-            temp_string &= grbx.Value.ToString & ";"
+            Dim grnum As NumericUpDown = CType(all_num(i), NumericUpDown)
+            temp_string &= grnum.Name & ";" & grnum.Value.ToString & ";"
         Next
         temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
 
@@ -985,8 +1176,8 @@ Public Class Form1
         FindControlRecursive(all_combo, Me, GetType(ComboBox))      'Find the control
         all_combo = all_combo.OrderBy(Function(x) x.Name).ToList()   'Alphabetical order
         For i = 0 To all_combo.Count - 1
-            Dim grbx As ComboBox = CType(all_combo(i), ComboBox)
-            temp_string &= grbx.SelectedItem.ToString & ";"
+            Dim grcom As ComboBox = CType(all_combo(i), ComboBox)
+            temp_string &= grcom.Name & ";" & grcom.SelectedItem.ToString & ";"
         Next
         temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
 
@@ -994,8 +1185,8 @@ Public Class Form1
         FindControlRecursive(all_check, Me, GetType(CheckBox))      'Find the control
         all_check = all_check.OrderBy(Function(x) x.Name).ToList()  'Alphabetical order
         For i = 0 To all_check.Count - 1
-            Dim grbx As CheckBox = CType(all_check(i), CheckBox)
-            temp_string &= grbx.Checked.ToString & ";"
+            Dim grcheck As CheckBox = CType(all_check(i), CheckBox)
+            temp_string &= grcheck.Name & ";" & grcheck.Checked.ToString & ";"
         Next
         temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
 
@@ -1003,8 +1194,8 @@ Public Class Form1
         FindControlRecursive(all_radio, Me, GetType(RadioButton))   'Find the control
         all_radio = all_radio.OrderBy(Function(x) x.Name).ToList()  'Alphabetical order
         For i = 0 To all_radio.Count - 1
-            Dim grbx As RadioButton = CType(all_radio(i), RadioButton)
-            temp_string &= grbx.Checked.ToString & ";"
+            Dim grrad As RadioButton = CType(all_radio(i), RadioButton)
+            temp_string &= grrad.Name & ";" & grrad.Checked.ToString & ";"
         Next
         temp_string &= vbCrLf & "BREAK" & vbCrLf & ";"
 
@@ -1028,4 +1219,6 @@ Public Class Form1
             MessageBox.Show("Line 5062, " & ex.Message)  ' Show the exception's message.
         End Try
     End Sub
+
+
 End Class

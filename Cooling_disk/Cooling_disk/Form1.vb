@@ -405,11 +405,12 @@ Public Class Form1
         TextBox17.Text = Math.Round(vel, 1).ToString
         TextBox65.Text = speed.ToString("0")
 
-        '===================== shaft only===============
+        '===================== shaft only ===================
         d_shaft = NumericUpDown1.Value / 1000       '[mm]
         vel_shaft = speed / 60 * PI * d_shaft
         reynolds_shaft = ro_air * vel_shaft * d_shaft / mu
 
+        '========= From Nusselt to "Heat transfer Coeff" =========
         'See Ain Shams Engineering journal (2014) 5, 177-185
         If reynolds_shaft >= 1000 And reynolds_shaft < 1000000 Then
             nusselt_shaft = 0.022 * reynolds_shaft ^ 0.821

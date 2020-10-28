@@ -10,9 +10,9 @@ Imports Word = Microsoft.Office.Interop.Word
 Public Class Form1
 
     '----------- directory's-----------
-    Dim dirpath_Eng As String = "N:\Engineering\VBasic\Cool_disk_input\"
-    Dim dirpath_Rap As String = "N:\Engineering\VBasic\Cool_disk_copy\"
-    Dim dirpath_Home As String = "C:\Temp\"
+    Public dirpath_Eng As String = "N:\Engineering\VBasic\Cool_disk_input\"
+    Public dirpath_Rap As String = "N:\Engineering\VBasic\Cool_disk_copy\"
+    Public dirpath_Home As String = "C:\Temp\"
 
     Public Shared transfer() As String = {"McPhee and Johnson (2007) employed experimental and",
    "analytical methods for better understanding of convection through the fins of a brake rotor",
@@ -360,7 +360,7 @@ Public Class Form1
 
     Private Sub Calc_transfer()
         Dim disk_od, d_hub, dia, d_shaft, speed As Double
-        Dim ro_air, ka_air, vel, vel_shaft, mu, safety As Double
+        Dim ro_air, ka_air, vel, vel_shaft, mu As Double
         Dim nusselt, nusselt_shaft, reynolds_disk, reynolds_shaft As Double
         Dim ht, ht_shaft As Double
 
@@ -376,7 +376,7 @@ Public Class Form1
         ro_air = 1.205                          '[ro] air
         'http://www.engineeringtoolbox.com/dry-air-properties-d_973.html
         mu = 1.846 / 10 ^ 5                     'dyn visco air [Pa.s] @ 300K
-        safety = 0.3
+
 
         reynolds_disk = ro_air * vel * dia / mu
 
@@ -913,7 +913,6 @@ Public Class Form1
 
     Private Sub Read_file_vtk5()
         Dim control_words(), words() As String
-        Dim k As Integer = 0
         Dim all_num, all_combo, all_check, all_radio As New List(Of Control)
         Dim separators() As String = {";"}
         Dim separators1() As String = {"BREAK"}
@@ -1024,23 +1023,23 @@ Public Class Form1
             Next
         Next
     End Sub
-    Private Sub Restore_textbox_controls(words As String(), all_text As List(Of Control))
-        For i = 0 To all_text.Count - 1
-            Dim txtbx As TextBox = CType(all_text(i), TextBox)
-            '============ find the stored numeric control list ====
-            For j = 0 To all_text.Count - 1
-                If (j * 2 + 2) < words.Count Then
-                    If txtbx.Name = words(j * 2 + 1) Then    '==== Found ====
-                        'Debug.WriteLine("j= " & j.ToString & ", FOUND !! txtbx.Name= " & txtbx.Name & ", words(j *2)= " & words(j * 2))
-                        txtbx.Text = words(j * 2 + 2)
-                        Exit For
-                    End If
-                Else
-                    MessageBox.Show(txtbx.Name & " was NOT Stored in file and is NOT updated")
-                End If
-            Next
-        Next
-    End Sub
+    'Private Sub Restore_textbox_controls(words As String(), all_text As List(Of Control))
+    '    For i = 0 To all_text.Count - 1
+    '        Dim txtbx As TextBox = CType(all_text(i), TextBox)
+    '        '============ find the stored numeric control list ====
+    '        For j = 0 To all_text.Count - 1
+    '            If (j * 2 + 2) < words.Count Then
+    '                If txtbx.Name = words(j * 2 + 1) Then    '==== Found ====
+    '                    'Debug.WriteLine("j= " & j.ToString & ", FOUND !! txtbx.Name= " & txtbx.Name & ", words(j *2)= " & words(j * 2))
+    '                    txtbx.Text = words(j * 2 + 2)
+    '                    Exit For
+    '                End If
+    '            Else
+    '                MessageBox.Show(txtbx.Name & " was NOT Stored in file and is NOT updated")
+    '            End If
+    '        Next
+    '    Next
+    'End Sub
     Private Sub Restore_num_controls(words As String(), all_num As List(Of Control))
         Dim ttt As Double
 
